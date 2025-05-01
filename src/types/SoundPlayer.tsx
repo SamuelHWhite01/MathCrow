@@ -1,13 +1,21 @@
-import orchHit1 from '@/assets/sounds/orch-hit-1.mp3';
+const soundModules = import.meta.glob('@/assets/sounds/orch-hit-*.mp3', { eager: true });
+const soundPaths = Object.entries(soundModules)
+  .sort(([a], [b]) => {
+    // Extract the numbers from the filenames
+    const numA = parseInt(a.match(/(\d+)\.mp3$/)?.[1] || '0');
+    const numB = parseInt(b.match(/(\d+)\.mp3$/)?.[1] || '0');
+    return numA - numB;
+  })
+  .map(([, mod]: [string, any]) => mod.default);
 class SoundPlayer {
     audios: HTMLAudioElement[] = [];
 
     constructor() {
-        for (let i = 1; i <= 12; i++) {
-            const audio = new Audio(orchHit1);
+        this.audios = soundPaths.map((src) => {
+            const audio = new Audio(src);
             audio.load();
-            this.audios.push(audio);
-        }
+            return audio;
+          });
     }
 
     public PlaySound(idx: number) {
