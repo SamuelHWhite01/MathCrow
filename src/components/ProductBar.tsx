@@ -23,7 +23,8 @@ const ProductBar: React.FC = () => {
             // if the entire grid has been aswered correctly
             setGridComplete(true); // allow the final product box to be entered
         }
-        if (factors.carryList?.[factors.numCarry]?.order ?? -1 === factors.numCorrect) {
+        if ((factors.carryList?.[factors.numCarry]?.order ?? -1) === factors.numCorrect) {
+            console.log(factors.carryList[factors.numCarry].order, factors.numCorrect);
             setActiveCarry(true);
         } else {
             setActiveCarry(false);
@@ -148,16 +149,15 @@ const ProductBar: React.FC = () => {
     };
 
     return (
-        <div className="product-bar">
+        <div className="h-auto flex flex-col gap-2">
             {gridInput.map((row, i) => (
-                <div className="product-bar-row" key={i}>
+                <div className="h-auto flex flex-row gap-2 justify-end" key={i}>
                     {row.map((val, j) => (
                         <input
-                            className={`product-bar-cell ${isLocked(i, j) ? 'locked-input' : ''}`}
+                            className={` product-bar-cell ${isLocked(i,j) ? 'bg-gray-500' : ''}`}
                             type="number"
-                            //placeholder = {factors.productGrid[i][j].toString()}
                             value={gridInput[i]?.[j] ?? ''}
-                            readOnly={isLocked(i, j)}
+                            //readOnly={isLocked(i, j)}
                             key={`${i}-${j}`}
                             onChange={(e) => handleChange(e, i, j)}
                         />
@@ -165,7 +165,7 @@ const ProductBar: React.FC = () => {
                 </div>
             ))}
             <input
-                className={`factor-input ${!gridComplete ? 'locked-input' : ''}`}
+                className={`factor-input ${!gridComplete ? 'bg-gray-500' : ''}`}
                 type="number"
                 onChange={handleSumChange}
                 readOnly={!gridComplete}

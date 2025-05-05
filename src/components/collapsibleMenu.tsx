@@ -9,14 +9,19 @@ const CollapsibleMenu: React.FC = () => {
     };
 
     return (
-        <div className={`side-menu ${isOpen ? 'open' : 'collapsed'}`}>
-            <button className="toggle-button" onClick={toggleMenu}>
+        <div
+            className={`fixed top-0 left-0 h-full bg-[#2c3e50] text-[#ecf0f1] overflow-x-hidden transition-all duration-300 p-4 ${isOpen ? 'w-[200px]' : 'w-[50px]'}`}
+        >
+            <button
+                className="bg-none border-none text-inherit text-2xl cursor-pointer outline-none mb-4"
+                onClick={toggleMenu}
+            >
                 {isOpen ? '<' : '>'}
             </button>
             {isOpen && (
                 <nav>
-                    <ul>
-                        <li>
+                    <ul className="list-none p-0">
+                        <li className="my-4">
                             <LevelSelector />
                         </li>
                     </ul>

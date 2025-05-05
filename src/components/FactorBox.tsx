@@ -4,19 +4,19 @@ import CarryBar from './CarryBar';
 const FactorBox: React.FC = () => {
     const { factors } = useFactorsContext();
     return (
-        <div className="factor-box">
+        <div className="h-[80vh] m-auto flex flex-col items-end w-[30vh]">
             <CarryBar />
-            <p>
+            <div className='leading-none text-[10vh] font-bold text-[rgb(20,128,223)]'>
                 {factors.factor1
                     .toString()
                     .split('')
                     .map((letter, index) => (
                         <span key={index}>{letter}</span>
                     ))}
-            </p>
-            <p>
+            </div>
+            <div className='text-[10vh] font-bold text-[rgb(20,128,223)]'>
                 <u>X {factors.factor2}</u>
-            </p>
+            </div>
             <ProductBar />
         </div>
     );

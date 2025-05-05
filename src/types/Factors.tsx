@@ -65,7 +65,7 @@ class Factors {
                     // if there is a carry, and its place would affect a future multiplication
                     const newcarry: Carry = {
                         value: carryVal,
-                        place: rowlen - curlen,
+                        place: rowlen - curlen-1,
                         order: answerOutput.length,
                     };
                     carryOutput.push(newcarry);
@@ -95,6 +95,7 @@ class Factors {
             this.product = this.factor1 * this.factor2;
             [this.answerList, this.carryList] = this.initAnswers();
             this.numCorrect = 0;
+            this.numCarry = 0;
             this.resetCounter++;
         } else {
             this.index = 0;
@@ -103,13 +104,23 @@ class Factors {
             this.product = this.factor1 * this.factor2;
             [this.answerList, this.carryList] = this.initAnswers();
             this.numCorrect = 0;
+            this.numCarry = 0;
             this.resetCounter++;
         }
     }
     public Correct() {
         this.numCorrect += 1;
     }
-
+    public CorrectCarry(){
+        this.numCarry +=1;
+    }
+    public NextCarry(){
+        if (this.carryList[this.numCarry] !== undefined)
+        {
+            return this.carryList[this.numCarry]
+        }
+        return undefined
+    }
     public Clone() {
         const newInstance = new Factors(this.factor1);
         newInstance.index = this.index;

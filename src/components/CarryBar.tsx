@@ -1,18 +1,32 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { useFactorsContext } from '../context/FactorsContext';
-import Carry from '../types/Carry';
 const CarryBar: React.FC = () => {
     const { setFactors, factors } = useFactorsContext();
     const productBarLength = useMemo(() => factors.product.toString().length, [factors.product]);
     const [carryInput, setCarryInput] = useState<(number | '')[]>(() =>
-        Array.from({ length: productBarLength })
+        Array.from({ length: productBarLength },() => '')
     );
+
+
+
+    useEffect(() => {
+        if(factors.numCorrect % productBarLength === 0) // when a row is complete, clear out the carry
+        setCarryInput(
+            Array.from({ length: productBarLength },() => '')
+        );
+    }, [factors.numCorrect, productBarLength]);
+
+
     const showCarry = (i: number) => {
-        if (factors.carryList.length === 0) {
-            //if there are no carries, then never display anything
+        if(carryInput[i] != '')
+        {
+            return true;
+        }
+        const nextCarry = factors.NextCarry()
+        if(nextCarry === undefined) // if there is not a next carry
+        {
             return false;
         }
-        const nextCarry: Carry = factors.carryList[factors.numCarry];
         if (nextCarry.place !== i) {
             // if the next carry is not at the given value column, then dont display it
             return false;
@@ -24,16 +38,36 @@ const CarryBar: React.FC = () => {
         return true;
     };
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {};
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+
+        let value: number | '' = ''; // scrape the input to make it into the correct type to be put into gridInput
+        if (event.target.value !== '') {
+            value = Number(event.target.value);
+        }
+        const newGrid = [...carryInput];
+        newGrid[index] = value;
+        setCarryInput(newGrid)
+        const nextCarry = factors.NextCarry();
+        if(nextCarry == undefined)
+        {
+            return
+        }
+        if(value === nextCarry.value) // if the new value is the correct one
+        {
+            factors.CorrectCarry();
+            setFactors(factors.Clone());
+        }
+
+    };
     return (
-        <div className="product-bar-row">
+        <div>
             {carryInput.map((val, i) => (
                 <input
-                    className="product-bar-cell"
+                    className={`product-bar-cell ${!showCarry(i) ? 'invisible' : ''} `}
                     type="number"
                     value={carryInput[i]}
                     key={i}
-                    onChange={(e) => handleChange(e)}
+                    onChange={(e) => handleChange(e, i)}
                 />
             ))}
         </div>
