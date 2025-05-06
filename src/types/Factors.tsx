@@ -61,7 +61,7 @@ class Factors {
                 product = product % 10;
                 answerOutput.push(product);
                 curlen++;
-                if (carryVal > 0 && curlen < Math.max(f1string.length, f2string.length)) {
+                if (carryVal > 0 && curlen <f1string.length) {
                     // if there is a carry, and its place would affect a future multiplication
                     const newcarry: Carry = {
                         value: carryVal,

@@ -23,8 +23,9 @@ const ProductBar: React.FC = () => {
             // if the entire grid has been aswered correctly
             setGridComplete(true); // allow the final product box to be entered
         }
-        if ((factors.carryList?.[factors.numCarry]?.order ?? -1) === factors.numCorrect) {
-            console.log(factors.carryList[factors.numCarry].order, factors.numCorrect);
+
+        if ((factors.NextCarry()?.order ?? -1) === factors.numCorrect) {
+            //console.log(factors.carryList[factors.numCarry].order, factors.numCorrect);
             setActiveCarry(true);
         } else {
             setActiveCarry(false);
