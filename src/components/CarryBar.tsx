@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useFactorsContext } from '../context/FactorsContext';
+import { useSoundPlayerContext } from '../context/SoundPlayerContext';
 const CarryBar: React.FC = () => {
     const { setFactors, factors } = useFactorsContext();
+    const {incrementStreak} = useSoundPlayerContext();
     const productBarLength = useMemo(() => factors.product.toString().length, [factors.product]);
     const [carryInput, setCarryInput] = useState<(number | '')[]>(() =>
         Array.from({ length: productBarLength },() => '')
@@ -56,6 +58,7 @@ const CarryBar: React.FC = () => {
         {
             factors.CorrectCarry();
             setFactors(factors.Clone());
+            incrementStreak();
         }
 
     };

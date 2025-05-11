@@ -1,11 +1,9 @@
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useFactorsContext } from '../context/FactorsContext';
-import SoundPlayer from '../types/SoundPlayer';
+import { useSoundPlayerContext } from '../context/SoundPlayerContext';
 const ProductBar: React.FC = () => {
     const { setFactors, factors } = useFactorsContext();
-    const [recentCorrect, setRecentCorrect] = useState(0);
-    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-    const soundPlayer = new SoundPlayer();
+    const {incrementStreak} = useSoundPlayerContext();
     const productBarHeight = useMemo(() => factors.factor2.toString().length, [factors.factor2]);
     const productBarLength = useMemo(() => factors.product.toString().length, [factors.product]);
     const [gridInput, setGridInput] = useState<(number | '')[][]>(() =>
@@ -115,16 +113,8 @@ const ProductBar: React.FC = () => {
                 });
                 factors.Correct();
                 setFactors(factors.Clone());
+                incrementStreak();
             }
-
-            setRecentCorrect(recentCorrect + 1);
-            soundPlayer.PlaySound(recentCorrect);
-            if (timeoutRef.current) {
-                clearTimeout(timeoutRef.current);
-            }
-            timeoutRef.current = setTimeout(() => {
-                setRecentCorrect(0);
-            }, 5000);
         }
     };
     const handleSumChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,14 +128,7 @@ const ProductBar: React.FC = () => {
             factors.Next();
             setFactors(factors.Clone());
             setGridComplete(false);
-            setRecentCorrect(recentCorrect + 1);
-            soundPlayer.PlaySound(recentCorrect);
-            if (timeoutRef.current) {
-                clearTimeout(timeoutRef.current);
-            }
-            timeoutRef.current = setTimeout(() => {
-                setRecentCorrect(0);
-            }, 5000);
+            incrementStreak();
         }
     };
 
