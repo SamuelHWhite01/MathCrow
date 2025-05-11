@@ -67,6 +67,7 @@ const CarryBar: React.FC = () => {
                     type="number"
                     value={carryInput[i]}
                     key={i}
+                    maxLength={1}
                     onChange={(e) => handleChange(e, i)}
                 />
             ))}
