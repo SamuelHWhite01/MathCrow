@@ -66,11 +66,10 @@ const CarryBar: React.FC = () => {
         <div>
             {carryInput.map((val, i) => (
                 <input
-                    className={`product-bar-cell ${!showCarry(i) ? 'invisible' : ''} `}
+                    className={`product-grid-cell ${!showCarry(i) ? 'invisible' : ''} `}
                     type="number"
                     value={carryInput[i]}
                     key={i}
-                    maxLength={1}
                     onChange={(e) => handleChange(e, i)}
                 />
             ))}

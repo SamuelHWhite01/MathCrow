@@ -15,7 +15,7 @@ body {
     background-color: aliceblue;
 }
 
-.product-bar-cell {
+.product-grid-cell {
     width: 6vh;
     height: 10vh;
     font-size: 8vh;           

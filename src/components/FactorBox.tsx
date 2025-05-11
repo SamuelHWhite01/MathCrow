@@ -1,6 +1,7 @@
 import { useFactorsContext } from '../context/FactorsContext';
-import ProductBar from './ProductBar';
+import ProductGrid from './ProductGrid';
 import CarryBar from './CarryBar';
+import SumBar from './SumBar';
 const FactorBox: React.FC = () => {
     const { factors } = useFactorsContext();
 
@@ -8,7 +9,7 @@ const FactorBox: React.FC = () => {
 
     const HighlightF1 = (i: number) =>
     {
-        if(factors.numCorrect === factors.answerList.length)
+        if(factors.numCorrect === factors.productAnswerList.length)
         {
             return false;
         }
@@ -58,7 +59,8 @@ const FactorBox: React.FC = () => {
                         <span key={index} className={`${HighlightF2(index) ? 'text-[#bb2020]' : ''}`}>{letter}</span>
                     ))}
             </div>
-            <ProductBar />
+            <ProductGrid />
+            <SumBar/>
         </div>
     );
 };
