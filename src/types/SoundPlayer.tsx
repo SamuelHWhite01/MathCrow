@@ -18,12 +18,12 @@ class SoundPlayer {
           });
     }
 
-    public PlaySound(idx: number) {
+    public PlaySound(index: number) {
         let i = 0;
-        if (idx > 11) {
+        if (index > 11) {
             i = 11;
         } else {
-            i = idx;
+            i = index;
         }
         this.audios[i].volume = 0.1;
         this.audios[i].currentTime = 0;

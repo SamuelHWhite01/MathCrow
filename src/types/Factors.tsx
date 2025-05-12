@@ -4,12 +4,13 @@ class Factors {
     factor1: number;
     factor2: number;
     product: number;
+    productList: number[] = [];
     factorsOrder: number[]; // random order of numbers to multiply against the level in times table mode
-    productAnswerList: number[] = [];
-    numCorrect: number = 0;
+    productGridList: number[] = [];
+    numGridCorrect: number = 0;
     carryList: Carry[] = [];
     resetCounter: number = 0;
-    numCarry: number = 0;
+    numCarryCorrect: number = 0;
     constructor(factor1: number) {
         this.index = 0;
         this.factorsOrder = [];
@@ -21,9 +22,18 @@ class Factors {
         this.factor1 = factor1;
         this.factor2 = this.factorsOrder[this.index];
         this.product = this.factor1 * this.factor2;
-        [this.productAnswerList, this.carryList] = this.initAnswers();
+        this.productList = this.initProductList(this.product);
+        [this.productGridList, this.carryList] = this.initAnswers();
     }
-
+    private initProductList(product:number)
+    {
+        const output:number[] = []
+        for(let i = 0; i<this.product.toString().length; i++)
+        {
+            output.push(parseInt(product.toString()[i]))
+        }
+        return output;
+    }
     private initAnswers(): [number[], Carry[]] {
         // will initialize the array with each number as it should be input. This will deprecate the productGrid component when it is complete
         const answerOutput: number[] = [];
@@ -93,31 +103,33 @@ class Factors {
             this.index += 1;
             this.factor2 = this.factorsOrder[this.index];
             this.product = this.factor1 * this.factor2;
-            [this.productAnswerList, this.carryList] = this.initAnswers();
-            this.numCorrect = 0;
-            this.numCarry = 0;
+            this.productList = this.initProductList(this.product);
+            [this.productGridList, this.carryList] = this.initAnswers();
+            this.numGridCorrect = 0;
+            this.numCarryCorrect = 0;
             this.resetCounter++;
         } else {
             this.index = 0;
             this.factorsOrder = this.shuffleArray(this.factorsOrder);
             this.factor2 = this.factorsOrder[this.index];
             this.product = this.factor1 * this.factor2;
-            [this.productAnswerList, this.carryList] = this.initAnswers();
-            this.numCorrect = 0;
-            this.numCarry = 0;
+            this.productList = this.initProductList(this.product);
+            [this.productGridList, this.carryList] = this.initAnswers();
+            this.numGridCorrect = 0;
+            this.numCarryCorrect = 0;
             this.resetCounter++;
         }
     }
-    public Correct() {
-        this.numCorrect += 1;
+    public CorrectGrid() {
+        this.numGridCorrect += 1;
     }
     public CorrectCarry(){
-        this.numCarry +=1;
+        this.numCarryCorrect +=1;
     }
     public NextCarry(){
-        if (this.carryList[this.numCarry] !== undefined)
+        if (this.carryList[this.numCarryCorrect] !== undefined)
         {
-            return this.carryList[this.numCarry]
+            return this.carryList[this.numCarryCorrect]
         }
         return undefined
     }
@@ -128,11 +140,12 @@ class Factors {
         newInstance.factor1 = this.factor1;
         newInstance.factor2 = this.factor2;
         newInstance.product = this.product;
-        newInstance.numCorrect = this.numCorrect;
-        newInstance.productAnswerList = this.productAnswerList;
+        newInstance.productList = this.productList;
+        newInstance.numGridCorrect = this.numGridCorrect;
+        newInstance.productGridList = this.productGridList;
         newInstance.carryList = this.carryList;
         newInstance.resetCounter = this.resetCounter;
-        newInstance.numCarry = this.numCarry;
+        newInstance.numCarryCorrect = this.numCarryCorrect;
         return newInstance;
     }
 

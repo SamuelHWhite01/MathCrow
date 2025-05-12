@@ -9,15 +9,15 @@ const FactorBox: React.FC = () => {
 
     const HighlightF1 = (i: number) =>
     {
-        if(factors.numCorrect === factors.productAnswerList.length)
+        if(factors.numGridCorrect === factors.productGridList.length)
         {
             return false;
         }
         const f1Len = factors.factor1.toString().length;
         const curNum = f1Len-i-1; // change the index to go from right to left 
         const rowLen = factors.product.toString().length;
-        const curRow = Math.floor(factors.numCorrect / rowLen);
-        const curCol = Math.min((factors.numCorrect % rowLen) - curRow, f1Len-1); // find the column, or the maximum value that f2 can be
+        const curRow = Math.floor(factors.numGridCorrect / rowLen);
+        const curCol = Math.min((factors.numGridCorrect % rowLen) - curRow, f1Len-1); // find the column, or the maximum value that f2 can be
         if(curNum === curCol)
         {
             return true;
@@ -29,7 +29,7 @@ const FactorBox: React.FC = () => {
     {
 
         const rowLen = factors.product.toString().length;
-        const curRow = Math.floor(factors.numCorrect / rowLen);
+        const curRow = Math.floor(factors.numGridCorrect / rowLen);
         const f2Len = factors.factor2.toString().length;
         const curNum = f2Len-i-1;
         if(curNum === curRow)

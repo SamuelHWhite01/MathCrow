@@ -4,19 +4,21 @@ import { useSoundPlayerContext } from '../context/SoundPlayerContext';
 const CarryBar: React.FC = () => {
     const { setFactors, factors } = useFactorsContext();
     const {incrementStreak} = useSoundPlayerContext();
-    const productBarLength = useMemo(() => factors.product.toString().length, [factors.product]);
+    const productGridLength = useMemo(() => factors.product.toString().length, [factors.product]);
     const [carryInput, setCarryInput] = useState<(number | '')[]>(() =>
-        Array.from({ length: productBarLength },() => '')
+        Array.from({ length: productGridLength },() => '')
     );
 
 
 
     useEffect(() => {
-        if(factors.numCorrect % productBarLength === 0) // when a row is complete, clear out the carry
-        setCarryInput(
-            Array.from({ length: productBarLength },() => '')
-        );
-    }, [factors.numCorrect, productBarLength]);
+        if(factors.numGridCorrect % productGridLength === 0) // when a row is complete, clear out the carry
+        {
+            setCarryInput(
+                Array.from({ length: productGridLength },() => '')
+            );
+        }
+    }, [factors.numGridCorrect,factors.resetCounter, productGridLength]);
 
 
     const showCarry = (i: number) => {
@@ -33,7 +35,7 @@ const CarryBar: React.FC = () => {
             // if the next carry is not at the given value column, then dont display it
             return false;
         }
-        if (nextCarry.order !== factors.numCorrect) {
+        if (nextCarry.order !== factors.numGridCorrect) {
             // if the next carry is not the next correct answer, then dont display it
             return false;
         }
