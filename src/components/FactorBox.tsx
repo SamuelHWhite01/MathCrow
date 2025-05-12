@@ -2,9 +2,11 @@ import { useFactorsContext } from '../context/FactorsContext';
 import ProductGrid from './ProductGrid';
 import CarryBar from './CarryBar';
 import SumBar from './SumBar';
+import { useMemo} from 'react';
 const FactorBox: React.FC = () => {
     const { factors } = useFactorsContext();
-
+    const gridComplete:boolean = useMemo(() => factors.numGridCorrect === factors.productGridList.length, [factors.numGridCorrect]);
+    const needToAdd: boolean = useMemo(() => factors.factor2.toString().length>1, [factors.product]);
 
 
     const HighlightF1 = (i: number) =>
@@ -59,7 +61,10 @@ const FactorBox: React.FC = () => {
                         <span key={index} className={`${HighlightF2(index) ? 'text-[#bb2020]' : ''}`}>{letter}</span>
                     ))}
             </div>
-            <ProductGrid />
+            <div className='flex flex-row items-end'>
+                <div className={`leading-none text-[10vh] font-bold text-[rgb(20,128,223)] ${(!gridComplete || !needToAdd) ? 'invisible' : ''}`}>+</div>
+                <ProductGrid />
+            </div>
             <SumBar/>
         </div>
     );
