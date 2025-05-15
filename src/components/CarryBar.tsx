@@ -50,7 +50,10 @@ const CarryBar: React.FC = () => {
         }
         const newGrid = [...carryInput];
         newGrid[index] = value;
-        setCarryInput(newGrid)
+        if(value === '' || value < 10) // only update the input if its a single digit
+        {
+            setCarryInput(newGrid)
+        }
         const nextCarry = factors.NextCarry();
         if(nextCarry == undefined)
         {
