@@ -3,6 +3,7 @@
     "private": true,
     "version": "0.0.0",
     "type": "module",
+    "homepage": "https://SamuelHWhite01.github.io/MathCrow",
     "scripts": {
         "dev": "vite",
         "build": "tsc -b && vite build",
@@ -10,7 +11,9 @@
         "lint:fix": "eslint . --ext .ts,.tsx --fix",
         "format": "prettier --write .",
         "preview": "vite preview",
-        "prepare": "husky"
+        "prepare": "husky",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d dist"
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.1.5",
@@ -31,6 +34,7 @@
         "eslint-plugin-react": "^7.37.5",
         "eslint-plugin-react-hooks": "^5.2.0",
         "eslint-plugin-react-refresh": "^0.4.19",
+        "gh-pages": "^6.3.0",
         "globals": "^16.0.0",
         "husky": "^9.1.7",
         "lint-staged": "^15.5.1",
