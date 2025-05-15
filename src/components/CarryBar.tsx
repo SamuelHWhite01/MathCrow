@@ -69,7 +69,7 @@ const CarryBar: React.FC = () => {
     };
     return (
         <div>
-            {carryInput.map((val, i) => (
+            {carryInput.map((_val, i) => (
                 <input
                     className={`product-grid-cell ${!showCarry(i) ? 'invisible' : ''} `}
                     type="number"
