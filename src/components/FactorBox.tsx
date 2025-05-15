@@ -42,9 +42,9 @@ const FactorBox: React.FC = () => {
         return false;
     }
     return (
-        <div className="h-[80vh] m-auto flex flex-col items-end w-[30vh]">
+        <div className="  leading-none h-[80vh] m-auto flex flex-col items-end w-[30vh]">
             <CarryBar />
-            <div className='leading-none text-[10vh] font-bold text-[rgb(20,128,223)]'>
+            <div className=' text-[10vh] font-bold text-[rgb(20,128,223)]'>
                 {factors.factor1
                     .toString()
                     .split('')
@@ -52,7 +52,7 @@ const FactorBox: React.FC = () => {
                         <span key={index}className={`${HighlightF1(index) ? 'text-[#bb2020]' : ''}`}>{letter}</span>
                     ))}
             </div>
-            <div className=' underline text-[10vh] font-bold text-[rgb(20,128,223)]'>
+            <div className='  border-b-6 border-[rgb(20,128,223)] text-[10vh] font-bold text-[rgb(20,128,223)]'>
                 X
                     {factors.factor2
                     .toString()

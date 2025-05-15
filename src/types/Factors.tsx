@@ -76,7 +76,7 @@ class Factors {
                     const newcarry: Carry = {
                         value: carryVal,
                         place: rowlen - curlen-1,
-                        order: answerOutput.length,
+                        order: answerOutput.length-1,
                     };
                     carryOutput.push(newcarry);
                 }
