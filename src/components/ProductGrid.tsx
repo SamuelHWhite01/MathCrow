@@ -6,6 +6,8 @@ const ProductGrid: React.FC = () => {
     const {incrementStreak} = useSoundPlayerContext();
     const productGridHeight = useMemo(() => factors.factor2.toString().length, [factors.factor2]);
     const productGridLength = useMemo(() => factors.product.toString().length, [factors.product]);
+    const gridComplete:boolean = useMemo(() => factors.numGridCorrect === factors.productGridList.length, [factors.numGridCorrect]);
+    const needToAdd: boolean = useMemo(() => factors.factor2.toString().length>1, [factors.product]);
     const [gridInput, setGridInput] = useState<(number | '')[][]>(() =>
         Array.from({ length: productGridHeight }, () =>
             Array.from({ length: productGridLength }, () => '')
@@ -93,21 +95,24 @@ const ProductGrid: React.FC = () => {
         }
     };
     return (
-        <div className="h-auto flex flex-col gap-2">
-            {gridInput.map((row, i) => (
-                <div className="h-auto flex flex-row gap-2 justify-end" key={i}>
-                    {row.map((_val, j) => (
-                        <input
-                            className={` product-grid-cell ${isLocked(i,j) ? 'bg-gray-500' : ''}`}
-                            type="number"
-                            value={gridInput[i]?.[j] ?? ''}
-                            readOnly={isLocked(i, j)}
-                            key={`${i}-${j}`}
-                            onChange={(e) => handleChange(e, i, j)}
-                        />
-                    ))}
-                </div>
-            ))}
+        <div className='flex flex-row items-end'>
+            <div className={`leading-none text-[10vh] font-bold text-[rgb(20,128,223)] ${(!gridComplete || !needToAdd) ? 'invisible' : ''}`}>+</div>
+            <div className="h-auto flex flex-col gap-2">
+                {gridInput.map((row, i) => (
+                    <div className="h-auto flex flex-row gap-2 justify-end" key={i}>
+                        {row.map((_val, j) => (
+                            <input
+                                className={` product-grid-cell ${isLocked(i,j) ? 'bg-gray-500' : ''}`}
+                                type="number"
+                                value={gridInput[i]?.[j] ?? ''}
+                                readOnly={isLocked(i, j)}
+                                key={`${i}-${j}`}
+                                onChange={(e) => handleChange(e, i, j)}
+                            />
+                        ))}
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };

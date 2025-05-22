@@ -18,7 +18,7 @@ const ScoreBoard: React.FC = () => {
     }
     const {userData} = useUserDataContext()
     return (
-        <div className=" h-auto flex flex-col">
+        <div className=" h-auto flex flex-col items-end">
             {userData.historyGrid.map((row, i) => (
                 <div key={i} className=" h-auto flex flex-row justify-end">
                     {row.map((val, j) => (
@@ -30,6 +30,7 @@ const ScoreBoard: React.FC = () => {
                     ))}
                 </div>
             ))}
+            <div className = "text-[3vh] font-bold">{userData.numCorrect}</div>
         </div>
     );
 };

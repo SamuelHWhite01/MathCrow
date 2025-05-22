@@ -31,7 +31,7 @@ export const saveData = async (user:User|null, userData:UserData) => {
 
     try {
       await setDoc(docRef, userData?.toFireStore(), { merge: true });
-      console.log("saved data...")
+      //console.log("saved data...")
     } catch (error) {
       console.error("Error saving user data:", error);
       alert("Failed to save data.");
