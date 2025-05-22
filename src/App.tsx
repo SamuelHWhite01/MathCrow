@@ -6,6 +6,7 @@ import { AuthProvider } from './context/AuthProvider';
 import CollapsibleMenu from './components/CollapsibleMenu';
 import './index.css';
 import { UserDataProvider } from './context/UserDataProvider';
+import ScoreBoard from './components/ScoreBoard';
 
 
 const App: React.FC = () => {
@@ -16,6 +17,7 @@ const App: React.FC = () => {
         <FactorsProvider>
             <FactorBox />
             <CollapsibleMenu />
+            <ScoreBoard/>
         </FactorsProvider>
         </SoundPlayerProvider>
         </UserDataProvider>

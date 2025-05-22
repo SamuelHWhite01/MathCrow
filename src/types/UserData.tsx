@@ -1,25 +1,38 @@
 import FireStoreUserData from "./FireStoreUserData";
 
 class UserData{
-  historyGrid: number[][] = [[]];
+  historyGrid: number[][];
+  numCorrect:number;
+  maxCorrect:number;
   constructor()
   {
     this.historyGrid = Array.from({ length: 12 }, () =>Array.from({ length: 12 }, () => 0));
+    this.numCorrect = 0;
+    this.maxCorrect = 0;
   }
-  toFireStore() {
+  public toFireStore() {
     const saveGrid = this.historyGrid.flat()
     return {
-      historyGrid: saveGrid
+      historyGrid: saveGrid,
+      numCorrect:this.numCorrect,
+      maxCorrect:this.maxCorrect,
     };
   }
-  correctAnswer(i:number, j:number)
+  public correctAnswer(i:number, j:number)
   {
     this.historyGrid[i][j] +=1;
+    this.numCorrect +=1;
+    if (this.historyGrid[i][j] > this.maxCorrect)
+    {
+      this.maxCorrect = this.historyGrid[i][j]
+    }
   }
-  clone()
+  public clone()
   {
     const newUserData = new UserData
     newUserData.historyGrid = this.historyGrid
+    newUserData.numCorrect = this.numCorrect
+    newUserData.maxCorrect = this.maxCorrect
     return newUserData
   }
   static fromFireStore(data:FireStoreUserData)
@@ -31,6 +44,8 @@ class UserData{
       grid.push(flat.slice(i * 12, (i + 1) * 12));
     }
     output.historyGrid = grid;
+    output.numCorrect = data.numCorrect;
+    output.maxCorrect = data.maxCorrect;
     return output;
   }
 

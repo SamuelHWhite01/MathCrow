@@ -1,7 +1,9 @@
 // Import the functions you need from the SDKs you need
+import debounce from 'lodash.debounce';
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getAuth, GoogleAuthProvider, User } from "firebase/auth";
+import { doc, getFirestore, setDoc } from "firebase/firestore";
+import UserData from "../types/UserData";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -22,3 +24,19 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
+
+export const saveData = async (user:User|null, userData:UserData) => {
+   if (!user) return; // safety check
+    const docRef = doc(db, 'users', user.uid);
+
+    try {
+      await setDoc(docRef, userData?.toFireStore(), { merge: true });
+      console.log("saved data...")
+    } catch (error) {
+      console.error("Error saving user data:", error);
+      alert("Failed to save data.");
+    }
+}
+export const debouncedSaveData = debounce((user:User|null, userData:UserData) => {
+  saveData(user, userData)
+},5000)

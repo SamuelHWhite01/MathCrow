@@ -9,7 +9,7 @@ const FactorBox: React.FC = () => {
     const needToAdd: boolean = useMemo(() => factors.factor2.toString().length>1, [factors.product]);
 
 
-    const HighlightF1 = (i: number) =>
+    const highlightF1 = (i: number) =>
     {
         if(factors.numGridCorrect === factors.productGridList.length)
         {
@@ -27,7 +27,7 @@ const FactorBox: React.FC = () => {
         return false;
 
     }
-    const HighlightF2 = (i:number) =>
+    const highlightF2 = (i:number) =>
     {
 
         const rowLen = factors.product.toString().length;
@@ -49,7 +49,7 @@ const FactorBox: React.FC = () => {
                     .toString()
                     .split('')
                     .map((letter, index) => (
-                        <span key={index}className={`${HighlightF1(index) ? 'text-[#bb2020]' : ''}`}>{letter}</span>
+                        <span key={index}className={`${highlightF1(index) ? 'text-[#bb2020]' : ''}`}>{letter}</span>
                     ))}
             </div>
             <div className='  border-b-6 border-[rgb(20,128,223)] text-[10vh] font-bold text-[rgb(20,128,223)]'>
@@ -58,7 +58,7 @@ const FactorBox: React.FC = () => {
                     .toString()
                     .split('')
                     .map((letter, index) => (
-                        <span key={index} className={`${HighlightF2(index) ? 'text-[#bb2020]' : ''}`}>{letter}</span>
+                        <span key={index} className={`${highlightF2(index) ? 'text-[#bb2020]' : ''}`}>{letter}</span>
                     ))}
             </div>
             <div className='flex flex-row items-end'>

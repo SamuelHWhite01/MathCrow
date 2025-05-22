@@ -2,5 +2,7 @@
 
 type FireStoreUserData = {
   historyGrid: number[];
+  numCorrect:number;
+  maxCorrect:number;
 };
 export default FireStoreUserData

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { db } from '../utils/firebase';
+import { doc, getDoc} from 'firebase/firestore';
+import { db, saveData } from '../utils/firebase';
 import { useAuth } from '../context/AuthContext';
 import { UserDataContext } from './UserDataContext';
 import UserData from '../types/UserData';
@@ -10,11 +10,12 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const { user } = useAuth(); // 🔑 use AuthContext instead of onAuthStateChanged again
   const [userData, setUserData] = useState<UserData>(new UserData()); // default to blank slate
   const fetchUserData = async () => { // updates the user data context to match the firestore
+    setUserData(new UserData());
     let userDataExist = false;
     console.log("starting data fetch...")
     if (!user) {
       console.log("no user ...")
-      return; // dont even check the database if the user is not logger in
+      return; // dont even check the database if the user is not logged in
     }
     const docRef = doc(db, 'users', user.uid); // this is where the user's data should be stored
     try {
@@ -31,12 +32,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       console.error("Failed to fetch user data:", error);
     }
     if(!userDataExist){ // if the data couldnt be fetched, make a new default
-      try {  //try setting their data to the default
-        await setDoc(docRef, userData.toFireStore());
-        console.log("New profile created");
-      } catch (error) {
-          console.error("error creating new profile:", error);
-      }
+      saveData(user, new UserData()) // not passing userdata directly because of possible race condition
     }
   };
   useEffect(() => {

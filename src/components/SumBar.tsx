@@ -2,8 +2,11 @@ import {useState, useEffect, useMemo } from 'react';
 import { useFactorsContext } from '../context/FactorsContext';
 import { useSoundPlayerContext } from '../context/SoundPlayerContext';
 import { useUserDataContext } from '../context/UserDataContext';
+import { debouncedSaveData } from '../utils/firebase';
+import { useAuth } from '../context/AuthContext';
 const SumBar: React.FC = () => {
     const { setFactors, factors } = useFactorsContext();
+    const { user } = useAuth();
     const {incrementStreak} = useSoundPlayerContext();
     const {userData, setUserData} = useUserDataContext();
     const [gridComplete, setGridComplete] = useState(false);
@@ -65,8 +68,9 @@ const SumBar: React.FC = () => {
     };
 
     const nextProblem = () =>{
-        //console.log(userData)
+        console.log(userData)
         userData.correctAnswer(factors.factor1-1, factors.factor2-1)
+        debouncedSaveData(user, userData)
         setUserData(userData.clone())
         factors.next();
         setFactors(factors.clone());
