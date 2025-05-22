@@ -18,19 +18,19 @@ const ScoreBoard: React.FC = () => {
     }
     const {userData} = useUserDataContext()
     return (
-        <div className=" h-auto flex flex-col items-end">
+        <div className=" mr-auto h-fit w-fit flex flex-col items-center">
             {userData.historyGrid.map((row, i) => (
-                <div key={i} className=" h-auto flex flex-row justify-end">
+                <div key={i} className=" h-auto flex flex-row">
                     {row.map((val, j) => (
                         <div
                             key={`${i}-${j}`}
-                            className={`border-1 border-black w-[2vh] h-[2vh] rounded m-0.5`}
+                            className={`border-1 border-black w-[1.5vh] h-[1.5vh] rounded`}
                             style={{ backgroundColor: `rgb(${getColor(val).join(',')})` }}
                         />
                     ))}
                 </div>
             ))}
-            <div className = "text-[3vh] font-bold">{userData.numCorrect}</div>
+            <div className = "text-[3vh] font-bold items-center">{userData.numCorrect}</div>
         </div>
     );
 };

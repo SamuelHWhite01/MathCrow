@@ -3,6 +3,7 @@ import LevelSelector from './LevelSelector';
 import LoginButton from './LoginButton';
 import LogoutButton from './LogoutButton';
 import SaveButton from './SaveButton';
+import ScoreBoard from './ScoreBoard';
 
 const CollapsibleMenu: React.FC = () => {
     const [isOpen, setIsOpen] = useState(true);
@@ -29,6 +30,7 @@ const CollapsibleMenu: React.FC = () => {
                             <LogoutButton/>
                             <SaveButton/>
                             <LevelSelector />
+                            <ScoreBoard/>
                         </li>
                     </ul>
                 </nav>
