@@ -8,7 +8,7 @@ export function SoundPlayerProvider({ children }: { children: React.ReactNode })
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const incrementStreak = () => {
         setRecentCorrect((prev) => prev + 1);
-        soundPlayer.PlaySound(recentCorrect);
+        soundPlayer.playSound(recentCorrect);
 
         if (timeoutRef.current) {
             clearTimeout(timeoutRef.current);

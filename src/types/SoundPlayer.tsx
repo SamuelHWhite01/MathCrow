@@ -18,7 +18,7 @@ class SoundPlayer {
           });
     }
 
-    public PlaySound(index: number) {
+    public playSound(index: number) {
         let i = 0;
         if (index > 11) {
             i = 11;

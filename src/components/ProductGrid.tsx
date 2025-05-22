@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { useFactorsContext } from '../context/FactorsContext';
 import { useSoundPlayerContext } from '../context/SoundPlayerContext';
 const ProductGrid: React.FC = () => {
-    const { setFactors, factors } = useFactorsContext();
+    const {factors,setFactors } = useFactorsContext();
     const {incrementStreak} = useSoundPlayerContext();
     const productGridHeight = useMemo(() => factors.factor2.toString().length, [factors.factor2]);
     const productGridLength = useMemo(() => factors.product.toString().length, [factors.product]);
@@ -14,7 +14,7 @@ const ProductGrid: React.FC = () => {
     const [activeCarry, setActiveCarry] = useState(false);
 
     useEffect(() => {
-        if ((factors.NextCarry()?.order ?? -1) === factors.numGridCorrect) {
+        if ((factors.nextCarry()?.order ?? -1) === factors.numGridCorrect) {
             //console.log(factors.carryList[factors.numCarry].order, factors.numCorrect);
             setActiveCarry(true);
         } else {
@@ -59,14 +59,14 @@ const ProductGrid: React.FC = () => {
             }
             if (allZeroes) {
                 for (let index = numCorrect; index < endRowIndex; index++) {
-                    factors.CorrectGrid();
-                    setFactors(factors.Clone());
+                    factors.correctGrid();
+                    setFactors(factors.clone());
                 }
             }
         };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>, i: number, j: number) => {
-        console.log(factors.productList);
+        //console.log(factors.productList);
         let value: number | '' = ''; // scrape the input to make it into the correct type to be put into gridInput
         if (event.target.value !== '') {
             value = Number(event.target.value);
@@ -87,8 +87,8 @@ const ProductGrid: React.FC = () => {
 
             leadingZero();
             // if a new correct answer is given
-            factors.CorrectGrid();
-            setFactors(factors.Clone());
+            factors.correctGrid();
+            setFactors(factors.clone());
             incrementStreak();
         }
     };

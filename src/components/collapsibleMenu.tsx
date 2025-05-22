@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import LevelSelector from './LevelSelector';
 import LoginButton from './LoginButton';
 import LogoutButton from './LogoutButton';
+import SaveButton from './SaveButton';
 
 const CollapsibleMenu: React.FC = () => {
     const [isOpen, setIsOpen] = useState(true);
@@ -26,6 +27,7 @@ const CollapsibleMenu: React.FC = () => {
                         <li className="my-4">
                             <LoginButton/>
                             <LogoutButton/>
+                            <SaveButton/>
                             <LevelSelector />
                         </li>
                     </ul>

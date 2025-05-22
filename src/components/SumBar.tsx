@@ -1,9 +1,11 @@
 import {useState, useEffect, useMemo } from 'react';
 import { useFactorsContext } from '../context/FactorsContext';
 import { useSoundPlayerContext } from '../context/SoundPlayerContext';
+import { useUserDataContext } from '../context/UserDataContext';
 const SumBar: React.FC = () => {
     const { setFactors, factors } = useFactorsContext();
     const {incrementStreak} = useSoundPlayerContext();
+    const {userData, setUserData} = useUserDataContext();
     const [gridComplete, setGridComplete] = useState(false);
     const needToAdd: boolean = useMemo(() => factors.factor2.toString().length>1, [factors.product]);
     const productGridLength = useMemo(() => factors.product.toString().length, [factors.product]);
@@ -63,8 +65,11 @@ const SumBar: React.FC = () => {
     };
 
     const nextProblem = () =>{
-        factors.Next();
-        setFactors(factors.Clone());
+        //console.log(userData)
+        userData.correctAnswer(factors.factor1-1, factors.factor2-1)
+        setUserData(userData.clone())
+        factors.next();
+        setFactors(factors.clone());
         setGridComplete(false);
     }
 

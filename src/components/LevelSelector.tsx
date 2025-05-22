@@ -12,8 +12,8 @@ const LevelSelector: React.FC = () => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelected(Number(event.target.value));
-        factors.SetLevel(Number(event.target.value));
-        setFactors(factors.Clone());
+        factors.setLevel(Number(event.target.value));
+        setFactors(factors.clone());
     };
 
     return (

@@ -26,7 +26,7 @@ const CarryBar: React.FC = () => {
         {
             return true;
         }
-        const nextCarry = factors.NextCarry()
+        const nextCarry = factors.nextCarry()
         if(nextCarry === undefined) // if there is not a next carry
         {
             return false;
@@ -54,15 +54,15 @@ const CarryBar: React.FC = () => {
         {
             setCarryInput(newGrid)
         }
-        const nextCarry = factors.NextCarry();
+        const nextCarry = factors.nextCarry();
         if(nextCarry == undefined)
         {
             return
         }
         if(value === nextCarry.value) // if the new value is the correct one
         {
-            factors.CorrectCarry();
-            setFactors(factors.Clone());
+            factors.correctCarry();
+            setFactors(factors.clone());
             incrementStreak();
         }
 

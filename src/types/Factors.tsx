@@ -98,7 +98,7 @@ class Factors {
         }
         return [answerOutput, carryOutput];
     }
-    public Next() {
+    public next() {
         if (this.index < 10) {
             this.index += 1;
             this.factor2 = this.factorsOrder[this.index];
@@ -120,20 +120,20 @@ class Factors {
             this.resetCounter++;
         }
     }
-    public CorrectGrid() {
+    public correctGrid() {
         this.numGridCorrect += 1;
     }
-    public CorrectCarry(){
+    public correctCarry(){
         this.numCarryCorrect +=1;
     }
-    public NextCarry(){
+    public nextCarry(){
         if (this.carryList[this.numCarryCorrect] !== undefined)
         {
             return this.carryList[this.numCarryCorrect]
         }
         return undefined
     }
-    public Clone() {
+    public clone() {
         const newInstance = new Factors(this.factor1);
         newInstance.index = this.index;
         newInstance.factorsOrder = this.factorsOrder;
@@ -149,10 +149,10 @@ class Factors {
         return newInstance;
     }
 
-    public SetLevel(factor1: number) {
+    public setLevel(factor1: number) {
         this.factor1 = factor1;
         this.index = 12;
-        this.Next();
+        this.next();
     }
     private shuffleArray(arr: number[]): number[] {
         const shuffled = [...arr]; // Create a copy to avoid mutating the original array
