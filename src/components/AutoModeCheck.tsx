@@ -1,10 +1,23 @@
 import { useSettingsContext } from "../context/SettingsContext";
-
-
+import {useFactorsContext } from "../context/FactorsContext";
+import { useUserDataContext } from "../context/UserDataContext";
 
 function AutoModeToggle(){
 const {settings, setSettings} = useSettingsContext()
+const {factors, setFactors} = useFactorsContext()
+const {userData} = useUserDataContext()
 const handleChange = () => {
+  // for this if block we will treat the variable as already updated to get around race conditions
+  if(settings.autoMode) // if it was on and turning off
+  {
+    factors.setLevel(1)
+    setFactors(factors.clone())
+  }
+  else // if it was off and turning on
+  {
+    factors.autoNext(userData.historyGrid)
+    setFactors(factors.clone())
+  }
     setSettings({
     autoMode: !settings.autoMode
   });

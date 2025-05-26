@@ -4,11 +4,13 @@ import { useSoundPlayerContext } from '../context/SoundPlayerContext';
 import { useUserDataContext } from '../context/UserDataContext';
 import { debouncedSaveData } from '../utils/firebase';
 import { useAuth } from '../context/AuthContext';
+import { useSettingsContext } from '../context/SettingsContext';
 function SumBar(){
     const { setFactors, factors } = useFactorsContext();
     const { user } = useAuth();
     const {incrementStreak} = useSoundPlayerContext();
     const {userData, setUserData} = useUserDataContext();
+    const {settings} = useSettingsContext()
     const [gridComplete, setGridComplete] = useState(false);
     const needToAdd: boolean = useMemo(() => factors.factor2.toString().length>1, [factors.product]);
     const productGridLength = useMemo(() => factors.product.toString().length, [factors.product]);
@@ -72,7 +74,14 @@ function SumBar(){
         userData.correctAnswer(factors.factor1-1, factors.factor2-1)
         debouncedSaveData(user, userData)
         setUserData(userData.clone())
-        factors.next();
+        if(settings.autoMode)
+        {
+            factors.autoNext(userData.historyGrid)
+        }
+        else
+        {
+            factors.next();
+        }
         setFactors(factors.clone());
         setGridComplete(false);
     }

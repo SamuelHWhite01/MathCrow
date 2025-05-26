@@ -5,7 +5,12 @@ function LevelSelector(){
     const options = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     const [selected, setSelected] = useState<number>(0);
     const { setFactors, factors } = useFactorsContext();
-    const {settings, setSettings} = useSettingsContext()
+    const {settings, setSettings} = useSettingsContext();
+
+    useEffect(() => {
+        setSelected(factors.factor1)
+    }, [factors.factor1]);
+    
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if(settings.autoMode) // if we touch this toggle, we should turn off auto mode
         {

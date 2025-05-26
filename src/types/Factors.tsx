@@ -98,7 +98,7 @@ class Factors {
         }
         return [answerOutput, carryOutput];
     }
-    public next() {
+    public next() { // used when in level selector Mode
         if (this.index < 10) {
             this.index += 1;
             this.factor2 = this.factorsOrder[this.index];
@@ -119,6 +119,40 @@ class Factors {
             this.numCarryCorrect = 0;
             this.resetCounter++;
         }
+    }
+    public autoNext(historyGrid:number[][]) // this will automatically set up the next problem to be one that the user has answered the fewest times
+    {
+        let lowest = Number.MAX_SAFE_INTEGER
+        let possibleFactors: number[][] = []
+        for(let i = 0; i< historyGrid.length;i++)
+        {
+            for(let j = 0; j<historyGrid[0].length; j++)
+            {
+                if(historyGrid[i][j] < lowest)
+                {
+                    lowest = historyGrid[i][j]
+                }
+            }
+        }
+        for(let i = 0; i< historyGrid.length;i++)
+        {
+            for(let j = 0; j<historyGrid[0].length; j++)
+            {
+                if(historyGrid[i][j] === lowest)
+                {
+                    possibleFactors.push([i,j])
+                }
+            }
+        }
+        const randomIdx = Math.floor(Math.random()*possibleFactors.length)
+        this.factor1 = possibleFactors[randomIdx][0]+1;
+        this.factor2 = possibleFactors[randomIdx][1]+1;
+        this.product = this.factor1 * this.factor2;
+        this.productList = this.initProductList(this.product);
+        [this.productGridList, this.carryList] = this.initAnswers();
+        this.numGridCorrect = 0;
+        this.numCarryCorrect = 0;
+        this.resetCounter++;
     }
     public correctGrid() {
         this.numGridCorrect += 1;

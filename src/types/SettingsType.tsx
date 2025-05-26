@@ -2,7 +2,7 @@ class SettingsType{
     autoMode:boolean;
     constructor()
     {
-        this.autoMode = true;
+        this.autoMode = false;
     }
 }
 export default SettingsType;
