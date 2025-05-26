@@ -124,24 +124,17 @@ class Factors {
     {
         let lowest = Number.MAX_SAFE_INTEGER
         let possibleFactors: number[][] = []
-        for(let i = 0; i< historyGrid.length;i++)
-        {
-            for(let j = 0; j<historyGrid[0].length; j++)
-            {
-                if(historyGrid[i][j] < lowest)
-                {
-                    lowest = historyGrid[i][j]
-                }
+        for (let i = 0; i < historyGrid.length; i++) {
+            for (let j = 0; j < historyGrid[i].length; j++) {
+            const value = historyGrid[i][j];
+            if (value < lowest) {
+                // Found a new lowest — reset the list
+                lowest = value;
+                possibleFactors = [[i, j]];
+            } else if (value === lowest) {
+                // Found another cell with the same lowest value
+                possibleFactors.push([i, j]);
             }
-        }
-        for(let i = 0; i< historyGrid.length;i++)
-        {
-            for(let j = 0; j<historyGrid[0].length; j++)
-            {
-                if(historyGrid[i][j] === lowest)
-                {
-                    possibleFactors.push([i,j])
-                }
             }
         }
         const randomIdx = Math.floor(Math.random()*possibleFactors.length)
