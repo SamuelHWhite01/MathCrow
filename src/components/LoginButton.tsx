@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useAuth } from "../context/AuthContext";
 
-const LoginButton = () => {
+function LoginButton(){
     const { loginWithGoogle,user } = useAuth();
     const isLoggedIn = useMemo(() => user != null, [user]);
   return (

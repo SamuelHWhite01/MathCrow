@@ -1,6 +1,7 @@
 import { useUserDataContext } from "../context/UserDataContext";
-const ScoreBoard: React.FC = () => {
+function ScoreBoard(){
     const maxColor = [0,255,128]
+    const {userData} = useUserDataContext()
     const getColor = (numAnswered:number ) => {
         const baseColor = [200,200,200]
         const maxCorrect = userData.maxCorrect
@@ -16,7 +17,6 @@ const ScoreBoard: React.FC = () => {
         const output = [redOutput,greenOutput,blueOutput]
         return output
     }
-    const {userData} = useUserDataContext()
     return (
         <div className=" mr-auto h-fit w-fit flex flex-col items-center">
             {userData.historyGrid.map((row, i) => (

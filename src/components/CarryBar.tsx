@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useFactorsContext } from '../context/FactorsContext';
 import { useSoundPlayerContext } from '../context/SoundPlayerContext';
-const CarryBar: React.FC = () => {
+function CarryBar(){
     const { setFactors, factors } = useFactorsContext();
     const {incrementStreak} = useSoundPlayerContext();
     const productGridLength = useMemo(() => factors.product.toString().length, [factors.product]);

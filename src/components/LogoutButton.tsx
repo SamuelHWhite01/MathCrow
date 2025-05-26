@@ -3,7 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { saveData } from "../utils/firebase";
 import { useUserDataContext } from "../context/UserDataContext";
 
-const LogoutButton = () => {
+function LogoutButton(){
   const { logout,user } = useAuth();
   const isLoggedIn = useMemo(() => user != null, [user]);
   const {userData} = useUserDataContext()

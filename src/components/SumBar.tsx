@@ -4,7 +4,7 @@ import { useSoundPlayerContext } from '../context/SoundPlayerContext';
 import { useUserDataContext } from '../context/UserDataContext';
 import { debouncedSaveData } from '../utils/firebase';
 import { useAuth } from '../context/AuthContext';
-const SumBar: React.FC = () => {
+function SumBar(){
     const { setFactors, factors } = useFactorsContext();
     const { user } = useAuth();
     const {incrementStreak} = useSoundPlayerContext();

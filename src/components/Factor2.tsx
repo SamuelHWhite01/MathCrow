@@ -1,5 +1,5 @@
 import { useFactorsContext } from '../context/FactorsContext';
-const Factor2: React.FC = () => {
+function Factor2(){
     const { factors } = useFactorsContext();
 
     const highlightF2 = (i:number) =>

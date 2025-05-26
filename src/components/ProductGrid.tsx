@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useFactorsContext } from '../context/FactorsContext';
 import { useSoundPlayerContext } from '../context/SoundPlayerContext';
-const ProductGrid: React.FC = () => {
+function ProductGrid(){
     const {factors,setFactors } = useFactorsContext();
     const {incrementStreak} = useSoundPlayerContext();
     const productGridHeight = useMemo(() => factors.factor2.toString().length, [factors.factor2]);

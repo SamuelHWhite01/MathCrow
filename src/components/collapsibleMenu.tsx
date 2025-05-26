@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import LevelSelector from './LevelSelector';
 import LoginButton from './LoginButton';
 import LogoutButton from './LogoutButton';
 import SaveButton from './SaveButton';
 import ScoreBoard from './ScoreBoard';
 
-const CollapsibleMenu: React.FC = () => {
+function CollapsibleMenu(){
     const [isOpen, setIsOpen] = useState(true);
-
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
@@ -29,7 +28,7 @@ const CollapsibleMenu: React.FC = () => {
                             <LoginButton/>
                             <LogoutButton/>
                             <SaveButton/>
-                            <LevelSelector />
+                            <LevelSelector/>
                             <ScoreBoard/>
                         </li>
                     </ul>
