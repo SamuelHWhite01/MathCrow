@@ -16,7 +16,7 @@ class Factors {
         this.index = 0;
         this.factorsOrder = [];
         this.factorsOrder = [9,1,2,3,4,5,6,7,8,10,11,12]
-        //this.factorsOrder = this.shuffleArray(this.factorsOrder);
+        this.factorsOrder = this.shuffleArray(this.factorsOrder);
 
         this.factor1 = 12;
         this.factor2 = this.factorsOrder[this.index];

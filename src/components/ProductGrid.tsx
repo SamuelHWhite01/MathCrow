@@ -66,10 +66,10 @@ function ProductGrid(){
         };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>, i: number, j: number) => {
-        console.log(factors.carryList);
-        console.log(activeCarry)
-        console.log(factors.nextCarry())
-        console.log(factors.numGridCorrect)
+        // console.log(factors.carryList);
+        // console.log(activeCarry)
+        // console.log(factors.nextCarry())
+        // console.log(factors.numGridCorrect)
         let value: number | '' = ''; // scrape the input to make it into the correct type to be put into gridInput
         if (event.target.value !== '') {
             value = Number(event.target.value);

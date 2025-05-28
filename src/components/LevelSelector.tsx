@@ -39,7 +39,7 @@ function LevelSelector(){
                         name="options"
                         className="h-[3vh] w-[3vh] accent-[rgb(20,128,223)] mr-2 cursor-pointer"
                         value={option}
-                        checked={ (userData.settings?.autoMode ?? false) && selected === option}
+                        checked={ !(userData.settings?.autoMode ?? false) && selected === option}
                         onChange={handleChange}
                     />
                     <div className="text-[3vh]">{option}</div>
