@@ -26,6 +26,7 @@ function ScoreBoard(){
                             key={`${i}-${j}`}
                             className={`border-1 border-black w-[1.5vh] h-[1.5vh] rounded`}
                             style={{ backgroundColor: `rgb(${getColor(val).join(',')})` }}
+                            title = {row[j].toString()}
                         />
                     ))}
                 </div>
