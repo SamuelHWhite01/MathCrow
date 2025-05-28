@@ -11,11 +11,10 @@ function SumBar(){
     const {incrementStreak} = useSoundPlayerContext();
     const {userData, setUserData} = useUserDataContext();
     const {settings} = useSettingsContext()
-    const [sumCorrect, setSumCorrect] = useState<(number)>(0);
     const gridComplete: boolean = useMemo(() => factors.numGridCorrect === factors.productGridList.length, [factors.numGridCorrect]);
     const needToAdd: boolean = useMemo(() => factors.factor2.toString().length>1, [factors.product]);
     const productGridLength: number = useMemo(() => factors.product.toString().length, [factors.product]);
-    const sumComplete: boolean = useMemo(() => sumCorrect == factors.productList.length, [sumCorrect]);
+    const sumComplete: boolean = useMemo(() => factors.numSumCorrect == factors.productList.length, [factors.numSumCorrect]);
     const problemComplete : boolean = useMemo(() => sumComplete || (gridComplete && !needToAdd), [sumComplete, gridComplete, needToAdd])
     const [sumInput, setSumInput] = useState<(number | '')[]>(() =>
         Array.from({ length: productGridLength },() => '')
@@ -33,7 +32,6 @@ function SumBar(){
         setSumInput(
             Array.from({ length: productGridLength },() => '')
         );
-        setSumCorrect(0);
     }, [factors.resetCounter, productGridLength]);
 
 
@@ -60,7 +58,14 @@ function SumBar(){
         };
     }, [problemComplete]);
 
-
+    const gridCorrect = (i:number) => { // returns a boolean value to indicate if a given grid coordinate is answered correctly
+        if((productGridLength-1-i) < factors.numSumCorrect)
+        {
+            return true;
+        }
+        return false;
+    }
+    
     const handleSumChange = (event: React.ChangeEvent<HTMLInputElement>, index:number) => {
         let value: number | '' = ''; // scrape the input to makew it into the correct type to be put into gridInput
         if (event.target.value !== '') {
@@ -76,7 +81,8 @@ function SumBar(){
             // in the case of a correct answer
             event.target.value = '';
             incrementStreak();
-            setSumCorrect(sumCorrect+1)
+            factors.correctSum()
+            setFactors(factors.clone())
         }
     };
 
@@ -98,7 +104,7 @@ function SumBar(){
 
     const isLocked = (i: number) => {
         // used to determine if a number cell should be locked
-        const unlockedIndex = factors.productList.length - sumCorrect - 1
+        const unlockedIndex = factors.productList.length - factors.numSumCorrect - 1
         if (i === unlockedIndex) {
             // only if the given i and j are next in the series are they NOT locked
             return false;
@@ -109,7 +115,7 @@ function SumBar(){
     <div className={` mt-2 border-t-6 border-[rgb(20,128,223)] h-auto flex flex-row gap-2 justify-end ${(!gridComplete || !needToAdd) ? 'invisible' : ''}`}>
         {sumInput.map((_val, i) => (
             <input
-                className={`mt-2 product-grid-cell ${isLocked(i) ? 'bg-gray-500' : ''}`}
+                className={`mt-2 product-grid-cell ${isLocked(i) ? gridCorrect(i) ? 'bg-green-200' : 'bg-gray-400' : ''}`}
                 type="number"
                 value={sumInput[i]}
                 key={i}

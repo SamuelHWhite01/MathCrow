@@ -8,18 +8,17 @@ class Factors {
     factorsOrder: number[]; // random order of numbers to multiply against the level in times table mode
     productGridList: number[] = [];
     numGridCorrect: number = 0;
+    numCarryCorrect: number = 0;
+    numSumCorrect: number = 0;
     carryList: Carry[] = [];
     resetCounter: number = 0;
-    numCarryCorrect: number = 0;
-    constructor(factor1: number) {
+    constructor() {
         this.index = 0;
         this.factorsOrder = [];
-        for (let i = 1; i <= 12; i++) {
-            this.factorsOrder.push(i);
-        }
-        this.factorsOrder = this.shuffleArray(this.factorsOrder);
+        this.factorsOrder = [9,1,2,3,4,5,6,7,8,10,11,12]
+        //this.factorsOrder = this.shuffleArray(this.factorsOrder);
 
-        this.factor1 = factor1;
+        this.factor1 = 12;
         this.factor2 = this.factorsOrder[this.index];
         this.product = this.factor1 * this.factor2;
         this.productList = this.initProductList(this.product);
@@ -71,8 +70,8 @@ class Factors {
                 product = product % 10;
                 answerOutput.push(product);
                 curlen++;
-                if (carryVal > 0 && curlen <f1string.length) {
-                    // if there is a carry, and its place would affect a future multiplication
+                if (carryVal > 0) {
+                    // if there is a carry, 
                     const newcarry: Carry = {
                         value: carryVal,
                         place: rowlen - curlen-1,
@@ -107,6 +106,7 @@ class Factors {
             [this.productGridList, this.carryList] = this.initAnswers();
             this.numGridCorrect = 0;
             this.numCarryCorrect = 0;
+            this.numSumCorrect = 0;
             this.resetCounter++;
         } else {
             this.index = 0;
@@ -117,6 +117,7 @@ class Factors {
             [this.productGridList, this.carryList] = this.initAnswers();
             this.numGridCorrect = 0;
             this.numCarryCorrect = 0;
+            this.numSumCorrect = 0;
             this.resetCounter++;
         }
     }
@@ -145,6 +146,7 @@ class Factors {
         [this.productGridList, this.carryList] = this.initAnswers();
         this.numGridCorrect = 0;
         this.numCarryCorrect = 0;
+        this.numSumCorrect = 0;
         this.resetCounter++;
     }
     public correctGrid() {
@@ -152,6 +154,9 @@ class Factors {
     }
     public correctCarry(){
         this.numCarryCorrect +=1;
+    }
+    public correctSum(){
+        this.numSumCorrect +=1;
     }
     public nextCarry(){
         if (this.carryList[this.numCarryCorrect] !== undefined)
@@ -161,7 +166,7 @@ class Factors {
         return undefined
     }
     public clone() {
-        const newInstance = new Factors(this.factor1);
+        const newInstance = new Factors();
         newInstance.index = this.index;
         newInstance.factorsOrder = this.factorsOrder;
         newInstance.factor1 = this.factor1;
@@ -169,10 +174,11 @@ class Factors {
         newInstance.product = this.product;
         newInstance.productList = this.productList;
         newInstance.numGridCorrect = this.numGridCorrect;
+        newInstance.numCarryCorrect = this.numCarryCorrect;
+        newInstance.numSumCorrect = this.numSumCorrect;
         newInstance.productGridList = this.productGridList;
         newInstance.carryList = this.carryList;
         newInstance.resetCounter = this.resetCounter;
-        newInstance.numCarryCorrect = this.numCarryCorrect;
         return newInstance;
     }
 

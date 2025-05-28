@@ -13,16 +13,8 @@ function ProductGrid(){
             Array.from({ length: productGridLength }, () => '')
         )
     );
-    const [activeCarry, setActiveCarry] = useState(false);
 
-    useEffect(() => {
-        if ((factors.nextCarry()?.order ?? -1) === factors.numGridCorrect) {
-            //console.log(factors.carryList[factors.numCarry].order, factors.numCorrect);
-            setActiveCarry(true);
-        } else {
-            setActiveCarry(false);
-        }
-    }, [factors.numGridCorrect,productGridHeight, productGridLength, factors.carryList, factors.numCarryCorrect]);
+    const activeCarry: boolean = useMemo(() => ((factors.nextCarry()?.order ?? -1) === factors.numGridCorrect),[factors.numCarryCorrect, factors.resetCounter, factors.numGridCorrect])
 
     //used to set input and correct grid to the corect shape to match the product grid
     useEffect(() => {
@@ -46,7 +38,13 @@ function ProductGrid(){
         }
         return true; // everything else is locked
     };
-
+    const gridCorrect = (i:number, j:number) => { // returns a boolean value to indicate if a given grid coordinate is answered correctly
+        if((i*productGridLength + productGridLength - 1 - j) < factors.numGridCorrect)
+        {
+            return true
+        }
+        return false
+    }
     const leadingZero = () =>
         // given a coordinate, check to the left of it and if everything is zeroes, then consider the whole row correct
         {
@@ -68,7 +66,10 @@ function ProductGrid(){
         };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>, i: number, j: number) => {
-        //console.log(factors.productList);
+        console.log(factors.carryList);
+        console.log(activeCarry)
+        console.log(factors.nextCarry())
+        console.log(factors.numGridCorrect)
         let value: number | '' = ''; // scrape the input to make it into the correct type to be put into gridInput
         if (event.target.value !== '') {
             value = Number(event.target.value);
@@ -102,7 +103,7 @@ function ProductGrid(){
                     <div className="h-auto flex flex-row gap-2 justify-end" key={i}>
                         {row.map((_val, j) => (
                             <input
-                                className={` product-grid-cell ${isLocked(i,j) ? 'bg-gray-500' : ''}`}
+                                className={` product-grid-cell ${isLocked(i,j) ? gridCorrect(i,j) ? 'bg-green-200' : 'bg-gray-400' : ''}`}
                                 type="number"
                                 value={gridInput[i]?.[j] ?? ''}
                                 readOnly={isLocked(i, j)}

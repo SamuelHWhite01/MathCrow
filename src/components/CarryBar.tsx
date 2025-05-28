@@ -8,6 +8,7 @@ function CarryBar(){
     const [carryInput, setCarryInput] = useState<(number | '')[]>(() =>
         Array.from({ length: productGridLength },() => '')
     );
+    const[carryCorrect, setCarryCorrect] = useState<boolean[]>([])
 
 
 
@@ -17,12 +18,15 @@ function CarryBar(){
             setCarryInput(
                 Array.from({ length: productGridLength },() => '')
             );
+            setCarryCorrect(
+                Array.from({ length: productGridLength },() => false)
+            );
         }
     }, [factors.numGridCorrect,factors.resetCounter, productGridLength]);
 
 
     const showCarry = (i: number) => {
-        if(carryInput[i] != '')
+        if(carryInput[i] != '') //always display a carry that has a value
         {
             return true;
         }
@@ -64,18 +68,25 @@ function CarryBar(){
             factors.correctCarry();
             setFactors(factors.clone());
             incrementStreak();
+            const newCorrect = [...carryCorrect];
+            newCorrect[index] = true
+            setCarryCorrect(newCorrect)
         }
 
     };
+
+
+
     return (
-        <div>
+        <div className='flex flex-row gap-2 justify-end'>
             {carryInput.map((_val, i) => (
                 <input
-                    className={`product-grid-cell ${!showCarry(i) ? 'invisible' : ''} `}
+                    className={`product-grid-cell ${!showCarry(i) ? 'invisible' : carryCorrect[i] ? 'bg-green-200':''} `}
                     type="number"
                     value={carryInput[i]}
                     key={i}
                     onChange={(e) => handleChange(e, i)}
+                    readOnly={carryCorrect[i]}
                 />
             ))}
         </div>
