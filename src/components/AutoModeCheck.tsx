@@ -19,7 +19,8 @@ const handleChange = () => {
     setFactors(factors.clone())
   }
     setSettings({
-    autoMode: !settings.autoMode
+      ...settings,
+      autoMode: !settings.autoMode
   });
 };
   return (
@@ -29,7 +30,7 @@ const handleChange = () => {
         type="checkbox"
         name="AutoModeToggle"
         className="h-[3vh] w-[3vh] accent-[rgb(20,128,223)] mr-2 cursor-pointer rounded"
-        checked={settings?.autoMode ?? true}
+        checked={settings?.autoMode ?? false}
         onChange={handleChange}
         />
         </div>

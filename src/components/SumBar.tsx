@@ -11,28 +11,23 @@ function SumBar(){
     const {incrementStreak} = useSoundPlayerContext();
     const {userData, setUserData} = useUserDataContext();
     const {settings} = useSettingsContext()
-    const [gridComplete, setGridComplete] = useState(false);
+    const [sumCorrect, setSumCorrect] = useState<(number)>(0);
+    const gridComplete: boolean = useMemo(() => factors.numGridCorrect === factors.productGridList.length, [factors.numGridCorrect]);
     const needToAdd: boolean = useMemo(() => factors.factor2.toString().length>1, [factors.product]);
-    const productGridLength = useMemo(() => factors.product.toString().length, [factors.product]);
+    const productGridLength: number = useMemo(() => factors.product.toString().length, [factors.product]);
+    const sumComplete: boolean = useMemo(() => sumCorrect == factors.productList.length, [sumCorrect]);
+    const problemComplete : boolean = useMemo(() => sumComplete || (gridComplete && !needToAdd), [sumComplete, gridComplete, needToAdd])
     const [sumInput, setSumInput] = useState<(number | '')[]>(() =>
         Array.from({ length: productGridLength },() => '')
     );
-    const [sumCorrect, setSumCorrect] = useState<(number)>(0);
     useEffect(() => {
-        // whenever the number of correct answers is updated, checks to see if all the answers have been given
-        if (factors.numGridCorrect === factors.productGridList.length) {
-            // if the entire grid has been aswered correctly
-            setGridComplete(true); // allow the final product box to be entered
-            if(!needToAdd)
-            {
+        // if we dont have to sum the grid, go to the next problem
+        if (gridComplete && !needToAdd) {
+            if(settings.speedMode){
                 nextProblem();
             }
         }
-        else
-        {
-            setGridComplete(false);
-        }
-    }, [factors.numGridCorrect]);
+    }, [gridComplete]);
     
     useEffect(() => {
         setSumInput(
@@ -42,12 +37,28 @@ function SumBar(){
     }, [factors.resetCounter, productGridLength]);
 
 
-    useEffect(() => {
-        if(sumCorrect === factors.productList.length)
+    useEffect(() => { // go to the next problem after competing the sum if speed mode is on
+        if(settings.speedMode)
         {
             nextProblem();
         }
-    }, [sumCorrect]);
+    }, [sumComplete]);
+
+
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Enter' && problemComplete) {
+                nextProblem();
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [problemComplete]);
 
 
     const handleSumChange = (event: React.ChangeEvent<HTMLInputElement>, index:number) => {
@@ -83,7 +94,6 @@ function SumBar(){
             factors.next();
         }
         setFactors(factors.clone());
-        setGridComplete(false);
     }
 
     const isLocked = (i: number) => {

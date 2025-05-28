@@ -5,6 +5,7 @@ import LogoutButton from './LogoutButton';
 import SaveButton from './SaveButton';
 import ScoreBoard from './ScoreBoard';
 import AutoModeToggle from './AutoModeCheck';
+import SpeedModeToggle from './SpeedModeCheck';
 
 function CollapsibleMenu(){
     const [isOpen, setIsOpen] = useState(true);
@@ -30,6 +31,7 @@ function CollapsibleMenu(){
                             <LogoutButton/>
                             <SaveButton/>
                             <AutoModeToggle/>
+                            <SpeedModeToggle/>
                             <LevelSelector/>
                             <ScoreBoard/>
                         </li>
