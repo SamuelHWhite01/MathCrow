@@ -187,6 +187,17 @@ class Factors {
         this.index = 12;
         this.next();
     }
+    public setFactors(f1:number, f2:number){
+        this.factor1 = f1;
+        this.factor2 = f2;
+        this.product = this.factor1 * this.factor2;
+        this.productList = this.initProductList(this.product);
+        [this.productGridList, this.carryList] = this.initAnswers();
+        this.numGridCorrect = 0;
+        this.numCarryCorrect = 0;
+        this.numSumCorrect = 0;
+        this.resetCounter++;
+    }
     private shuffleArray(arr: number[]): number[] {
         const shuffled = [...arr]; // Create a copy to avoid mutating the original array
         for (let i = shuffled.length - 1; i > 0; i--) {

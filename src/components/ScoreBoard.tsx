@@ -1,7 +1,9 @@
+import { useFactorsContext } from "../context/FactorsContext";
 import { useUserDataContext } from "../context/UserDataContext";
 function ScoreBoard(){
     const maxColor = [0,255,128]
     const {userData} = useUserDataContext()
+    const { setFactors, factors } = useFactorsContext();
     const getColor = (numAnswered:number ) => {
         const baseColor = [200,200,200]
         const maxCorrect = userData.maxCorrect
@@ -17,16 +19,38 @@ function ScoreBoard(){
         const output = [redOutput,greenOutput,blueOutput]
         return output
     }
+    const titleGenerator = (factor1:number, factor2:number, numAnswered:number) =>
+    {
+        if(numAnswered > 1)
+        {
+            return(`You've answered "${factor1}x${factor2}" ${numAnswered} times.`)
+        }
+        else if(numAnswered == 1)
+        {
+            return(`You've answered "${factor1}x${factor2}" ${numAnswered} time.`)
+        }
+        return(`You've never answered "${factor1}x${factor2}."`)
+    }
+
+    const handleScoreboardClick = (f1:number, f2:number) =>
+    {
+        factors.setFactors(f1,f2)
+        setFactors(factors.clone())
+        return
+    }
+
+
     return (
         <div className=" mr-auto h-fit w-fit flex flex-col items-center">
             {userData.historyGrid.map((row, i) => (
                 <div key={i} className=" h-auto flex flex-row">
                     {row.map((val, j) => (
-                        <div
+                        <button
                             key={`${i}-${j}`}
-                            className={`border-1 border-black w-[1.5vh] h-[1.5vh] rounded`}
+                            className="scoreboard-cell"
                             style={{ backgroundColor: `rgb(${getColor(val).join(',')})` }}
-                            title = {row[j].toString()}
+                            title = {titleGenerator(i+1,j+1, row[i])}
+                            onClick={ () => handleScoreboardClick(i+1,j+1)}
                         />
                     ))}
                 </div>

@@ -4,13 +4,11 @@ import { useSoundPlayerContext } from '../context/SoundPlayerContext';
 import { useUserDataContext } from '../context/UserDataContext';
 import { debouncedSaveData } from '../utils/firebase';
 import { useAuth } from '../context/AuthContext';
-import { useSettingsContext } from '../context/SettingsContext';
 function SumBar(){
     const { setFactors, factors } = useFactorsContext();
     const { user } = useAuth();
     const {incrementStreak} = useSoundPlayerContext();
     const {userData, setUserData} = useUserDataContext();
-    const {settings} = useSettingsContext()
     const gridComplete: boolean = useMemo(() => factors.numGridCorrect === factors.productGridList.length, [factors.numGridCorrect]);
     const needToAdd: boolean = useMemo(() => factors.factor2.toString().length>1, [factors.product]);
     const productGridLength: number = useMemo(() => factors.product.toString().length, [factors.product]);
@@ -22,7 +20,7 @@ function SumBar(){
     useEffect(() => {
         // if we dont have to sum the grid, go to the next problem
         if (gridComplete && !needToAdd) {
-            if(settings.speedMode){
+            if(userData.settings.speedMode){
                 nextProblem();
             }
         }
@@ -36,7 +34,7 @@ function SumBar(){
 
 
     useEffect(() => { // go to the next problem after competing the sum if speed mode is on
-        if(settings.speedMode)
+        if(userData.settings.speedMode)
         {
             nextProblem();
         }
@@ -91,7 +89,7 @@ function SumBar(){
         userData.correctAnswer(factors.factor1-1, factors.factor2-1)
         debouncedSaveData(user, userData)
         setUserData(userData.clone())
-        if(settings.autoMode)
+        if(userData.settings.autoMode)
         {
             factors.autoNext(userData.historyGrid)
         }
