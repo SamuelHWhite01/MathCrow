@@ -1,4 +1,4 @@
-import {useState, useEffect, useMemo } from 'react';
+import {useState, useEffect, useMemo, useRef } from 'react';
 import { useFactorsContext } from '../context/FactorsContext';
 import { useSoundPlayerContext } from '../context/SoundPlayerContext';
 import { useUserDataContext } from '../context/UserDataContext';
@@ -14,6 +14,7 @@ function SumBar(){
     const productGridLength: number = useMemo(() => factors.product.toString().length, [factors.product]);
     const sumComplete: boolean = useMemo(() => factors.numSumCorrect == factors.productList.length, [factors.numSumCorrect]);
     const problemComplete : boolean = useMemo(() => sumComplete || (gridComplete && !needToAdd), [sumComplete, gridComplete, needToAdd])
+    const sumRef = useRef<(HTMLInputElement | null)[]>([]);
     const [sumInput, setSumInput] = useState<(number | '')[]>(() =>
         Array.from({ length: productGridLength },() => '')
     );
@@ -39,9 +40,7 @@ function SumBar(){
             nextProblem();
         }
     }, [sumComplete]);
-
-
-
+    
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'Enter' && problemComplete) {
@@ -109,6 +108,18 @@ function SumBar(){
         }
         return true; // everything else is locked
     };
+
+    function shouldFocusSumInput(
+    index: number,
+    productGridLength: number,
+    numSumCorrect: number,
+    gridComplete: boolean,
+    needToAdd: boolean
+    ): boolean {
+        if (!gridComplete || !needToAdd) return false;
+        const expectedIndex = productGridLength - numSumCorrect - 1;
+        return index === expectedIndex;
+    }
     return (
     <div className={` mt-2 border-t-6 border-[rgb(20,128,223)] h-auto flex flex-row gap-2 justify-end ${(!gridComplete || !needToAdd) ? 'invisible' : ''}`}>
         {sumInput.map((_val, i) => (
@@ -118,6 +129,14 @@ function SumBar(){
                 value={sumInput[i]}
                 key={i}
                 readOnly={isLocked(i)}
+                ref={(el) => {
+                    sumRef.current[i] = el;
+                    if (el &&
+                    shouldFocusSumInput(i,productGridLength,factors.numSumCorrect,gridComplete,needToAdd)
+                    ) {
+                        el.focus();
+                    }
+                }}
                 onChange={(e) => handleSumChange(e, i)}
             />
         ))}

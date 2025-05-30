@@ -1,19 +1,19 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { useFactorsContext } from '../context/FactorsContext';
 import { useSoundPlayerContext } from '../context/SoundPlayerContext';
 function CarryBar(){
     const { setFactors, factors } = useFactorsContext();
     const {incrementStreak} = useSoundPlayerContext();
-    const productGridLength = useMemo(() => factors.product.toString().length, [factors.product]);
+    const productGridLength = useMemo(() => factors.product.toString().length, [factors.product, factors.resetCounter]);
     const [carryInput, setCarryInput] = useState<(number | '')[]>(() =>
         Array.from({ length: productGridLength },() => '')
     );
     const[carryCorrect, setCarryCorrect] = useState<boolean[]>([])
-
-
+    const carryRef = useRef<(HTMLInputElement | null)[]>([]);
+    const nextCarry = useMemo(()=> factors.nextCarry(),[factors.numCarryCorrect, factors.resetCounter])
 
     useEffect(() => {
-        if(factors.numGridCorrect % productGridLength === 0) // when a row is complete, clear out the carry
+        if(factors.numCarryCorrect % productGridLength === 0) // when a row is complete, clear out the carry
         {
             setCarryInput(
                 Array.from({ length: productGridLength },() => '')
@@ -22,15 +22,13 @@ function CarryBar(){
                 Array.from({ length: productGridLength },() => false)
             );
         }
-    }, [factors.numGridCorrect,factors.resetCounter, productGridLength]);
-
+    }, [factors.numGridCorrect,factors.resetCounter]);
 
     const showCarry = (i: number) => {
         if(carryInput[i] != '') //always display a carry that has a value
         {
             return true;
         }
-        const nextCarry = factors.nextCarry()
         if(nextCarry === undefined) // if there is not a next carry
         {
             return false;
@@ -58,8 +56,7 @@ function CarryBar(){
         {
             setCarryInput(newGrid)
         }
-        const nextCarry = factors.nextCarry();
-        if(nextCarry == undefined)
+        if(nextCarry === undefined)
         {
             return
         }
@@ -75,18 +72,34 @@ function CarryBar(){
 
     };
 
-
+    function shouldFocusCarryInput(
+    index: number,
+    nextCarry: { place: number; order: number } | undefined,
+    numGridCorrect: number
+    ): boolean {
+        if (!nextCarry) return false;
+        return nextCarry.place === index && nextCarry.order === numGridCorrect;
+    }
 
     return (
         <div className='flex flex-row gap-2 justify-end'>
             {carryInput.map((_val, i) => (
                 <input
-                    className={`product-grid-cell ${!showCarry(i) ? 'invisible' : carryCorrect[i] ? 'bg-green-200':''} `}
+                    className={`product-grid-cell ${showCarry(i) ? carryCorrect[i] ? 'bg-green-200':'' : 'invisible'} `}
                     type="number"
                     value={carryInput[i]}
                     key={i}
                     onChange={(e) => handleChange(e, i)}
                     readOnly={carryCorrect[i]}
+                    ref={(el) => {
+                        carryRef.current[i] = el;
+                        if (
+                        el &&
+                        shouldFocusCarryInput(i, nextCarry, factors.numGridCorrect)
+                        ) {
+                            el.focus();
+                        }
+                    }}
                 />
             ))}
         </div>

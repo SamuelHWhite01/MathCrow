@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { useFactorsContext } from '../context/FactorsContext';
 import { useSoundPlayerContext } from '../context/SoundPlayerContext';
 function ProductGrid(){
@@ -8,23 +8,26 @@ function ProductGrid(){
     const productGridLength = useMemo(() => factors.product.toString().length, [factors.product]);
     const gridComplete:boolean = useMemo(() => factors.numGridCorrect === factors.productGridList.length, [factors.numGridCorrect]);
     const needToAdd: boolean = useMemo(() => factors.factor2.toString().length>1, [factors.product]);
-    const [gridInput, setGridInput] = useState<(number | '')[][]>(() =>
-        Array.from({ length: productGridHeight }, () =>
-            Array.from({ length: productGridLength }, () => '')
-        )
-    );
+    const [gridInput, setGridInput] = useState<(number | '')[][]>([]);
+    const gridRef = useRef<(HTMLInputElement | null)[][]>(
+    Array.from({ length: productGridHeight }, () =>
+        Array.from({ length: productGridLength }, () => null)
+    )
+);
 
     const activeCarry: boolean = useMemo(() => ((factors.nextCarry()?.order ?? -1) === factors.numGridCorrect),[factors.numCarryCorrect, factors.resetCounter, factors.numGridCorrect])
-
+    
     //used to set input and correct grid to the corect shape to match the product grid
     useEffect(() => {
-        setGridInput(
-            Array.from({ length: productGridHeight }, () =>
-                Array.from({ length: productGridLength }, () => '')
-            )
+        const newGridShape: (number|'')[][] = Array.from({ length: productGridHeight }, () =>
+            Array.from({ length: productGridLength }, () => '')
         );
-    }, [factors.resetCounter,productGridHeight, productGridLength]);
+        setGridInput(newGridShape);
 
+        gridRef.current = Array.from({ length: productGridHeight }, () =>
+            Array.from({ length: productGridLength }, () => null)
+        );
+    }, [factors.resetCounter, productGridHeight, productGridLength]);
     const isLocked = (i: number, j: number) => {
         // used to determine if a number cell should be locked
         const unlockedLength = productGridLength - 1 - (factors.numGridCorrect % productGridLength);
@@ -55,6 +58,7 @@ function ProductGrid(){
             for (let index = numCorrect; index < endRowIndex; index++) {
                 if (factors.productGridList[index] !== 0) {
                     allZeroes = false;
+                    break;
                 }
             }
             if (allZeroes) {
@@ -95,6 +99,23 @@ function ProductGrid(){
             incrementStreak();
         }
     };
+
+    function shouldFocusCell(
+    i: number,
+    j: number,
+    productGridLength: number,
+    numGridCorrect: number,
+    gridComplete: boolean,
+    activeCarry: boolean
+    ): boolean {
+        if (gridComplete || activeCarry) return false;
+
+        const expectedJ = productGridLength - 1 - (numGridCorrect % productGridLength);
+        const expectedI = Math.floor(numGridCorrect / productGridLength);
+
+        return i === expectedI && j === expectedJ;
+    }
+
     return (
         <div className='flex flex-row items-end'>
             <div className={`leading-none text-[10vh] font-bold text-[rgb(20,128,223)] ${(!gridComplete || !needToAdd) ? 'invisible' : ''}`}>+</div>
@@ -109,6 +130,17 @@ function ProductGrid(){
                                 readOnly={isLocked(i, j)}
                                 key={`${i}-${j}`}
                                 onChange={(e) => handleChange(e, i, j)}
+                                ref={(el) => {
+
+                                    if (!gridRef.current[i]) {
+                                        gridRef.current[i] = [];
+                                    }
+                                    gridRef.current[i][j] = el;
+                                    
+                                    if (el && shouldFocusCell(i,j, productGridLength, factors.numGridCorrect, gridComplete, activeCarry)) {
+                                        el.focus();
+                                    }
+                                }}
                             />
                         ))}
                     </div>
