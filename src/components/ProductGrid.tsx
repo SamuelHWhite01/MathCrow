@@ -1,7 +1,10 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
 import { useFactorsContext } from '../context/FactorsContext';
 import { useSoundPlayerContext } from '../context/SoundPlayerContext';
-function ProductGrid(){
+type ProductGridProps = {
+  gridRef: React.RefObject<(HTMLInputElement | null)[][]>;
+};
+function ProductGrid({ gridRef }: ProductGridProps){
     const {factors,setFactors } = useFactorsContext();
     const {incrementStreak} = useSoundPlayerContext();
     const productGridHeight = useMemo(() => factors.factor2.toString().length, [factors.factor2]);
@@ -9,11 +12,11 @@ function ProductGrid(){
     const gridComplete:boolean = useMemo(() => factors.numGridCorrect === factors.productGridList.length, [factors.numGridCorrect]);
     const needToAdd: boolean = useMemo(() => factors.factor2.toString().length>1, [factors.product]);
     const [gridInput, setGridInput] = useState<(number | '')[][]>([]);
-    const gridRef = useRef<(HTMLInputElement | null)[][]>(
-    Array.from({ length: productGridHeight }, () =>
-        Array.from({ length: productGridLength }, () => null)
-    )
-);
+    // const gridRef = useRef<(HTMLInputElement | null)[][]>(
+    // Array.from({ length: productGridHeight }, () =>
+    //     Array.from({ length: productGridLength }, () => null)
+    // ));
+    const [animationReady, setAnimationReady] = useState(false);
 
     const activeCarry: boolean = useMemo(() => ((factors.nextCarry()?.order ?? -1) === factors.numGridCorrect),[factors.numCarryCorrect, factors.resetCounter, factors.numGridCorrect])
     
@@ -27,7 +30,37 @@ function ProductGrid(){
         gridRef.current = Array.from({ length: productGridHeight }, () =>
             Array.from({ length: productGridLength }, () => null)
         );
+        setAnimationReady(false)
     }, [factors.resetCounter, productGridHeight, productGridLength]);
+
+    useEffect(() => { // whenever there is a new carry
+        //console.log("Active Carry:", activeCarry, "NextCarry:", factors.nextCarry(), "Answer after next:",factors.productGridList[factors.numGridCorrect+1] );
+        if(activeCarry &&
+            factors.nextCarry()?.value === factors.productGridList[factors.numGridCorrect+1]) // if the carry is the next answer AND the largest place value AND the answer after next
+        {
+            console.log("Animation Ready ...");
+            setAnimationReady(true);
+        }
+    }, [factors.numCarryCorrect, factors.resetCounter, activeCarry]);
+
+    const autoCarry = () => { //if the most recent carry needs to be transferred to the product grid (animationReady) It will do it
+
+        console.log("factors", factors)
+        console.log("animation here...")
+        const carryVal = factors.productGridList[factors.numGridCorrect]
+        const carryLength = productGridLength - 1 - ((factors.numGridCorrect) % productGridLength);
+        const carryHeight = Math.floor((factors.numGridCorrect) / productGridLength);
+        setGridInput((prev) => {
+            // update the grid input to match the new input
+            const newGrid = prev.map((row) => [...row]);
+            newGrid[carryHeight][carryLength] = carryVal;
+            return newGrid;
+        });
+        factors.correctGrid();
+        setFactors(factors.clone());
+        setAnimationReady(false)
+        
+    }
     const isLocked = (i: number, j: number) => {
         // used to determine if a number cell should be locked
         const unlockedLength = productGridLength - 1 - (factors.numGridCorrect % productGridLength);
@@ -48,7 +81,7 @@ function ProductGrid(){
         }
         return false
     }
-    const leadingZero = () =>
+    const leadingZero = ( ) =>
         // given a coordinate, check to the left of it and if everything is zeroes, then consider the whole row correct
         {
             let allZeroes = true;
@@ -93,25 +126,21 @@ function ProductGrid(){
             // in the case of a correct answer
 
             leadingZero();
-            // if a new correct answer is given
+            if(animationReady)
+            {
+                autoCarry();
+            }
             factors.correctGrid();
             setFactors(factors.clone());
             incrementStreak();
         }
     };
 
-    function shouldFocusCell(
-    i: number,
-    j: number,
-    productGridLength: number,
-    numGridCorrect: number,
-    gridComplete: boolean,
-    activeCarry: boolean
-    ): boolean {
+    function shouldFocusCell(i: number,j: number): boolean {
         if (gridComplete || activeCarry) return false;
 
-        const expectedJ = productGridLength - 1 - (numGridCorrect % productGridLength);
-        const expectedI = Math.floor(numGridCorrect / productGridLength);
+        const expectedJ = productGridLength - 1 - (factors.numGridCorrect % productGridLength);
+        const expectedI = Math.floor(factors.numGridCorrect / productGridLength);
 
         return i === expectedI && j === expectedJ;
     }
@@ -137,7 +166,7 @@ function ProductGrid(){
                                     }
                                     gridRef.current[i][j] = el;
                                     
-                                    if (el && shouldFocusCell(i,j, productGridLength, factors.numGridCorrect, gridComplete, activeCarry)) {
+                                    if (el && shouldFocusCell(i,j)) {
                                         el.focus();
                                     }
                                 }}

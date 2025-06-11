@@ -25,7 +25,7 @@ function ScoreBoard(){
         {
             return(`You've answered "${factor1}x${factor2}" ${numAnswered} times.`)
         }
-        else if(numAnswered == 1)
+        else if(numAnswered === 1)
         {
             return(`You've answered "${factor1}x${factor2}" ${numAnswered} time.`)
         }
@@ -49,7 +49,7 @@ function ScoreBoard(){
                             key={`${i}-${j}`}
                             className="scoreboard-cell"
                             style={{ backgroundColor: `rgb(${getColor(val).join(',')})` }}
-                            title = {titleGenerator(i+1,j+1, row[i])}
+                            title = {titleGenerator(i+1,j+1, val)}
                             onClick={ () => handleScoreboardClick(i+1,j+1)}
                         />
                     ))}

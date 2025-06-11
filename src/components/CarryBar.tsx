@@ -1,7 +1,12 @@
-import { useEffect, useState, useMemo, useRef } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useFactorsContext } from '../context/FactorsContext';
 import { useSoundPlayerContext } from '../context/SoundPlayerContext';
-function CarryBar(){
+
+type CarryBarProps = {
+  carryBarRefs: React.RefObject<(HTMLInputElement | null)[]>;
+};
+
+function CarryBar({ carryBarRefs }: CarryBarProps){
     const { setFactors, factors } = useFactorsContext();
     const {incrementStreak} = useSoundPlayerContext();
     const productGridLength = useMemo(() => factors.product.toString().length, [factors.product, factors.resetCounter]);
@@ -9,7 +14,6 @@ function CarryBar(){
         Array.from({ length: productGridLength },() => '')
     );
     const[carryCorrect, setCarryCorrect] = useState<boolean[]>([])
-    const carryRef = useRef<(HTMLInputElement | null)[]>([]);
     const nextCarry = useMemo(()=> factors.nextCarry(),[factors.numCarryCorrect, factors.resetCounter])
 
     useEffect(() => {
@@ -92,7 +96,7 @@ function CarryBar(){
                     onChange={(e) => handleChange(e, i)}
                     readOnly={carryCorrect[i]}
                     ref={(el) => {
-                        carryRef.current[i] = el;
+                        carryBarRefs.current[i] = el;
                         if (
                         el &&
                         shouldFocusCarryInput(i, nextCarry, factors.numGridCorrect)

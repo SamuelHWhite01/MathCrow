@@ -84,7 +84,7 @@ function SumBar(){
     };
 
     const nextProblem = () =>{
-        //console.log(userData)
+        console.log(userData)
         userData.correctAnswer(factors.factor1-1, factors.factor2-1)
         debouncedSaveData(user, userData)
         setUserData(userData.clone())
