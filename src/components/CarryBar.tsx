@@ -17,7 +17,7 @@ function CarryBar({ carryBarRefs }: CarryBarProps){
     const nextCarry = useMemo(()=> factors.nextCarry(),[factors.numCarryCorrect, factors.resetCounter])
 
     useEffect(() => {
-        if(factors.numCarryCorrect % productGridLength === 0) // when a row is complete, clear out the carry
+        if(factors.numGridCorrect % productGridLength === 0) // when a row is complete, clear out the carry
         {
             setCarryInput(
                 Array.from({ length: productGridLength },() => '')
@@ -49,7 +49,6 @@ function CarryBar({ carryBarRefs }: CarryBarProps){
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-
         let value: number | '' = ''; // scrape the input to make it into the correct type to be put into gridInput
         if (event.target.value !== '') {
             value = Number(event.target.value);

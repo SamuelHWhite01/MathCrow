@@ -84,7 +84,7 @@ function SumBar(){
     };
 
     const nextProblem = () =>{
-        console.log(userData)
+        //console.log(userData)
         userData.correctAnswer(factors.factor1-1, factors.factor2-1)
         debouncedSaveData(user, userData)
         setUserData(userData.clone())
@@ -109,15 +109,9 @@ function SumBar(){
         return true; // everything else is locked
     };
 
-    function shouldFocusSumInput(
-    index: number,
-    productGridLength: number,
-    numSumCorrect: number,
-    gridComplete: boolean,
-    needToAdd: boolean
-    ): boolean {
+    function shouldFocusSumInput(index: number,): boolean {
         if (!gridComplete || !needToAdd) return false;
-        const expectedIndex = productGridLength - numSumCorrect - 1;
+        const expectedIndex = productGridLength - factors.numSumCorrect - 1;
         return index === expectedIndex;
     }
     return (
@@ -132,7 +126,7 @@ function SumBar(){
                 ref={(el) => {
                     sumRef.current[i] = el;
                     if (el &&
-                    shouldFocusSumInput(i,productGridLength,factors.numSumCorrect,gridComplete,needToAdd)
+                    shouldFocusSumInput(i)
                     ) {
                         el.focus();
                     }

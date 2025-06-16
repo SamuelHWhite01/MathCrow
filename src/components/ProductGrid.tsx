@@ -1,21 +1,20 @@
-import { useEffect, useState, useMemo, useRef } from 'react';
+import { useEffect, useState, useMemo} from 'react';
 import { useFactorsContext } from '../context/FactorsContext';
 import { useSoundPlayerContext } from '../context/SoundPlayerContext';
+import Factors from '../types/Factors';
 type ProductGridProps = {
   gridRef: React.RefObject<(HTMLInputElement | null)[][]>;
+  gridInput:(number|'')[][];
+  setGridInput:React.Dispatch<React.SetStateAction<(number|'')[][]>>;
+  autoCarry:(curfactors:Factors) => Factors;
 };
-function ProductGrid({ gridRef }: ProductGridProps){
+function ProductGrid({ gridRef, gridInput, setGridInput, autoCarry}: ProductGridProps){
     const {factors,setFactors } = useFactorsContext();
     const {incrementStreak} = useSoundPlayerContext();
     const productGridHeight = useMemo(() => factors.factor2.toString().length, [factors.factor2]);
     const productGridLength = useMemo(() => factors.product.toString().length, [factors.product]);
     const gridComplete:boolean = useMemo(() => factors.numGridCorrect === factors.productGridList.length, [factors.numGridCorrect]);
-    const needToAdd: boolean = useMemo(() => factors.factor2.toString().length>1, [factors.product]);
-    const [gridInput, setGridInput] = useState<(number | '')[][]>([]);
-    // const gridRef = useRef<(HTMLInputElement | null)[][]>(
-    // Array.from({ length: productGridHeight }, () =>
-    //     Array.from({ length: productGridLength }, () => null)
-    // ));
+    const needToAdd: boolean = useMemo(() => factors.factor2.toString().length>1, [factors.factor2]);
     const [animationReady, setAnimationReady] = useState(false);
 
     const activeCarry: boolean = useMemo(() => ((factors.nextCarry()?.order ?? -1) === factors.numGridCorrect),[factors.numCarryCorrect, factors.resetCounter, factors.numGridCorrect])
@@ -30,7 +29,16 @@ function ProductGrid({ gridRef }: ProductGridProps){
         gridRef.current = Array.from({ length: productGridHeight }, () =>
             Array.from({ length: productGridLength }, () => null)
         );
-        setAnimationReady(false)
+        if(activeCarry &&
+            factors.nextCarry()?.value === factors.productGridList[factors.numGridCorrect+1]) // if the carry is the next answer AND the largest place value AND the answer after next
+        {
+            //console.log("Animation Ready ...");
+            setAnimationReady(true);
+        }
+        else
+        {
+            setAnimationReady(false);
+        }
     }, [factors.resetCounter, productGridHeight, productGridLength]);
 
     useEffect(() => { // whenever there is a new carry
@@ -38,29 +46,11 @@ function ProductGrid({ gridRef }: ProductGridProps){
         if(activeCarry &&
             factors.nextCarry()?.value === factors.productGridList[factors.numGridCorrect+1]) // if the carry is the next answer AND the largest place value AND the answer after next
         {
-            console.log("Animation Ready ...");
+            //console.log("Animation Ready ...");
             setAnimationReady(true);
         }
-    }, [factors.numCarryCorrect, factors.resetCounter, activeCarry]);
+    }, [factors.numCarryCorrect, activeCarry]);
 
-    const autoCarry = () => { //if the most recent carry needs to be transferred to the product grid (animationReady) It will do it
-
-        console.log("factors", factors)
-        console.log("animation here...")
-        const carryVal = factors.productGridList[factors.numGridCorrect]
-        const carryLength = productGridLength - 1 - ((factors.numGridCorrect) % productGridLength);
-        const carryHeight = Math.floor((factors.numGridCorrect) / productGridLength);
-        setGridInput((prev) => {
-            // update the grid input to match the new input
-            const newGrid = prev.map((row) => [...row]);
-            newGrid[carryHeight][carryLength] = carryVal;
-            return newGrid;
-        });
-        factors.correctGrid();
-        setFactors(factors.clone());
-        setAnimationReady(false)
-        
-    }
     const isLocked = (i: number, j: number) => {
         // used to determine if a number cell should be locked
         const unlockedLength = productGridLength - 1 - (factors.numGridCorrect % productGridLength);
@@ -81,25 +71,23 @@ function ProductGrid({ gridRef }: ProductGridProps){
         }
         return false
     }
-    const leadingZero = ( ) =>
+    const leadingZero = (curfactors:Factors) =>
         // given a coordinate, check to the left of it and if everything is zeroes, then consider the whole row correct
         {
             let allZeroes = true;
-            const numCorrect = factors.numGridCorrect + 1; // adding one to account for this only being run when an answer is correct.
-            // Not waiting until after the update to account for potential race condition
-            const endRowIndex = productGridLength * Math.ceil(numCorrect / productGridLength);
-            for (let index = numCorrect; index < endRowIndex; index++) {
-                if (factors.productGridList[index] !== 0) {
+            const endRowIndex = productGridLength * Math.ceil(curfactors.numGridCorrect / productGridLength);
+            for (let index = curfactors.numGridCorrect; index < endRowIndex; index++) {
+                if (curfactors.productGridList[index] !== 0) {
                     allZeroes = false;
                     break;
                 }
             }
             if (allZeroes) {
-                for (let index = numCorrect; index < endRowIndex; index++) {
-                    factors.correctGrid();
-                    setFactors(factors.clone());
+                for (let index = curfactors.numGridCorrect; index < endRowIndex; index++) {
+                    curfactors.correctGrid();
                 }
             }
+            return curfactors;
         };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>, i: number, j: number) => {
@@ -124,14 +112,15 @@ function ProductGrid({ gridRef }: ProductGridProps){
         }
         if (value === factors.productGridList[factors.numGridCorrect]) {
             // in the case of a correct answer
-
-            leadingZero();
-            if(animationReady)
-            {
-                autoCarry();
+            let curfactors = factors.clone()
+            curfactors.correctGrid();
+            if(animationReady){
+               curfactors =  autoCarry(curfactors);
+               setAnimationReady(false);
             }
-            factors.correctGrid();
-            setFactors(factors.clone());
+            curfactors = leadingZero(curfactors);
+            //console.log(curfactors)
+            setFactors(curfactors);
             incrementStreak();
         }
     };
