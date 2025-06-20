@@ -6,6 +6,7 @@ import SaveButton from './SaveButton';
 import ScoreBoard from './ScoreBoard';
 import AutoModeToggle from './AutoModeCheck';
 import SpeedModeToggle from './SpeedModeCheck';
+import { Link } from 'react-router-dom';
 
 function CollapsibleMenu(){
     const [isOpen, setIsOpen] = useState(true);
@@ -34,6 +35,7 @@ function CollapsibleMenu(){
                             <SpeedModeToggle/>
                             <LevelSelector/>
                             <ScoreBoard/>
+                            <Link to="/">Go to Home Screen</Link>
                         </li>
                     </ul>
                 </nav>

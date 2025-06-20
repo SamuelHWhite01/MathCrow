@@ -12,6 +12,7 @@ class Factors {
     numSumCorrect: number = 0;
     carryList: Carry[] = [];
     resetCounter: number = 0;
+    difficulty:number = 1;
     constructor() {
         this.index = 0;
         this.factorsOrder = [];
@@ -149,6 +150,22 @@ class Factors {
         this.numSumCorrect = 0;
         this.resetCounter++;
     }
+    public longNext() // used in long multiplication. References difficulty level
+    {
+        let totalDigits = this.difficulty + 2;
+        const f2len = Math.floor(totalDigits / 2);
+        const f1len = totalDigits - f2len;
+        this.factor1 = this.randomDigits(f1len);
+        this.factor2 = this.randomDigits(f2len);
+        this.product = this.factor1 * this.factor2;
+        this.productList = this.initProductList(this.product);
+        [this.productGridList, this.carryList] = this.initAnswers();
+        this.numGridCorrect = 0;
+        this.numCarryCorrect = 0;
+        this.numSumCorrect = 0;
+        this.resetCounter++;
+
+    }
     public correctGrid() {
         this.numGridCorrect += 1;
     }
@@ -179,6 +196,7 @@ class Factors {
         newInstance.productGridList = this.productGridList;
         newInstance.carryList = this.carryList;
         newInstance.resetCounter = this.resetCounter;
+        newInstance.difficulty = this.difficulty
         return newInstance;
     }
 
@@ -186,6 +204,9 @@ class Factors {
         this.factor1 = factor1;
         this.index = 12;
         this.next();
+    }
+    public setDifficulty(newdiff:number){
+        this.difficulty = newdiff
     }
     public setFactors(f1:number, f2:number){
         this.factor1 = f1;
@@ -205,6 +226,16 @@ class Factors {
             [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
         }
         return shuffled;
+    }
+    private randomDigits(digits: number): number { // given a number of digits, will generate a number with that many
+    if (digits < 1) {
+    throw new Error("Number of digits must be at least 1.");
+    }
+
+    const min = Math.pow(10, digits - 1);
+    const max = Math.pow(10, digits) - 1;
+
+    return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 }
 export default Factors;
