@@ -29,8 +29,9 @@ function ProductGrid({ gridRef, gridInput, setGridInput, autoCarry}: ProductGrid
         gridRef.current = Array.from({ length: productGridHeight }, () =>
             Array.from({ length: productGridLength }, () => null)
         );
-        if(activeCarry &&
-            factors.nextCarry()?.value === factors.productGridList[factors.numGridCorrect+1]) // if the carry is the next answer AND the largest place value AND the answer after next
+        if(activeCarry && //carry is active
+            factors.nextCarry()?.value === factors.productGridList[factors.numGridCorrect+1] && // is the answer after next
+            factors.nextCarry()?.place === 0) // is the final number in a row
         {
             //console.log("Animation Ready ...");
             setAnimationReady(true);
@@ -43,8 +44,9 @@ function ProductGrid({ gridRef, gridInput, setGridInput, autoCarry}: ProductGrid
 
     useEffect(() => { // whenever there is a new carry
         //console.log("Active Carry:", activeCarry, "NextCarry:", factors.nextCarry(), "Answer after next:",factors.productGridList[factors.numGridCorrect+1] );
-        if(activeCarry &&
-            factors.nextCarry()?.value === factors.productGridList[factors.numGridCorrect+1]) // if the carry is the next answer AND the largest place value AND the answer after next
+        if(activeCarry && //carry is active
+            factors.nextCarry()?.value === factors.productGridList[factors.numGridCorrect+1] && // is the answer after next
+            factors.nextCarry()?.place === 0) // is the final number in a row
         {
             //console.log("Animation Ready ...");
             setAnimationReady(true);

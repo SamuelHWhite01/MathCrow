@@ -98,7 +98,7 @@ class Factors {
         }
         return [answerOutput, carryOutput];
     }
-    public next() { // used when in level selector Mode
+    public selectedFactorNext() { // used when in level selector Mode
         if (this.index < 10) {
             this.index += 1;
             this.factor2 = this.factorsOrder[this.index];
@@ -203,7 +203,7 @@ class Factors {
     public setLevel(factor1: number) {
         this.factor1 = factor1;
         this.index = 12;
-        this.next();
+        this.selectedFactorNext();
     }
     public setDifficulty(newdiff:number){
         this.difficulty = newdiff

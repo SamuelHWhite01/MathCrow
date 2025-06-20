@@ -1,45 +1,52 @@
 import FireStoreUserData from "./FireStoreUserData";
 import SettingsType from "./SettingsType";
+import TimesTableDataType from "./TimesTableDataType";
 
 class UserData{
-  historyGrid: number[][];
-  numCorrect:number;
-  maxCorrect:number;
   settings:SettingsType;
+  timesTableData:TimesTableDataType
   constructor()
   {
-    this.historyGrid = Array.from({ length: 12 }, () =>Array.from({ length: 12 }, () => 0));
-    this.numCorrect = 0;
-    this.maxCorrect = 0;
+    this.timesTableData ={
+      historyGrid: Array.from({ length: 12 }, () =>Array.from({ length: 12 }, () => 0)),
+      numCorrect: 0,
+      maxCorrect: 0
+    }
     this.settings = {
-      autoMode: false,
+      mode: "SelectedFactor",
       speedMode: false,
     }
   }
   public toFireStore() {
-    const saveGrid = this.historyGrid.flat()
+    const saveGrid = this.timesTableData.historyGrid.flat()
     return {
-      historyGrid: saveGrid,
-      numCorrect:this.numCorrect,
-      maxCorrect:this.maxCorrect,
+      timesTableData:{
+        historyGrid: saveGrid,
+        numCorrect:this.timesTableData.numCorrect,
+        maxCorrect:this.timesTableData.maxCorrect,
+      },
       settings:{
-        autoMode: this.settings.autoMode,
+        mode: this.settings.mode,
         speedMode: this.settings.speedMode
       }
     };
   }
-  public correctAnswer(i:number, j:number)
+  public correctTimesTable(i:number, j:number)
   {
-    this.historyGrid[i][j] +=1;
-    this.numCorrect +=1;
-    if (this.historyGrid[i][j] > this.maxCorrect)
+    this.timesTableData.historyGrid[i][j] +=1;
+    this.timesTableData.numCorrect +=1;
+    if (this.timesTableData.historyGrid[i][j] > this.timesTableData.maxCorrect)
     {
-      this.maxCorrect = this.historyGrid[i][j]
+      this.timesTableData.maxCorrect = this.timesTableData.historyGrid[i][j]
     }
   }
-  public autoModeToggle()
+  public correctLongMult(i:number)
   {
-    this.settings.autoMode = !this.settings.autoMode
+    
+  }
+  public changeMode(newMode:string)
+  {
+    this.settings.mode = newMode
   }
   public speedModeToggle()
   {
@@ -48,9 +55,7 @@ class UserData{
   public clone()
   {
     const newUserData = new UserData
-    newUserData.historyGrid = this.historyGrid
-    newUserData.numCorrect = this.numCorrect
-    newUserData.maxCorrect = this.maxCorrect
+    newUserData.timesTableData = this.timesTableData
     newUserData.settings = this.settings
     return newUserData
   }
@@ -58,15 +63,15 @@ class UserData{
   {
     let output = new UserData()
     const grid = [];
-    const flat = data.historyGrid;
+    const flat = data.timesTableData.historyGrid;
     for (let i = 0; i < 12; i++) {
       grid.push(flat.slice(i * 12, (i + 1) * 12));
     }
-    output.historyGrid = grid;
-    output.numCorrect = data.numCorrect;
-    output.maxCorrect = data.maxCorrect;
+    output.timesTableData.historyGrid = grid;
+    output.timesTableData.numCorrect = data.timesTableData.numCorrect;
+    output.timesTableData.maxCorrect = data.timesTableData.maxCorrect;
     let settings = {
-      autoMode: data.settings.autoMode,
+      mode: data.settings.mode,
       speedMode: data.settings.speedMode
     }
     output.settings = settings;

@@ -6,11 +6,11 @@ function ScoreBoard(){
     const { setFactors, factors } = useFactorsContext();
     const getColor = (numAnswered:number ) => {
         const baseColor = [200,200,200]
-        const maxCorrect = userData.maxCorrect
+        const maxCorrect = userData.timesTableData.maxCorrect
         let intensity:number = 0
         if(maxCorrect !== 0)
         {
-            intensity = numAnswered / userData.maxCorrect //a percentage to take the color from the base color ro the maxColor
+            intensity = numAnswered / userData.timesTableData.maxCorrect //a percentage to take the color from the base color ro the maxColor
         }
 
         const redOutput = (intensity*maxColor[0] + (1-intensity)*baseColor[0])
@@ -42,7 +42,7 @@ function ScoreBoard(){
 
     return (
         <div className=" mr-auto h-fit w-fit flex flex-col items-center">
-            {userData.historyGrid.map((row, i) => (
+            {userData.timesTableData.historyGrid.map((row, i) => (
                 <div key={i} className=" h-auto flex flex-row">
                     {row.map((val, j) => (
                         <button
@@ -55,7 +55,7 @@ function ScoreBoard(){
                     ))}
                 </div>
             ))}
-            <div className = "text-[3vh] font-bold items-center">{userData.numCorrect}</div>
+            <div className = "text-[3vh] font-bold items-center">{userData.timesTableData.numCorrect}</div>
         </div>
     );
 };

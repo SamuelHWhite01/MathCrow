@@ -3,9 +3,11 @@
 import SettingsType from "./SettingsType";
 
 type FireStoreUserData = {
-  historyGrid: number[];
-  numCorrect:number;
-  maxCorrect:number;
+  timesTableData:{
+    historyGrid: number[];
+    numCorrect:number;
+    maxCorrect:number;
+  }
   settings:SettingsType;
 };
 export default FireStoreUserData

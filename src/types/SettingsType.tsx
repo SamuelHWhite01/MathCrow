@@ -1,5 +1,5 @@
 type SettingsType = {
-    autoMode:boolean;
+    mode:string;
     speedMode:boolean;
 }
 export default SettingsType;

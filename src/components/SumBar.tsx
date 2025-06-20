@@ -4,6 +4,7 @@ import { useSoundPlayerContext } from '../context/SoundPlayerContext';
 import { useUserDataContext } from '../context/UserDataContext';
 import { debouncedSaveData } from '../utils/firebase';
 import { useAuth } from '../context/AuthContext';
+import { error } from 'console';
 function SumBar(){
     const { setFactors, factors } = useFactorsContext();
     const { user } = useAuth();
@@ -85,16 +86,26 @@ function SumBar(){
 
     const nextProblem = () =>{
         //console.log(userData)
-        userData.correctAnswer(factors.factor1-1, factors.factor2-1)
-        debouncedSaveData(user, userData)
+        const nextMode = userData.settings.mode
         setUserData(userData.clone())
-        if(userData.settings.autoMode)
+        if(nextMode === "TimesTableAuto")
         {
-            factors.autoNext(userData.historyGrid)
+            userData.correctTimesTable(factors.factor1-1, factors.factor2-1)
+            debouncedSaveData(user, userData)
+            factors.autoNext(userData.timesTableData.historyGrid)
         }
-        else
+        else if(nextMode === "SelectedFactor")
         {
-            factors.next();
+            userData.correctTimesTable(factors.factor1-1, factors.factor2-1)
+            debouncedSaveData(user, userData)
+            factors.selectedFactorNext();
+        }
+        else if (nextMode === "LongMult")
+        {
+            factors.longNext();
+        }
+        else{
+            console.error(" Unrecognized mode:", nextMode)
         }
         setFactors(factors.clone());
     }
