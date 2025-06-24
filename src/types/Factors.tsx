@@ -1,4 +1,5 @@
 import Carry from './Carry';
+import UserData from './UserData';
 class Factors {
     index: number;
     factor1: number;
@@ -98,17 +99,17 @@ class Factors {
         }
         return [answerOutput, carryOutput];
     }
-    public next(mode:string, historyGrid?:number[][]) // when supplied with a mode, will disambiguate and use the correct next
+    public next(userData:UserData) // when supplied with a mode, will disambiguate and use the correct next
     {
-        if(mode === "SelectedFactor")
+        if(userData.settings.mode === "SelectedFactor")
         {
             this.selectedFactorNext()
         }
-        else if( mode === "TimesTableAuto" && historyGrid)
+        else if( userData.settings.mode === "TimesTableAuto" && userData.timesTableData.historyGrid)
         {
-            this.autoNext(historyGrid)
+            this.autoNext(userData.timesTableData.historyGrid)
         }
-        else if( mode === "LongMult")
+        else if( userData.settings.mode === "LongMult")
         {
             this.longNext()
         }

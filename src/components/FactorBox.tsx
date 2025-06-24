@@ -7,8 +7,10 @@ import CarryAnimationBox from './CarryAnimationBox';
 import { useEffect, useRef, useState } from 'react';
 import { useFactorsContext } from '../context/FactorsContext';
 import Factors from '../types/Factors';
+import { useUserDataContext } from '../context/UserDataContext';
 function FactorBox(){
     const {factors} = useFactorsContext()
+    const {userData} = useUserDataContext()
     const productGridHeight = factors.factor2.toString().length;
     const productGridLength = factors.product.toString().length;
     const ANIMATION_DURATION = 1000;
@@ -26,10 +28,15 @@ function FactorBox(){
     } | null>(null);
     
     
-    useEffect(() => {
+    useEffect(() => { // the first answer will never be animated
         resetCounterRef.current = factors.resetCounter;
         setCarryAnimationProps(null)
     },[factors.resetCounter]);
+
+    useEffect(() => // when the mode is updated, refresh the current problem
+    {
+        factors.next(userData)
+    }, [userData.settings.mode])
 
     const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
     const autoCarry = (curfactors:Factors) => { //if the most recent carry needs to be transferred to the product grid (animationReady) It will do it

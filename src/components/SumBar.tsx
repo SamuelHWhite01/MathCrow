@@ -86,10 +86,9 @@ function SumBar(){
 
     const nextProblem = () =>{
         //console.log(userData)
-        const nextMode = userData.settings.mode
         userData.correct(factors);
         debouncedSaveData(user, userData);
-        factors.next(nextMode, userData.timesTableData.historyGrid)
+        factors.next(userData);
         setUserData(userData.clone())
         setFactors(factors.clone());
     }
