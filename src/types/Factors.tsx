@@ -12,7 +12,7 @@ class Factors {
     numSumCorrect: number = 0;
     carryList: Carry[] = [];
     resetCounter: number = 0;
-    difficulty:number = 1;
+    difficulty:number = 0;
     constructor() {
         this.index = 0;
         this.factorsOrder = [];
@@ -98,7 +98,7 @@ class Factors {
         }
         return [answerOutput, carryOutput];
     }
-    public next(mode:string, historyGrid?:number[][]) // when supplied with a mode, will disambiguate anduse the correct next
+    public next(mode:string, historyGrid?:number[][]) // when supplied with a mode, will disambiguate and use the correct next
     {
         if(mode === "SelectedFactor")
         {
@@ -167,7 +167,7 @@ class Factors {
     }
     public longNext() // used in long multiplication. References difficulty level
     {
-        let totalDigits = this.difficulty + 2;
+        let totalDigits = this.difficulty + 3;
         const f2len = Math.floor(totalDigits / 2);
         const f1len = totalDigits - f2len;
         this.factor1 = this.randomDigits(f1len);

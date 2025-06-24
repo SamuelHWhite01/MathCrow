@@ -87,26 +87,10 @@ function SumBar(){
     const nextProblem = () =>{
         //console.log(userData)
         const nextMode = userData.settings.mode
+        userData.correct(factors);
+        debouncedSaveData(user, userData);
+        factors.next(nextMode, userData.timesTableData.historyGrid)
         setUserData(userData.clone())
-        if(nextMode === "TimesTableAuto")
-        {
-            userData.correctTimesTable(factors.factor1-1, factors.factor2-1)
-            debouncedSaveData(user, userData)
-            factors.autoNext(userData.timesTableData.historyGrid)
-        }
-        else if(nextMode === "SelectedFactor")
-        {
-            userData.correctTimesTable(factors.factor1-1, factors.factor2-1)
-            debouncedSaveData(user, userData)
-            factors.selectedFactorNext();
-        }
-        else if (nextMode === "LongMult")
-        {
-            factors.longNext();
-        }
-        else{
-            console.error(" Unrecognized mode:", nextMode)
-        }
         setFactors(factors.clone());
     }
 

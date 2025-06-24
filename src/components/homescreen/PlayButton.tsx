@@ -6,10 +6,16 @@ function LoginButton(){
     const { loginWithGoogle,user } = useAuth();
     const isLoggedIn = useMemo(() => user != null, [user]);
     const navigate = useNavigate()
-    function handlePlayButton(){
+    async function handlePlayButton(){
         if(!isLoggedIn)
         {
-            loginWithGoogle();
+            try{
+                await loginWithGoogle();
+            }
+            catch (err){
+                console.log("Login failed: ", err);
+            }
+            
         }
         console.log("now swap to activity select screen")
         navigate('/ActivitySelect')

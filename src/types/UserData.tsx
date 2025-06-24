@@ -1,3 +1,5 @@
+import { error } from "console";
+import Factors from "./Factors";
 import FireStoreUserData from "./FireStoreUserData";
 import LongMultDataType from "./LongMultData";
 import SettingsType from "./SettingsType";
@@ -19,7 +21,7 @@ class UserData{
       speedMode: false,
     }
     this.longMultData = {
-      difficultyScore: [],
+      difficultyScore: [0,0,0,0,0],
       numCorrect:0
     }
   }
@@ -41,7 +43,22 @@ class UserData{
       }
     };
   }
-  public correctTimesTable(i:number, j:number)
+  public correct(factors:Factors) // disambiguation to save depending on mode
+  {
+    if(this.settings.mode === "SelectedFactor" || this.settings.mode === "TimesTableAuto")
+    {
+      this.correctTimesTable(factors.factor1, factors.factor2)
+    }
+    else if( this.settings.mode === "LongMult")
+    {
+      this.correctLongMult(factors.difficulty)
+    }
+    else
+    {
+      console.error("Incompatible mode: ", this.settings.mode)
+    }
+  }
+  private correctTimesTable(i:number, j:number)
   {
     this.timesTableData.historyGrid[i][j] +=1;
     this.timesTableData.numCorrect +=1;
@@ -50,16 +67,10 @@ class UserData{
       this.timesTableData.maxCorrect = this.timesTableData.historyGrid[i][j]
     }
   }
-  public correctLongMult(i:number)
+  private correctLongMult(i:number)
   {
-    if(this.longMultData.difficultyScore[i])
-    {
-      this.longMultData.difficultyScore[i] +=1;
-    }
-    else
-    {
-      this.longMultData.difficultyScore[i] = 1;
-    }
+
+    this.longMultData.difficultyScore[i] +=1;
     this.longMultData.numCorrect +=1;
   }
   public changeMode(newMode:string)
