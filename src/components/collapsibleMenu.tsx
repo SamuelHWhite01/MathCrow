@@ -28,9 +28,6 @@ function CollapsibleMenu(){
                 <nav>
                     <ul className="list-none p-0">
                         <li className="my-4">
-                            <LoginButton/>
-                            <LogoutButton/>
-                            <SaveButton/>
                             <AutoModeToggle/>
                             <SpeedModeToggle/>
                             <LevelSelector/>
