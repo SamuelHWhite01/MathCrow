@@ -11,7 +11,7 @@ function FactorBox(){
     const {factors} = useFactorsContext()
     const productGridHeight = factors.factor2.toString().length;
     const productGridLength = factors.product.toString().length;
-    const ANIMATION_DURATION = 500;
+    const ANIMATION_DURATION = 1000;
     const carryBarRef = useRef<(HTMLInputElement | null)[]>([]);
     const gridRef = useRef<(HTMLInputElement | null)[][]>(
         Array.from({ length: productGridHeight }, () =>
@@ -25,7 +25,7 @@ function FactorBox(){
         value: number | null;
     } | null>(null);
     
-
+    
     useEffect(() => {
         resetCounterRef.current = factors.resetCounter;
         setCarryAnimationProps(null)

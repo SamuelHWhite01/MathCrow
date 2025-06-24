@@ -8,6 +8,10 @@ type FireStoreUserData = {
     numCorrect:number;
     maxCorrect:number;
   }
+  longMultData:{
+    difficultyScore:number[];
+    numCorrect:number;
+  }
   settings:SettingsType;
 };
 export default FireStoreUserData

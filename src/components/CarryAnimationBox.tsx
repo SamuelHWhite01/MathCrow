@@ -38,6 +38,7 @@ export default function CarryAnimationBox({
         justifyContent: 'center',
         borderRadius: 4,
         fontSize:'8vh',
+        fontWeight:'bolder',
         transition: `transform ${duration}ms ease-in`,
         transform: active
           ? `translate(${to.left - from.left}px, ${to.top - from.top}px)`

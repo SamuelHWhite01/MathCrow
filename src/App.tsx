@@ -6,6 +6,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import HomeScreen from './screens/HomeScreen';
 import TimesTable from './screens/TimesTable';
 import LongMultiplication from './screens/LongMultiplication';
+import ActivitySelect from './screens/ActivitySelect';
 
 
 const App: React.FC = () => {
@@ -17,6 +18,7 @@ const App: React.FC = () => {
                 <Route path="/" element={<HomeScreen />} />
                 <Route path="/TimesTable" element={<TimesTable />} />
                 <Route path="/LongMultiplication" element={<LongMultiplication />} />
+                <Route path="/ActivitySelect" element={<ActivitySelect />} />
             </Routes>
         </Router>
         </UserDataProvider>

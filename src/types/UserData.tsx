@@ -1,10 +1,12 @@
 import FireStoreUserData from "./FireStoreUserData";
+import LongMultDataType from "./LongMultData";
 import SettingsType from "./SettingsType";
 import TimesTableDataType from "./TimesTableDataType";
 
 class UserData{
   settings:SettingsType;
-  timesTableData:TimesTableDataType
+  timesTableData:TimesTableDataType;
+  longMultData:LongMultDataType
   constructor()
   {
     this.timesTableData ={
@@ -15,6 +17,10 @@ class UserData{
     this.settings = {
       mode: "SelectedFactor",
       speedMode: false,
+    }
+    this.longMultData = {
+      difficultyScore: [],
+      numCorrect:0
     }
   }
   public toFireStore() {
@@ -28,6 +34,10 @@ class UserData{
       settings:{
         mode: this.settings.mode,
         speedMode: this.settings.speedMode
+      },
+      longMultData:{
+        difficultyScore:this.longMultData.difficultyScore,
+        numCorrect:this.longMultData.numCorrect
       }
     };
   }
@@ -42,7 +52,15 @@ class UserData{
   }
   public correctLongMult(i:number)
   {
-    
+    if(this.longMultData.difficultyScore[i])
+    {
+      this.longMultData.difficultyScore[i] +=1;
+    }
+    else
+    {
+      this.longMultData.difficultyScore[i] = 1;
+    }
+    this.longMultData.numCorrect +=1;
   }
   public changeMode(newMode:string)
   {
@@ -57,6 +75,7 @@ class UserData{
     const newUserData = new UserData
     newUserData.timesTableData = this.timesTableData
     newUserData.settings = this.settings
+    newUserData.longMultData = this.longMultData
     return newUserData
   }
   static fromFireStore(data:FireStoreUserData)
@@ -74,7 +93,12 @@ class UserData{
       mode: data.settings.mode,
       speedMode: data.settings.speedMode
     }
+    let longMultData = {
+      difficultyScore: data.longMultData.difficultyScore,
+      numCorrect:data.longMultData.numCorrect
+    }
     output.settings = settings;
+    output.longMultData = longMultData;
     return output;
   }
 

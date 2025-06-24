@@ -98,6 +98,21 @@ class Factors {
         }
         return [answerOutput, carryOutput];
     }
+    public next(mode:string, historyGrid?:number[][]) // when supplied with a mode, will disambiguate anduse the correct next
+    {
+        if(mode === "SelectedFactor")
+        {
+            this.selectedFactorNext()
+        }
+        else if( mode === "TimesTableAuto" && historyGrid)
+        {
+            this.autoNext(historyGrid)
+        }
+        else if( mode === "LongMult")
+        {
+            this.longNext()
+        }
+    }
     public selectedFactorNext() { // used when in level selector Mode
         if (this.index < 10) {
             this.index += 1;
