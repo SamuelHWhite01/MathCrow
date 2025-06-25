@@ -29,9 +29,13 @@ function ProductGrid({ gridRef, gridInput, setGridInput, autoCarry}: ProductGrid
         gridRef.current = Array.from({ length: productGridHeight }, () =>
             Array.from({ length: productGridLength }, () => null)
         );
+        const curfactors = factors.clone()
+        curfactors.correctGrid()
+        const nextOrder = curfactors.numGridCorrect
+        curfactors.correctGrid()
         if(activeCarry && //carry is active
-            factors.nextCarry()?.value === factors.productGridList[factors.numGridCorrect+1] && // is the answer after next
-            factors.nextCarry()?.place === 0) // is the final number in a row
+            curfactors.nextCarry()?.value === curfactors.productGridList[nextOrder] && // is the answer after next
+            rowComplete(curfactors)) // is the final number in a row
         {
             //console.log("Animation Ready ...");
             setAnimationReady(true);
@@ -44,15 +48,28 @@ function ProductGrid({ gridRef, gridInput, setGridInput, autoCarry}: ProductGrid
 
     useEffect(() => { // whenever there is a new carry
         //console.log("Active Carry:", activeCarry, "NextCarry:", factors.nextCarry(), "Answer after next:",factors.productGridList[factors.numGridCorrect+1] );
+        const curfactors = factors.clone()
+        curfactors.correctGrid()
+        const nextOrder = curfactors.numGridCorrect
+        curfactors.correctGrid()
         if(activeCarry && //carry is active
-            factors.nextCarry()?.value === factors.productGridList[factors.numGridCorrect+1] && // is the answer after next
-            factors.nextCarry()?.place === 0) // is the final number in a row
+            curfactors.nextCarry()?.value === curfactors.productGridList[nextOrder] && // is the answer after next
+            rowComplete(curfactors)) // is the final number in a row
         {
             //console.log("Animation Ready ...");
             setAnimationReady(true);
         }
     }, [factors.numCarryCorrect, activeCarry]);
+    const rowComplete = (curfactors:Factors) =>{
 
+        const endRowIndex = productGridLength * Math.ceil(curfactors.numGridCorrect / productGridLength);
+        for (let index = curfactors.numGridCorrect; index < endRowIndex; index++) {
+            if (curfactors.productGridList[index] !== 0) {
+                return false;
+            }
+        }
+        return true;
+    }
     const isLocked = (i: number, j: number) => {
         // used to determine if a number cell should be locked
         const unlockedLength = productGridLength - 1 - (factors.numGridCorrect % productGridLength);
@@ -76,21 +93,14 @@ function ProductGrid({ gridRef, gridInput, setGridInput, autoCarry}: ProductGrid
     const leadingZero = (curfactors:Factors) =>
         // given a coordinate, check to the left of it and if everything is zeroes, then consider the whole row correct
         {
-            let allZeroes = true;
             const endRowIndex = productGridLength * Math.ceil(curfactors.numGridCorrect / productGridLength);
-            for (let index = curfactors.numGridCorrect; index < endRowIndex; index++) {
-                if (curfactors.productGridList[index] !== 0) {
-                    allZeroes = false;
-                    break;
-                }
-            }
-            if (allZeroes) {
+            if (rowComplete(curfactors)) {
                 for (let index = curfactors.numGridCorrect; index < endRowIndex; index++) {
                     curfactors.correctGrid();
                 }
             }
             return curfactors;
-        };
+        }
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>, i: number, j: number) => {
         // console.log(factors.carryList);

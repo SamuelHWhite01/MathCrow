@@ -60,11 +60,11 @@ class UserData{
   }
   private correctTimesTable(i:number, j:number)
   {
-    this.timesTableData.historyGrid[i][j] +=1;
+    this.timesTableData.historyGrid[i-1][j-1] +=1;
     this.timesTableData.numCorrect +=1;
-    if (this.timesTableData.historyGrid[i][j] > this.timesTableData.maxCorrect)
+    if (this.timesTableData.historyGrid[i-1][j-1] > this.timesTableData.maxCorrect)
     {
-      this.timesTableData.maxCorrect = this.timesTableData.historyGrid[i][j]
+      this.timesTableData.maxCorrect = this.timesTableData.historyGrid[i-1][j-1]
     }
   }
   private correctLongMult(i:number)
