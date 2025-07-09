@@ -59,9 +59,10 @@ function CarryAddBar({carrySumBarRef, carrySumToGrid}: CarryAddBarProps){
         if(carrySumComplete)
         {
             let curfactors = factors.clone()
+            console.log(carrySumAnswer, carrySumNumCorrect)
             if(carrySumNumCorrect === 2) 
             {
-                if(carrySumAnswer[1] === curfactors.productGridList[curfactors.numGridCorrect+1]) // if the second digit can be carried directly to the grid
+                if(carrySumAnswer[0] === curfactors.productGridList[curfactors.numGridCorrect+1]) // if the second digit can be carried directly to the grid
                 {
                     curfactors = carrySumToGrid(curfactors, recentCarry.place-1)
                 }
@@ -96,13 +97,11 @@ function CarryAddBar({carrySumBarRef, carrySumToGrid}: CarryAddBarProps){
                 .toString()
                 .split('')
                 .map(Number)
-                .reverse();
 
             const reversedCarrySumList = factors.carrySumList[factors.numCarryCorrect]
                 .toString()
                 .split('')
                 .map(Number)
-                .reverse();
             setRawMultAnswer(reversedRawMultList)
             setCarrySumAnswer(reversedCarrySumList)
         }
@@ -133,7 +132,7 @@ function CarryAddBar({carrySumBarRef, carrySumToGrid}: CarryAddBarProps){
     const lockRawMultCell = (index:number) =>{
         if(recentCarry)
         {
-            const unlockedIndex = ((recentCarry?.place ?? 0) - rawMultNumCorrect)
+            const unlockedIndex = ((recentCarry?.place ?? 0)  - rawMultAnswer.length +1+ rawMultNumCorrect)
             if(rawMultComplete) // if the rawMult is complete, all cells should be locked
             {
                 return true;
@@ -149,7 +148,7 @@ function CarryAddBar({carrySumBarRef, carrySumToGrid}: CarryAddBarProps){
     const lockCarrySumCell = (index:number) =>{
         if(recentCarry)
         {
-            const unlockedIndex = ((recentCarry?.place ?? 0) - carrySumNumCorrect)
+           const unlockedIndex = ((recentCarry?.place ?? 0)  - carrySumAnswer.length +1+ carrySumNumCorrect)
             //console.log(unlockedIndex, index, recentCarry, carrySumNumCorrect)
             if(carrySumComplete || !rawMultComplete) // if the carrySum is complete, or if raw mult is not finished, then it should be locked
             {
@@ -163,7 +162,7 @@ function CarryAddBar({carrySumBarRef, carrySumToGrid}: CarryAddBarProps){
         }
     }
     const handleRawMultChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-        console.log(rawMultAnswer[rawMultNumCorrect])
+        //console.log(rawMultAnswer[rawMultNumCorrect])
         let value: number | '' = ''; // scrape the input to make it into the correct type to be put into gridInput
         if (event.target.value !== '') {
             value = Number(event.target.value);
@@ -185,13 +184,13 @@ function CarryAddBar({carrySumBarRef, carrySumToGrid}: CarryAddBarProps){
         }
       
         
-        console.log(rawMultNumCorrect, rawMultAnswer)
+        //console.log(rawMultNumCorrect, rawMultAnswer)
 
 
     };
 
     const handleCarrySumChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-        console.log(carrySumAnswer[carrySumNumCorrect])
+        //console.log(carrySumAnswer[carrySumNumCorrect])
         let value: number | '' = ''; // scrape the input to make it into the correct type to be put into gridInput
         if (event.target.value !== '') {
             value = Number(event.target.value);
@@ -213,7 +212,7 @@ function CarryAddBar({carrySumBarRef, carrySumToGrid}: CarryAddBarProps){
         }
 
 
-        console.log(carrySumNumCorrect, carrySumAnswer)
+        //console.log(carrySumNumCorrect, carrySumAnswer)
 
 
     };
@@ -222,7 +221,7 @@ function CarryAddBar({carrySumBarRef, carrySumToGrid}: CarryAddBarProps){
     function shouldFocusCarrySum(index:number) { /// WIP, need to add logic to focus the sum
         if(recentCarry)
         {
-            const unlockedIndex = ((recentCarry?.place ?? 0) - carrySumNumCorrect)
+            const unlockedIndex = ((recentCarry?.place ?? 0)  - carrySumAnswer.length +1+ carrySumNumCorrect)
             //console.log(unlockedIndex, index, recentCarry, carrySumNumCorrect)
             if(carrySumComplete || !rawMultComplete) // if the carrySum is complete, or if raw mult is not finished, then it should be locked
             {
@@ -239,7 +238,7 @@ function CarryAddBar({carrySumBarRef, carrySumToGrid}: CarryAddBarProps){
     function shouldFocusRawMult(index:number) { /// WIP, need to add logic to focus the rawMult
         if(recentCarry)
         {
-            const unlockedIndex = ((recentCarry?.place ?? 0) - rawMultNumCorrect)
+            const unlockedIndex = ((recentCarry?.place ?? 0)  - rawMultAnswer.length +1+ rawMultNumCorrect)
             if(rawMultComplete) // if the rawMult is complete, all cells should be locked
             {
                 return false;

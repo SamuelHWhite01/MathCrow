@@ -35,7 +35,8 @@ function ProductGrid({ gridRef, gridInput, setGridInput, carryBarToGrid}: Produc
         curfactors.correctGrid()
         if(activeCarry && //carry is active
             curfactors.nextCarry()?.value === curfactors.productGridList[nextOrder] && // is the answer after next
-            rowComplete(curfactors)) // is the final number in a row
+            rowComplete(curfactors) &&// is the final number in a row
+            curfactors.nextCarry()?.primary) // is a primary carry
         {
             //console.log("Animation Ready ...");
             setAnimationReady(true);
@@ -54,7 +55,8 @@ function ProductGrid({ gridRef, gridInput, setGridInput, carryBarToGrid}: Produc
         curfactors.correctGrid()
         if(activeCarry && //carry is active
             curfactors.nextCarry()?.value === curfactors.productGridList[nextOrder] && // is the answer after next
-            rowComplete(curfactors)) // is the final number in a row
+            rowComplete(curfactors) &&// is the final number in a row
+            curfactors.nextCarry()?.primary) // is a primary carry
         {
             //console.log("Animation Ready ...");
             setAnimationReady(true);
