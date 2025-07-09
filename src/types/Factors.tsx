@@ -1,19 +1,21 @@
 import Carry from './Carry';
 import UserData from './UserData';
 class Factors {
-    index: number;
-    factor1: number;
-    factor2: number;
-    product: number;
-    productList: number[] = [];
+    index: number; // how far through a set of timestable problems we are
+    factor1: number; // number version of the first factor
+    factor2: number; // number version of the second factor
+    product: number; // number version of the third factor
+    productList: number[] = []; // product deconstructed into individual digits
     factorsOrder: number[]; // random order of numbers to multiply against the level in times table mode
-    productGridList: number[] = [];
-    numGridCorrect: number = 0;
-    numCarryCorrect: number = 0;
-    numSumCorrect: number = 0;
-    carryList: Carry[] = [];
-    resetCounter: number = 0;
-    difficulty:number = 0;
+    productGridList: number[] = []; // answer to product grid in expected order
+    numGridCorrect: number = 0; // number times a correct answer for the product grid list has been given
+    numCarryCorrect: number = 0; // number of times the user has correctly answered a carry
+    numSumCorrect: number = 0; // number of times the user has correctly answered the sim
+    carryList: Carry[] = []; // list of carries that are present in the problem
+    rawMultList:number[] = []; // raw list of the value you get by multiplying each number in factor 1 against each number in factor 2
+    carrySumList:number[] = []; // list of carries added to the raw mult list fot he appropriate pairs
+    resetCounter: number = 0; // reset watched to update elements that use factors
+    difficulty:number = 0; // used to deermine length of long mulciplication
     constructor() {
         this.index = 0;
         this.factorsOrder = [];
@@ -24,7 +26,7 @@ class Factors {
         this.factor2 = this.factorsOrder[this.index];
         this.product = this.factor1 * this.factor2;
         this.productList = this.initProductList(this.product);
-        [this.productGridList, this.carryList] = this.initAnswers();
+        [this.productGridList, this.carryList, this.rawMultList, this.carrySumList] = this.initAnswers();
     }
     private initProductList(product:number)
     {
@@ -35,10 +37,12 @@ class Factors {
         }
         return output;
     }
-    private initAnswers(): [number[], Carry[]] {
+    private initAnswers(): [number[], Carry[], number[], number[]] {
         // will initialize the array with each number as it should be input. This will deprecate the productGrid component when it is complete
+        const carrySumOutput:number[] = [];
         const answerOutput: number[] = [];
         const carryOutput: Carry[] = [];
+        const rawMultOutput: number[] = [];
         const f1string: string = this.factor1.toString();
         const f2string: string = this.factor2.toString();
         let numZeroes: number = 0;
@@ -67,7 +71,14 @@ class Factors {
             ) {
                 const f1 = parseInt(f1string[j]);
                 const f2 = parseInt(f2string[i]);
+                let primaryCarry = false;
                 let product = f1 * f2 + carryVal;
+                if(f1*f2 === product) // simply check to see if the raw numbers themselves would prooduce a carry
+                {
+                    primaryCarry = true;
+                }
+                carrySumOutput.push(product)
+                rawMultOutput.push(f1*f2);
                 carryVal = Math.floor(product / 10);
                 product = product % 10;
                 answerOutput.push(product);
@@ -78,6 +89,7 @@ class Factors {
                         value: carryVal,
                         place: rowlen - curlen-1,
                         order: answerOutput.length-1,
+                        primary: primaryCarry,
                     };
                     carryOutput.push(newcarry);
                 }
@@ -97,7 +109,7 @@ class Factors {
             }
             numZeroes++;
         }
-        return [answerOutput, carryOutput];
+        return [answerOutput, carryOutput, rawMultOutput, carrySumOutput];
     }
     public next(userData:UserData) // when supplied with a mode, will disambiguate and use the correct next
     {
@@ -120,7 +132,7 @@ class Factors {
             this.factor2 = this.factorsOrder[this.index];
             this.product = this.factor1 * this.factor2;
             this.productList = this.initProductList(this.product);
-            [this.productGridList, this.carryList] = this.initAnswers();
+            [this.productGridList, this.carryList, this.rawMultList, this.carrySumList] = this.initAnswers();
             this.numGridCorrect = 0;
             this.numCarryCorrect = 0;
             this.numSumCorrect = 0;
@@ -131,7 +143,7 @@ class Factors {
             this.factor2 = this.factorsOrder[this.index];
             this.product = this.factor1 * this.factor2;
             this.productList = this.initProductList(this.product);
-            [this.productGridList, this.carryList] = this.initAnswers();
+            [this.productGridList, this.carryList, this.rawMultList, this.carrySumList] = this.initAnswers();
             this.numGridCorrect = 0;
             this.numCarryCorrect = 0;
             this.numSumCorrect = 0;
@@ -160,7 +172,7 @@ class Factors {
         this.factor2 = possibleFactors[randomIdx][1]+1;
         this.product = this.factor1 * this.factor2;
         this.productList = this.initProductList(this.product);
-        [this.productGridList, this.carryList] = this.initAnswers();
+        [this.productGridList, this.carryList, this.rawMultList, this.carrySumList] = this.initAnswers();
         this.numGridCorrect = 0;
         this.numCarryCorrect = 0;
         this.numSumCorrect = 0;
@@ -175,7 +187,7 @@ class Factors {
         this.factor2 = this.randomDigits(f2len);
         this.product = this.factor1 * this.factor2;
         this.productList = this.initProductList(this.product);
-        [this.productGridList, this.carryList] = this.initAnswers();
+        [this.productGridList, this.carryList, this.rawMultList, this.carrySumList] = this.initAnswers();
         this.numGridCorrect = 0;
         this.numCarryCorrect = 0;
         this.numSumCorrect = 0;
@@ -212,7 +224,9 @@ class Factors {
         newInstance.productGridList = this.productGridList;
         newInstance.carryList = this.carryList;
         newInstance.resetCounter = this.resetCounter;
-        newInstance.difficulty = this.difficulty
+        newInstance.difficulty = this.difficulty;
+        newInstance.rawMultList = this.rawMultList;
+        newInstance.carrySumList = this.carrySumList;
         return newInstance;
     }
 
@@ -229,7 +243,7 @@ class Factors {
         this.factor2 = f2;
         this.product = this.factor1 * this.factor2;
         this.productList = this.initProductList(this.product);
-        [this.productGridList, this.carryList] = this.initAnswers();
+        [this.productGridList, this.carryList, this.rawMultList, this.carrySumList] = this.initAnswers();
         this.numGridCorrect = 0;
         this.numCarryCorrect = 0;
         this.numSumCorrect = 0;

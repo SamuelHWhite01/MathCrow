@@ -4,7 +4,6 @@ import { useSoundPlayerContext } from '../context/SoundPlayerContext';
 import { useUserDataContext } from '../context/UserDataContext';
 import { debouncedSaveData } from '../utils/firebase';
 import { useAuth } from '../context/AuthContext';
-import { error } from 'console';
 function SumBar(){
     const { setFactors, factors } = useFactorsContext();
     const { user } = useAuth();

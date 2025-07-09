@@ -30,6 +30,18 @@ body {
     padding: 0;               
     box-sizing: border-box;   
 }
+
+.carry-cell {
+    width: 6vh;
+    height: 5vh;
+    font-size: 4vh;           
+    line-height: 5vh;        
+    border-radius: 10px;
+    border-width: 2px;
+    text-align: center;
+    padding: 0;               
+    box-sizing: border-box;   
+}
 .scoreboard-cell {
   border: 1px solid black;
   width: 1.5vh;

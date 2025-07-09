@@ -1,18 +1,18 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useFactorsContext } from '../context/FactorsContext';
 import { useSoundPlayerContext } from '../context/SoundPlayerContext';
+import Carry from '../types/Carry';
 
 type CarryBarProps = {
-  carryBarRefs: React.RefObject<(HTMLInputElement | null)[]>;
+  carryBarRef: React.RefObject<(HTMLInputElement | null)[]>;
+  carryInput:(number|'')[];
+  setCarryInput:React.Dispatch<React.SetStateAction<(number|'')[]>>;
 };
 
-function CarryBar({ carryBarRefs }: CarryBarProps){
+function CarryBar({carryBarRef, carryInput, setCarryInput }: CarryBarProps){
     const { setFactors, factors } = useFactorsContext();
     const {incrementStreak} = useSoundPlayerContext();
     const productGridLength = useMemo(() => factors.product.toString().length, [factors.product, factors.resetCounter]);
-    const [carryInput, setCarryInput] = useState<(number | '')[]>(() =>
-        Array.from({ length: productGridLength },() => '')
-    );
     const[carryCorrect, setCarryCorrect] = useState<boolean[]>([])
     const nextCarry = useMemo(()=> factors.nextCarry(),[factors.numCarryCorrect, factors.resetCounter])
 
@@ -40,6 +40,10 @@ function CarryBar({ carryBarRefs }: CarryBarProps){
         if (nextCarry.place !== i) {
             // if the next carry is not at the given value column, then dont display it
             return false;
+        }
+        if(nextCarry.primary === false) // if the next carry is a sum of a raw mult and existing carry, then it should be accessed directly
+        {
+            return false
         }
         if (nextCarry.order !== factors.numGridCorrect) {
             // if the next carry is not the next correct answer, then dont display it
@@ -77,25 +81,25 @@ function CarryBar({ carryBarRefs }: CarryBarProps){
 
     function shouldFocusCarryInput(
     index: number,
-    nextCarry: { place: number; order: number } | undefined,
+    nextCarry: Carry|undefined,
     numGridCorrect: number
     ): boolean {
         if (!nextCarry) return false;
-        return nextCarry.place === index && nextCarry.order === numGridCorrect;
+        return nextCarry.place === index && nextCarry.order === numGridCorrect && nextCarry.primary;
     }
 
     return (
         <div className='flex flex-row gap-2 justify-end'>
             {carryInput.map((_val, i) => (
                 <input
-                    className={`product-grid-cell ${showCarry(i) ? carryCorrect[i] ? 'bg-green-200':'' : 'invisible'} `}
+                    className={`carry-cell ${showCarry(i) ? carryCorrect[i] ? 'bg-green-200':'' : 'invisible'} `}
                     type="number"
                     value={carryInput[i]}
                     key={i}
                     onChange={(e) => handleChange(e, i)}
                     readOnly={carryCorrect[i]}
                     ref={(el) => {
-                        carryBarRefs.current[i] = el;
+                        carryBarRef.current[i] = el;
                         if (
                         el &&
                         shouldFocusCarryInput(i, nextCarry, factors.numGridCorrect)

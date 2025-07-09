@@ -1,0 +1,24 @@
+import { useState } from "react";
+import CarryAddBar from "./CarryAddBar";
+import CarryBar from "./CarryBar";
+import Factors from "../types/Factors";
+
+type CarryBoxProps = {
+  carryBarRef: React.RefObject<(HTMLInputElement | null)[]>;
+  carrySumBarRef: React.RefObject<(HTMLInputElement | null)[]>;
+  carrySumToGrid:(curfactors:Factors, index:number) => Factors;
+};
+function CarryBox({carryBarRef, carrySumBarRef, carrySumToGrid}: CarryBoxProps){
+    const [carryInput, setCarryInput] = useState<(number | '')[]>([]);
+    function carrySumToBar(){ // this should fire whenever a carry sum is complete and update the carry bar if applicable
+
+    }
+    return (
+        <div className="h-[20vh] flex flex-col justify-end">
+            <CarryBar carryBarRef={carryBarRef} carryInput={carryInput} setCarryInput={setCarryInput}/>
+            <CarryAddBar carrySumBarRef={carrySumBarRef} carrySumToGrid={carrySumToGrid}/>
+
+        </div>
+    );
+};
+export default CarryBox;

@@ -6,9 +6,9 @@ type ProductGridProps = {
   gridRef: React.RefObject<(HTMLInputElement | null)[][]>;
   gridInput:(number|'')[][];
   setGridInput:React.Dispatch<React.SetStateAction<(number|'')[][]>>;
-  autoCarry:(curfactors:Factors) => Factors;
+  carryBarToGrid:(curfactors:Factors) => Factors;
 };
-function ProductGrid({ gridRef, gridInput, setGridInput, autoCarry}: ProductGridProps){
+function ProductGrid({ gridRef, gridInput, setGridInput, carryBarToGrid}: ProductGridProps){
     const {factors,setFactors } = useFactorsContext();
     const {incrementStreak} = useSoundPlayerContext();
     const productGridHeight = useMemo(() => factors.factor2.toString().length, [factors.factor2]);
@@ -18,7 +18,7 @@ function ProductGrid({ gridRef, gridInput, setGridInput, autoCarry}: ProductGrid
     const [animationReady, setAnimationReady] = useState(false);
 
     const activeCarry: boolean = useMemo(() => ((factors.nextCarry()?.order ?? -1) === factors.numGridCorrect),[factors.numCarryCorrect, factors.resetCounter, factors.numGridCorrect])
-    
+    const recentCarry = useMemo(() => factors.carryList[factors.numCarryCorrect-1] ?? undefined, [factors.numCarryCorrect])
     //used to set input and correct grid to the corect shape to match the product grid
     useEffect(() => {
         const newGridShape: (number|'')[][] = Array.from({ length: productGridHeight }, () =>
@@ -77,6 +77,10 @@ function ProductGrid({ gridRef, gridInput, setGridInput, autoCarry}: ProductGrid
         if (activeCarry) {
             return true;
         }
+        if(recentCarry && recentCarry.order === factors.numGridCorrect-1)
+        {
+            return true;
+        }
         if (j === unlockedLength && i === unlockedHeight) {
             // only if the given i and j are next in the series are they NOT locked
             return false;
@@ -103,7 +107,7 @@ function ProductGrid({ gridRef, gridInput, setGridInput, autoCarry}: ProductGrid
         }
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>, i: number, j: number) => {
-        // console.log(factors.carryList);
+        //console.log(factors);
         // console.log(activeCarry)
         // console.log(factors.nextCarry())
         // console.log(factors.numGridCorrect)
@@ -127,7 +131,7 @@ function ProductGrid({ gridRef, gridInput, setGridInput, autoCarry}: ProductGrid
             let curfactors = factors.clone()
             curfactors.correctGrid();
             if(animationReady){
-               curfactors =  autoCarry(curfactors);
+               curfactors =  carryBarToGrid(curfactors);
                setAnimationReady(false);
             }
             curfactors = leadingZero(curfactors);
@@ -138,7 +142,7 @@ function ProductGrid({ gridRef, gridInput, setGridInput, autoCarry}: ProductGrid
     };
 
     function shouldFocusCell(i: number,j: number): boolean {
-        if (gridComplete || activeCarry) return false;
+        if (gridComplete || activeCarry || ( recentCarry && (recentCarry.order === factors.numGridCorrect-1))) return false;
 
         const expectedJ = productGridLength - 1 - (factors.numGridCorrect % productGridLength);
         const expectedI = Math.floor(factors.numGridCorrect / productGridLength);

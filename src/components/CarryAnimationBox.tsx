@@ -5,6 +5,7 @@ interface CarryAnimationBoxProps {
   to: DOMRect;
   value: number;
   duration?: number;
+  grow?:number;
   onAnimationEnd: () => void;
 }
 
@@ -13,6 +14,7 @@ export default function CarryAnimationBox({
   to,
   value,
   duration,
+  grow,
   onAnimationEnd,
 }: CarryAnimationBoxProps) {
   const [active, setActive] = useState(false);
@@ -37,12 +39,12 @@ export default function CarryAnimationBox({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 4,
-        fontSize:'8vh',
+        fontSize:'4vh',
         fontWeight:'bolder',
         transition: `transform ${duration}ms ease-in`,
         transform: active
-          ? `translate(${to.left - from.left}px, ${to.top - from.top}px)`
-          : 'translate(0px, 0px)',
+          ? `translate(${to.left - from.left}px, ${to.top - from.top}px) scale(${grow})`
+          : 'translate(0px, 0px) scale(1)',
         zIndex: 1000,
       }}
       onTransitionEnd={onAnimationEnd}

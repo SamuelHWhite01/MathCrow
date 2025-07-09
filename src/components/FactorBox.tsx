@@ -1,5 +1,4 @@
 import ProductGrid from './ProductGrid';
-import CarryBar from './CarryBar';
 import SumBar from './SumBar';
 import Factor1 from './Factor1';
 import Factor2 from './Factor2';
@@ -8,13 +7,16 @@ import { useEffect, useRef, useState } from 'react';
 import { useFactorsContext } from '../context/FactorsContext';
 import Factors from '../types/Factors';
 import { useUserDataContext } from '../context/UserDataContext';
+import CarryBox from './CarryBox';
 function FactorBox(){
     const {factors} = useFactorsContext()
     const {userData} = useUserDataContext()
     const productGridHeight = factors.factor2.toString().length;
     const productGridLength = factors.product.toString().length;
     const ANIMATION_DURATION = 1000;
+    const ANIMATION_GROW = 1.5;
     const carryBarRef = useRef<(HTMLInputElement | null)[]>([]);
+    const carrySumBarRef = useRef<(HTMLInputElement | null)[]>([]);
     const gridRef = useRef<(HTMLInputElement | null)[][]>(
         Array.from({ length: productGridHeight }, () =>
             Array.from({ length: productGridLength }, () => null)
@@ -39,7 +41,7 @@ function FactorBox(){
     }, [userData.settings.mode])
 
     const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-    const autoCarry = (curfactors:Factors) => { //if the most recent carry needs to be transferred to the product grid (animationReady) It will do it
+    const carryBarToGrid = (curfactors:Factors) => { //if the most recent carry needs to be transferred to the product grid (animationReady) It will do it
 
         const nextVal = curfactors.productGridList[curfactors.numGridCorrect]
         const nextLength = productGridLength - 1 - ((curfactors.numGridCorrect) % productGridLength);
@@ -73,12 +75,27 @@ function FactorBox(){
         curfactors.correctGrid();
         return curfactors;
     }
+
+    const carrySumToGrid = (curfactors:Factors, index:number) => { // fire when carry sum is complete to move the lowest value of the carry sum to the product
+        const nextVal = curfactors.productGridList[curfactors.numGridCorrect]
+        const nextLength = productGridLength - 1 - ((curfactors.numGridCorrect) % productGridLength);
+        const nextHeight = Math.floor((curfactors.numGridCorrect) / productGridLength); 
+        setGridInput((prev) => {
+            const newGrid = prev.map((row) => [...row]);
+            newGrid[nextHeight][nextLength] = nextVal;
+            return newGrid;
+        });
+        curfactors.correctGrid();
+        return curfactors;
+
+    }
+
     return (
         <div className="  leading-none m-auto flex flex-col items-end w-fit h-fit">
-            <CarryBar carryBarRefs={carryBarRef}/>
+            <CarryBox carryBarRef={carryBarRef} carrySumBarRef={carrySumBarRef} carrySumToGrid={carrySumToGrid}/>
             <Factor1/>
             <Factor2/>
-            <ProductGrid gridRef={gridRef} gridInput={gridInput} setGridInput={setGridInput} autoCarry={autoCarry}/>
+            <ProductGrid gridRef={gridRef} gridInput={gridInput} setGridInput={setGridInput} carryBarToGrid={carryBarToGrid}/>
             <SumBar/>
             {carryAnimationProps && carryAnimationProps.from && carryAnimationProps.to && (
                 <CarryAnimationBox
@@ -86,6 +103,7 @@ function FactorBox(){
                     to={carryAnimationProps.to}
                     value={carryAnimationProps.value!}
                     duration={ANIMATION_DURATION}
+                    grow={ANIMATION_GROW}
                     onAnimationEnd={() => {
                         setCarryAnimationProps(null);
                     }}
