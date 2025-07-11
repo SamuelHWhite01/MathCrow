@@ -7,13 +7,14 @@ type CarryBarProps = {
   carryBarRef: React.RefObject<(HTMLInputElement | null)[]>;
   carryInput:(number|'')[];
   setCarryInput:React.Dispatch<React.SetStateAction<(number|'')[]>>;
+  carryCorrect:boolean[];
+  setCarryCorrect:React.Dispatch<React.SetStateAction<boolean[]>>;
 };
 
-function CarryBar({carryBarRef, carryInput, setCarryInput }: CarryBarProps){
+function CarryBar({carryBarRef, carryInput, setCarryInput, carryCorrect, setCarryCorrect }: CarryBarProps){
     const { setFactors, factors } = useFactorsContext();
     const {incrementStreak} = useSoundPlayerContext();
     const productGridLength = useMemo(() => factors.product.toString().length, [factors.product, factors.resetCounter]);
-    const[carryCorrect, setCarryCorrect] = useState<boolean[]>([])
     const nextCarry = useMemo(()=> factors.nextCarry(),[factors.numCarryCorrect, factors.resetCounter])
 
     useEffect(() => {
@@ -78,7 +79,6 @@ function CarryBar({carryBarRef, carryInput, setCarryInput }: CarryBarProps){
         }
 
     };
-
     function shouldFocusCarryInput(
     index: number,
     nextCarry: Carry|undefined,
