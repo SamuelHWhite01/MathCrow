@@ -23,16 +23,25 @@ function FactorBox(){
     ));
     const resetCounterRef = useRef(factors.resetCounter);
     const [gridInput, setGridInput] = useState<(number | '')[][]>([]);
-    const [carryAnimationProps, setCarryAnimationProps] = useState<{
-        from: DOMRect | null;
-        to: DOMRect | null;
-        value: number | null;
-    } | null>(null);
-    
+    type CarryAnimationPropsType = {
+        from: DOMRect;
+        to: DOMRect;
+        value: number;
+        id:number;
+        duration:number;
+        grow:number;
+        onAnimationEnd: () => void;
+    }
+    const [carryAnimations, setCarryAnimations] = useState<CarryAnimationPropsType[]>([]);
+    // const [carryAnimationProps, setCarryAnimationProps] = useState<{
+    //     from: DOMRect | null;
+    //     to: DOMRect | null;
+    //     value: number | null;
+    // } | null>(null);
     
     useEffect(() => { // the first answer will never be animated
         resetCounterRef.current = factors.resetCounter;
-        setCarryAnimationProps(null)
+        setCarryAnimations([])
     },[factors.resetCounter]);
 
     useEffect(() => // when the mode is updated, refresh the current problem
@@ -57,7 +66,21 @@ function FactorBox(){
             // this needs to point to the real factors to listend for changes and abort the operation
             const snapshotResetCounter = curfactors.resetCounter
             //console.log(resetCounterRef.current, snapshotResetCounter)
-            setCarryAnimationProps({from:from, to:to, value:nextVal})
+            const animId = Date.now() + Math.random()
+            setCarryAnimations((prev) =>[
+                ...prev,
+                {
+                    id: animId, // unique id
+                    from,
+                    to,
+                    value: nextVal,
+                    duration: ANIMATION_DURATION,
+                    grow: ANIMATION_GROW,
+                    onAnimationEnd: () => {
+                        setCarryAnimations((prev) => prev.filter((anim) => anim.id !== animId));
+                    },
+                }
+            ])
             wait(ANIMATION_DURATION).then(() => {
                 //console.log(resetCounterRef.current, snapshotResetCounter)
                 if(resetCounterRef.current === snapshotResetCounter)
@@ -80,11 +103,44 @@ function FactorBox(){
         const nextVal = curfactors.productGridList[curfactors.numGridCorrect]
         const nextLength = productGridLength - 1 - ((curfactors.numGridCorrect) % productGridLength);
         const nextHeight = Math.floor((curfactors.numGridCorrect) / productGridLength); 
-        setGridInput((prev) => {
-            const newGrid = prev.map((row) => [...row]);
-            newGrid[nextHeight][nextLength] = nextVal;
-            return newGrid;
-        });
+        const startRef = carrySumBarRef.current[index] // this is where I want the animation to start
+        const endRef = gridRef.current[nextHeight][nextLength]
+        if(startRef && endRef)
+        {
+            const from = startRef.getBoundingClientRect();
+            const to = endRef.getBoundingClientRect();
+            // this needs to point to the real factors to listend for changes and abort the operation
+            const snapshotResetCounter = curfactors.resetCounter
+            //console.log(resetCounterRef.current, snapshotResetCounter)
+            const animId = Date.now() + Math.random()
+            setCarryAnimations((prev) =>[
+                ...prev,
+                {
+                    id: animId, // unique id
+                    from,
+                    to,
+                    value: nextVal,
+                    duration: ANIMATION_DURATION,
+                    grow: ANIMATION_GROW,
+                    onAnimationEnd: () => {
+                        setCarryAnimations((prev) => prev.filter((anim) => anim.id !== animId));
+                    },
+                }
+            ])
+            wait(ANIMATION_DURATION).then(() => {
+                //console.log(resetCounterRef.current, snapshotResetCounter)
+                if(resetCounterRef.current === snapshotResetCounter)
+                {
+                    //console.log("setting gridInput...")
+                    setGridInput((prev) => {
+                        const newGrid = prev.map((row) => [...row]);
+                        newGrid[nextHeight][nextLength] = nextVal;
+                        return newGrid;
+                    });
+                }
+            });
+
+        }
         curfactors.correctGrid();
         return curfactors;
 
@@ -97,18 +153,9 @@ function FactorBox(){
             <Factor2/>
             <ProductGrid gridRef={gridRef} gridInput={gridInput} setGridInput={setGridInput} carryBarToGrid={carryBarToGrid}/>
             <SumBar/>
-            {carryAnimationProps && carryAnimationProps.from && carryAnimationProps.to && (
-                <CarryAnimationBox
-                    from={carryAnimationProps.from}
-                    to={carryAnimationProps.to}
-                    value={carryAnimationProps.value!}
-                    duration={ANIMATION_DURATION}
-                    grow={ANIMATION_GROW}
-                    onAnimationEnd={() => {
-                        setCarryAnimationProps(null);
-                    }}
-                />
-            )}
+            {carryAnimations.map((props) => (
+                <CarryAnimationBox key = {props.id} {...props} />
+            ))}
         </div>
     );
 };

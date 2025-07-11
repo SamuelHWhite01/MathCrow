@@ -12,10 +12,11 @@ import Factors from '../types/Factors';
 type CarryAddBarProps = {
   carrySumBarRef: React.RefObject<(HTMLInputElement | null)[]>;
   carrySumToGrid:(curfactors:Factors, index:number) => Factors;
+  clearCarryBar:(index:number) =>void;
 };
 
 
-function CarryAddBar({carrySumBarRef, carrySumToGrid}: CarryAddBarProps){
+function CarryAddBar({carrySumBarRef, carrySumToGrid, clearCarryBar}: CarryAddBarProps){
     const { setFactors, factors } = useFactorsContext();
     const {incrementStreak} = useSoundPlayerContext();
     const productGridLength = useMemo(() => factors.product.toString().length, [factors.product, factors.resetCounter]);
@@ -58,21 +59,24 @@ function CarryAddBar({carrySumBarRef, carrySumToGrid}: CarryAddBarProps){
     useEffect(() => { // when the carry sum is completed, the values need to be propegated to the carry bar and the product grid
         if(carrySumComplete)
         {
+            
             let curfactors = factors.clone()
+            curfactors = carrySumToGrid(curfactors,recentCarry.place)
             console.log(carrySumAnswer, carrySumNumCorrect)
             if(carrySumNumCorrect === 2) 
             {
-                if(carrySumAnswer[0] === curfactors.productGridList[curfactors.numGridCorrect+1]) // if the second digit can be carried directly to the grid
+                if(carrySumAnswer[0] === curfactors.productGridList[curfactors.numGridCorrect]) // if the second digit can be carried directly to the grid
                 {
                     curfactors = carrySumToGrid(curfactors, recentCarry.place-1)
                 }
-                else //if the second digit needs to be moved to the carry box
+                else //if the second digit needs to be moved to the carry bar
                 {
                     // carrySumToBar
                 }
             }
-            curfactors = carrySumToGrid(curfactors,recentCarry.place)
+            clearCarryBar(recentCarry.place)
             setFactors(curfactors)
+
         }
     }, [carrySumComplete]);
 
