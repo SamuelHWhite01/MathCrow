@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { SoundPlayerProvider } from '../context/SoundPlayerProvider';
 import { FactorsProvider } from '../context/FactorsProvider';
-import FactorBox from '../components/FactorBox';
+import FactorBox from '../components/multiplication/FactorBox';
 import { useEffect } from 'react';
 import { useUserDataContext } from '../context/UserDataContext';
 const LongMultiplication = () => {

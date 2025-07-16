@@ -4,9 +4,9 @@
 
 
 import { useEffect, useState, useMemo, useRef } from 'react';
-import { useFactorsContext } from '../context/FactorsContext';
-import { useSoundPlayerContext } from '../context/SoundPlayerContext';
-import Factors from '../types/Factors';
+import { useFactorsContext } from 'context/FactorsContext';
+import { useSoundPlayerContext } from 'context/SoundPlayerContext';
+import Factors from 'types/Factors';
 
 
 type CarryAddBarProps = {

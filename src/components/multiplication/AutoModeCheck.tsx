@@ -1,6 +1,6 @@
-import { useAuth } from "../context/AuthContext";
-import { useUserDataContext } from "../context/UserDataContext";
-import { debouncedSaveData } from "../utils/firebase";
+import { useAuth } from "context/AuthContext";
+import { useUserDataContext } from "context/UserDataContext";
+import { debouncedSaveData } from "utils/firebase";
 
 function AutoModeToggle(){
 const {user} = useAuth()

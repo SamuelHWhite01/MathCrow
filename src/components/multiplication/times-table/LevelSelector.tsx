@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useFactorsContext } from '../context/FactorsContext';
-import { useUserDataContext } from '../context/UserDataContext';
-import { debouncedSaveData } from '../utils/firebase';
-import { useAuth } from '../context/AuthContext';
+import { useFactorsContext } from 'context/FactorsContext';
+import { useUserDataContext } from 'context/UserDataContext';
+import { debouncedSaveData } from 'utils/firebase';
+import { useAuth } from 'context/AuthContext';
 function LevelSelector(){
     const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     const [selected, setSelected] = useState<number>(0);

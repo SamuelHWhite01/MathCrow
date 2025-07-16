@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { doc, getDoc} from 'firebase/firestore';
-import { db, saveData } from '../utils/firebase';
-import { useAuth } from '../context/AuthContext';
+import { db, saveData } from 'utils/firebase';
+import { useAuth } from 'context/AuthContext';
 import { UserDataContext } from './UserDataContext';
-import UserData from '../types/UserData';
-import FireStoreUserData from '../types/FireStoreUserData';
+import UserData from 'types/UserData';
+import FireStoreUserData from 'types/FireStoreUserData';
 
 export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user } = useAuth(); // 🔑 use AuthContext instead of onAuthStateChanged again

@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import UserData from '../types/UserData';
+import UserData from 'types/UserData';
 
 export const UserDataContext = createContext<
   | {

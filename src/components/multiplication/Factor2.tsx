@@ -1,4 +1,4 @@
-import { useFactorsContext } from '../context/FactorsContext';
+import { useFactorsContext } from 'context/FactorsContext';
 function Factor2(){
     const { factors } = useFactorsContext();
 

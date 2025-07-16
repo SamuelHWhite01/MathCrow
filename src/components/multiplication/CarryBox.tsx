@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CarryAddBar from "./CarryAddBar";
 import CarryBar from "./CarryBar";
-import Factors from "../types/Factors";
+import Factors from "types/Factors";
 
 type CarryBoxProps = {
   carryBarRef: React.RefObject<(HTMLInputElement | null)[]>;

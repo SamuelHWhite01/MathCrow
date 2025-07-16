@@ -1,8 +1,5 @@
 import { useState } from 'react';
-import LevelSelector from './LevelSelector';
-import LoginButton from './LoginButton';
-import LogoutButton from './LogoutButton';
-import SaveButton from './SaveButton';
+import LevelSelector from './times-table/LevelSelector';
 import ScoreBoard from './ScoreBoard';
 import AutoModeToggle from './AutoModeCheck';
 import SpeedModeToggle from './SpeedModeCheck';

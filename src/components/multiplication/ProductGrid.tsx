@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo} from 'react';
-import { useFactorsContext } from '../context/FactorsContext';
-import { useSoundPlayerContext } from '../context/SoundPlayerContext';
-import Factors from '../types/Factors';
+import { useFactorsContext } from 'context/FactorsContext';
+import { useSoundPlayerContext } from 'context/SoundPlayerContext';
+import Factors from 'types/Factors';
 type ProductGridProps = {
   gridRef: React.RefObject<(HTMLInputElement | null)[][]>;
   gridInput:(number|'')[][];

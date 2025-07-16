@@ -1,9 +1,9 @@
 import {useState, useEffect, useMemo, useRef } from 'react';
-import { useFactorsContext } from '../context/FactorsContext';
-import { useSoundPlayerContext } from '../context/SoundPlayerContext';
-import { useUserDataContext } from '../context/UserDataContext';
-import { debouncedSaveData } from '../utils/firebase';
-import { useAuth } from '../context/AuthContext';
+import { useFactorsContext } from 'context/FactorsContext';
+import { useSoundPlayerContext } from 'context/SoundPlayerContext';
+import { useUserDataContext } from 'context/UserDataContext';
+import { debouncedSaveData } from 'utils/firebase';
+import { useAuth } from 'context/AuthContext';
 function SumBar(){
     const { setFactors, factors } = useFactorsContext();
     const { user } = useAuth();

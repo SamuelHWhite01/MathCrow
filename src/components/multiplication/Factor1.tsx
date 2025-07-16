@@ -1,4 +1,4 @@
-import { useFactorsContext } from '../context/FactorsContext';
+import { useFactorsContext } from 'context/FactorsContext';
 function Factor1(){
     const { factors } = useFactorsContext();
     const highlightF1 = (i: number) =>

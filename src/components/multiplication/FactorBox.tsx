@@ -4,9 +4,9 @@ import Factor1 from './Factor1';
 import Factor2 from './Factor2';
 import CarryAnimationBox from './CarryAnimationBox';
 import { useEffect, useRef, useState } from 'react';
-import { useFactorsContext } from '../context/FactorsContext';
-import Factors from '../types/Factors';
-import { useUserDataContext } from '../context/UserDataContext';
+import { useFactorsContext } from 'context/FactorsContext';
+import Factors from 'types/Factors';
+import { useUserDataContext } from 'context/UserDataContext';
 import CarryBox from './CarryBox';
 function FactorBox(){
     const {factors} = useFactorsContext()

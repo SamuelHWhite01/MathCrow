@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { SoundPlayerContext } from './SoundPlayerContext.tsx';
-import SoundPlayer from '../types/SoundPlayer.tsx';
+import SoundPlayer from 'types/SoundPlayer.tsx';
 
 export function SoundPlayerProvider({ children }: { children: React.ReactNode }) {
     const [soundPlayer] = useState(new SoundPlayer());

@@ -1,7 +1,7 @@
-import { useEffect, useState, useMemo } from 'react';
-import { useFactorsContext } from '../context/FactorsContext';
-import { useSoundPlayerContext } from '../context/SoundPlayerContext';
-import Carry from '../types/Carry';
+import { useEffect, useMemo } from 'react';
+import { useFactorsContext } from 'context/FactorsContext';
+import { useSoundPlayerContext } from 'context/SoundPlayerContext';
+import Carry from 'types/Carry';
 
 type CarryBarProps = {
   carryBarRef: React.RefObject<(HTMLInputElement | null)[]>;

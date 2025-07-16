@@ -1,8 +1,8 @@
 // screens/HomeScreen.tsx
 //import { Link } from 'react-router-dom';
 import { SoundPlayerProvider } from '../context/SoundPlayerProvider';
-import CollapsibleMenu from '../components/CollapsibleMenu';
-import FactorBox from '../components/FactorBox';
+import CollapsibleMenu from '../components/multiplication/CollapsibleMenu';
+import FactorBox from '../components/multiplication/FactorBox';
 import { FactorsProvider } from '../context/FactorsProvider';
 import { useUserDataContext } from '../context/UserDataContext';
 import { useEffect } from 'react';

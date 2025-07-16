@@ -1,5 +1,5 @@
-import { useFactorsContext } from "../context/FactorsContext";
-import { useUserDataContext } from "../context/UserDataContext";
+import { useFactorsContext } from "context/FactorsContext";
+import { useUserDataContext } from "context/UserDataContext";
 function ScoreBoard(){
     const maxColor = [0,255,128]
     const {userData} = useUserDataContext()

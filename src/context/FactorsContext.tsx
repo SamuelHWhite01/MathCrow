@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import Factors from '../types/Factors';
+import Factors from 'types/Factors';
 
 export const FactorsContext = createContext<
   | {
