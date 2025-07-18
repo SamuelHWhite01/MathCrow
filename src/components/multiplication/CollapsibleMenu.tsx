@@ -13,7 +13,13 @@ function CollapsibleMenu(){
 
     return (
         <div
-            className={`fixed top-0 left-0 h-full bg-[#2c3e50] text-[#ecf0f1] overflow-x-hidden transition-all duration-300 p-4 ${isOpen ? 'w-[200px]' : 'w-[50px]'}`}
+            className={`fixed
+                top-0 left-0 h-full
+                bg-[#2c8bcd]
+                text-[#ecf0f1] 
+                overflow-x-hidden 
+                transition-all duration-300 p-0 
+                ${isOpen ? 'w-[20vw]' : 'w-[3vw]'}`}
         >
             <button
                 className="bg-none border-none text-inherit text-2xl cursor-pointer outline-none mb-4"

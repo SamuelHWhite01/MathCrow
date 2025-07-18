@@ -1,6 +1,7 @@
 import { useAuth } from "context/AuthContext";
 import { useUserDataContext } from "context/UserDataContext";
 import { debouncedSaveData } from "utils/firebase";
+import { Switch } from "@/components/ui/switch"
 
 function AutoModeToggle(){
 const {user} = useAuth()
@@ -19,15 +20,14 @@ const handleChange = () => {
   setUserData(userData.clone())
 };
   return (
-        <div> 
-            <h1 className= " font-bold text-[2vh]">Auto Mode</h1>
-        <input
-        type="checkbox"
-        name="AutoModeToggle"
-        className="h-[3vh] w-[3vh] accent-[rgb(20,128,223)] mr-2 cursor-pointer rounded"
-        checked={userData.settings.mode === "TimesTableAuto"}
-        onChange={handleChange}
+        <div className="bg-[#589ccc] flex flex-row h-[5vh]"> 
+            <h1 className= "flex m-auto font-bold text-[2vh]">Auto Mode</h1>
+        <Switch
+          checked={userData.settings.mode === "TimesTableAuto"}
+          onCheckedChange={handleChange}
+          className=" h-[3vh] flex m-auto bg-gray-300 data-[state=checked]:bg-[#08e4ac]"
         />
+
         </div>
   );
 };

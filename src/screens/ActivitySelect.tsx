@@ -1,9 +1,9 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const HomeScreen = () => {
   const navigate = useNavigate()
   return (
     <div className='flex flex-col m-auto items-center gap-5'>
-      <div className='text-[10vh]'>
+      <div className='text-[10vh] mb-[10vh]'>
         Select an activity
       </div>
       <div className=' flex flex-row m-auto items-center gap-5'>
@@ -17,13 +17,6 @@ const HomeScreen = () => {
           </button>
           Times Table
         </div>
-        <div className='h-[20vh] w-[20vh] bg-blue-300 rounded'>
-
-        </div>
-      </div>
-      <div className='leading-none m-auto flex flex-col w-fit h-fit gap-10'>
-        <Link to="/TimesTable">Go to Times Table</Link>
-        <Link to="/LongMultiplication">Go to Long Multiplication</Link>
       </div>
     </div>
   );

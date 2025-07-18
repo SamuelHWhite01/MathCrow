@@ -1,4 +1,4 @@
-const soundModules = import.meta.glob('@/assets/sounds/orch-hit-*.mp3', { eager: true });
+const soundModules = import.meta.glob('../assets/sounds/orch-hit-*.mp3', { eager: true });
 const soundPaths = Object.entries(soundModules)
   .sort(([a], [b]) => {
     // Extract the numbers from the filenames
