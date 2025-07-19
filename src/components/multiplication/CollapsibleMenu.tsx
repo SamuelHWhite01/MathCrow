@@ -21,7 +21,7 @@ function CollapsibleMenu(){
                 transition-all duration-300 p-0 
                 ${isOpen ? 'w-[20vw]' : 'w-[3vw]'}`}>
             <button
-                className="bg-none border-none text-inherit text-2xl cursor-pointer outline-none mb-4"
+                className="bg-none border-none text-inherit text-2xl cursor-pointer outline-none mb-4 flex mr-0 justify-end"
                 onClick={toggleMenu}>
                 {isOpen ? '<' : '>'}
             </button>

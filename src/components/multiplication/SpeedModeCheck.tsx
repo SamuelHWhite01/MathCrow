@@ -19,7 +19,9 @@ function SpeedModeToggle(){
             <Switch
             checked={userData.settings?.speedMode ?? false}
             onCheckedChange={handleChange}
-            className=" h-[3vh] flex m-auto bg-gray-300 data-[state=checked]:bg-[#08e4ac]"
+            className=" h-[3vh] flex  m-auto mr-5 bg-gray-300 data-[state=checked]:bg-[#08e4ac]
+                hover:cursor-pointer 
+                hover:scale-110 transform transition-transform duration-150"
             />
         </div>
     );
