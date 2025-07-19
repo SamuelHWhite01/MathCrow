@@ -19,26 +19,19 @@ function CollapsibleMenu(){
                 text-[#ecf0f1] 
                 overflow-x-hidden 
                 transition-all duration-300 p-0 
-                ${isOpen ? 'w-[20vw]' : 'w-[3vw]'}`}
-        >
+                ${isOpen ? 'w-[20vw]' : 'w-[3vw]'}`}>
             <button
                 className="bg-none border-none text-inherit text-2xl cursor-pointer outline-none mb-4"
-                onClick={toggleMenu}
-            >
+                onClick={toggleMenu}>
                 {isOpen ? '<' : '>'}
             </button>
             {isOpen && (
-                <nav>
-                    <ul className="list-none p-0">
-                        <li className="my-4">
-                            <AutoModeToggle/>
-                            <SpeedModeToggle/>
-                            <LevelSelector/>
-                            <ScoreBoard/>
-                            <Link to="/">Go to Home Screen</Link>
-                        </li>
-                    </ul>
-                </nav>
+                <div className='flex flex-col gap-2'>
+                    <AutoModeToggle/>
+                    <SpeedModeToggle/>
+                    <LevelSelector/>
+                    <ScoreBoard/>
+                </div>
             )}
         </div>
     );
