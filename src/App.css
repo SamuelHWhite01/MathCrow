@@ -45,16 +45,11 @@ body {
     padding: 0;               
     box-sizing: border-box;   
 }
-.scoreboard-cell {
-  border: 1px solid black;
-  width: 1.5vh;
-  height: 1.5vh;
-  border-radius: 0.25rem; /* This is Tailwind's default 'rounded' */
-}
 
 .scoreboard-cell:hover {
-  transform: scale(1.2);
+  transform: scale(1.4);
   cursor: pointer;
+  border: 1px solid black
 }
 .scoreboard-cell:active {
   transform: scale(0.97);

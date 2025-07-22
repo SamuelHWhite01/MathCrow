@@ -48,16 +48,20 @@ function LevelSelector(){
 
         // </div>
         <div>
-
+            <div className='bg-[#305c84] mb-1 h-[4vh] flex items-center justify-center'>
+                <h1 className= "font-bold text-[3vh]">Factor Practice</h1>
+            </div>
             <div className='grid grid-cols-3'>
                 {options.map(
                     (option)=>
                         <button
+                        key={option}
                         onClick={(_e) =>handleChange(option)}
-                        className={`${selected === option ? 'bg-[#08e4ac]':'bg-[#589ccc]' }
+                        className={`${((selected === option) && (userData.settings.mode === 'SelectedFactor')) ? 'bg-[#08e4ac]':'bg-[#589ccc]' }
                             h-[5vh]
                             m-1 
                             rounded
+                            font-bold
                             hover:cursor-pointer
                             hover:scale-110 transform transition-transform duration-150
                             `} 

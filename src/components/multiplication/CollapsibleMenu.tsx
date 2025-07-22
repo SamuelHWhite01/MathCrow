@@ -3,7 +3,6 @@ import LevelSelector from './times-table/LevelSelector';
 import ScoreBoard from './ScoreBoard';
 import AutoModeToggle from './AutoModeCheck';
 import SpeedModeToggle from './SpeedModeCheck';
-import { Link } from 'react-router-dom';
 
 function CollapsibleMenu(){
     const [isOpen, setIsOpen] = useState(true);
@@ -21,9 +20,13 @@ function CollapsibleMenu(){
                 transition-all duration-300 p-0 
                 ${isOpen ? 'w-[20vw]' : 'w-[3vw]'}`}>
             <button
-                className="bg-none border-none text-inherit text-2xl cursor-pointer outline-none mb-4 flex mr-0 justify-end"
+                className=" text-[4vh] font-bold h-[4vh] items-center justify-center p-2
+                    hover:cursor-pointer hover:scale-110 transform transition-transform duration-150
+                    bg-[#589ccc]
+                    flex m-1 ml-auto
+                    rounded"
                 onClick={toggleMenu}>
-                {isOpen ? '<' : '>'}
+                {isOpen ? '←' : '→'}
             </button>
             {isOpen && (
                 <div className='flex flex-col gap-2'>
