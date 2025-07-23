@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useFactorsContext } from 'context/FactorsContext';
 import { useUserDataContext } from 'context/UserDataContext';
 import { debouncedSaveData } from 'utils/firebase';

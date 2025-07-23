@@ -111,12 +111,13 @@ function ScoreBoard(){
             </button>
             {
                 expanded &&(
-                    <div className="fixed
+                    <button className="fixed
                     top-0 left-[20vw]
                     h-full
                     w-[80vw]
-                    bg-black/50">
-                        <div className="flex flex-col gap-4 mt-[10vh] mr-auto ml-auto w-fit">
+                    bg-black/50"
+                    onClick={handleExpand}>
+                        <div className="flex flex-col gap-4 mr-auto ml-auto w-fit">
                             <div className="flex flex-row mx-auto w-full">
                                 <button
                                     onClick={handleExpand} 
@@ -136,26 +137,41 @@ function ScoreBoard(){
                                 </div>
                             </div>
                             <div className="mr-auto ml-auto">
-                                {userData.timesTableData.historyGrid.map((row, i) => (
-                                <div key={i} className=" h-auto flex flex-row justify-center">
-                                    {row.map((val, j) => (
-                                        
-                                        <button
+                                {expandedGrid.map((row, i) => (
+                            <div key={i} className="h-auto flex flex-row justify-center">
+                                {row.map((val, j) => {
+                                const isHeader = i === 0 || j === 0;
+
+                                if (isHeader) {
+                                    return (
+                                        <div
                                             key={`${i}-${j}`}
-                                            className={`scoreboard-cell h-[2vw] w-[2vw] border-black
-                                                border-r border-b
+                                            className={`h-[2vw] w-[2vw] flex items-center justify-center
+                                                font-bold bg-[#2c8bcd] 
+                                                border-r border-b border-black
                                                 ${ (i===0) ? 'border-t':''}
                                                 ${ (j===0) ? 'border-l':''}
-                                                ${ (i===0 && j===0) ? 'rounded-tl':''} 
-                                                ${ (i===11 && j===0) ? 'rounded-bl':''} 
-                                                ${ (i===0 && j===11) ? 'rounded-tr':''} 
-                                                ${ (i===11 && j===11) ? 'rounded-br':''} 
-                                                `}
-                                            style={{ backgroundColor: `rgb(${getColor(val).join(',')})` }}
-                                            title = {titleGenerator(i+1,j+1, val)}
-                                            onClick={ () => handleExpandScoreboardClick(i+1,j+1)}
-                                        />
-                                    ))}
+                                                ${i === 0 && j === 0 ? 'rounded-tl' : ''}
+                                                ${i === 12 && j === 0 ? 'rounded-bl' : ''}
+                                                ${i === 0 && j === 12 ? 'rounded-tr' : ''}`}>
+                                            {val}
+                                        </div>
+                                    );
+                                }
+
+                                const numAnswered = userData.timesTableData.historyGrid[i - 1][j - 1];
+                                return (
+                                    <button
+                                        key={`${i}-${j}`}
+                                        className={`scoreboard-cell h-[2vw] w-[2vw] border-black
+                                        border-r border-b
+                                        ${i === 12 && j === 12 ? 'rounded-br' : ''}
+                                        `}
+                                        style={{ backgroundColor: `rgb(${getColor(numAnswered).join(',')})` }}
+                                        title={titleGenerator(i, j, numAnswered)}
+                                        onClick={() => handleExpandScoreboardClick(i, j)}/>
+                                );
+                                })}
                                 </div>
                                 ))}
                             </div>
@@ -163,7 +179,7 @@ function ScoreBoard(){
                                 Total Score: {userData.timesTableData.numCorrect}
                             </div>
                         </div>
-                    </div>
+                    </button>
                 )
             }
         </div>

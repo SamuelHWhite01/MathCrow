@@ -13,7 +13,7 @@ const HomeScreen = () => {
           bg-cover
           rounded 
           hover:cursor-pointer hover:scale-110 transform transition-transform duration-150'
-          onClick={(e) => navigate('/TimesTable')}>        
+          onClick={(_e) => navigate('/TimesTable')}>        
           </button>
           Times Table
         </div>

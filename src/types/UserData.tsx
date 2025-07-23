@@ -1,4 +1,3 @@
-import { error } from "console";
 import Factors from "./Factors";
 import FireStoreUserData from "./FireStoreUserData";
 import LongMultDataType from "./LongMultData";

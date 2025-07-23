@@ -11,9 +11,9 @@ type CarryBoxProps = {
 function CarryBox({carryBarRef, carrySumBarRef, carrySumToGrid}: CarryBoxProps){
     const [carryInput, setCarryInput] = useState<(number | '')[]>([]);
     const[carryCorrect, setCarryCorrect] = useState<boolean[]>([])
-    function carrySumToBar(){ // this should fire whenever a carry sum is complete and update the carry bar if applicable
+    // function carrySumToBar(){ // this should fire whenever a carry sum is complete and update the carry bar if applicable
 
-    }
+    // }
     function clearCarryBar(index:number){ // will clear a given index of the carryBar
         let outputBar = carryInput
         outputBar[index] = ''
