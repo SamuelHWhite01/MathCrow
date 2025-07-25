@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-function LoginButton(){
+function PlayButton(){
     const { loginWithGoogle,user } = useAuth();
     const isLoggedIn = useMemo(() => user != null, [user]);
     const navigate = useNavigate()
@@ -17,7 +17,6 @@ function LoginButton(){
             }
             
         }
-        console.log("now swap to activity select screen")
         navigate('/ActivitySelect')
         
     }
@@ -29,4 +28,4 @@ function LoginButton(){
   );
 };
 
-export default LoginButton;
+export default PlayButton;

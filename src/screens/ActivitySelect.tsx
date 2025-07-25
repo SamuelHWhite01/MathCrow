@@ -15,7 +15,7 @@ const HomeScreen = () => {
           hover:cursor-pointer hover:scale-110 transform transition-transform duration-150'
           onClick={(_e) => navigate('/TimesTable')}>        
           </button>
-          Times Table
+          Multiplication
         </div>
       </div>
     </div>

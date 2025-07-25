@@ -19,6 +19,7 @@ function CollapsibleMenu(){
                 overflow-x-hidden 
                 transition-all duration-300 p-0 
                 ${isOpen ? 'w-[20vw]' : 'w-[3vw]'}`}>
+            <div className='h-[8vh]'/>
             <button
                 className=" text-[4vh] font-bold h-[4vh] items-center justify-center p-2
                     hover:cursor-pointer hover:scale-110 transform transition-transform duration-150
