@@ -18,7 +18,7 @@ const App: React.FC = () => {
         <Router>
             <Layout>
                 <Routes>
-                    <Route path="/" element={<HomeScreen />} />
+                    <Route path="/MathCrow" element={<HomeScreen />} />
                     <Route element={<ProtectedRoute />}>
                         <Route path="/TimesTable" element={<TimesTable />} />
                         <Route path="/LongMultiplication" element={<LongMultiplication />} />

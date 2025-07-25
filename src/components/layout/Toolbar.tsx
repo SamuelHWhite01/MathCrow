@@ -16,7 +16,7 @@ const Toolbar: React.FC = () => {
           rounded 
           hover:cursor-pointer hover:scale-110 transform transition-transform duration-150
           m-4'
-          onClick={(_e) => navigate('/')}>
+          onClick={(_e) => navigate('/MathCrow')}>
           </button>
          <button className='h-[6vh] w-[25vh] font-bold bg-[url("/Activities-button.png")]
             bg-cover
