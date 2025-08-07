@@ -7,7 +7,9 @@ import TimesTableDataType from "./TimesTableDataType";
 class UserData{
   settings:SettingsType;
   timesTableData:TimesTableDataType;
-  longMultData:LongMultDataType
+  longMultData:LongMultDataType;
+  isTeacher:boolean;
+  classroomId:string;
   constructor()
   {
     this.timesTableData ={
@@ -23,6 +25,8 @@ class UserData{
       difficultyScore: [0,0,0,0,0],
       numCorrect:0
     }
+    this.isTeacher = false;
+    this.classroomId = "";
   }
   public toFireStore() {
     const saveGrid = this.timesTableData.historyGrid.flat()
@@ -39,7 +43,9 @@ class UserData{
       longMultData:{
         difficultyScore:this.longMultData.difficultyScore,
         numCorrect:this.longMultData.numCorrect
-      }
+      },
+      isTeacher:this.isTeacher,
+      classroomId:this.classroomId,
     };
   }
   public correct(factors:Factors) // disambiguation to save depending on mode
@@ -109,6 +115,8 @@ class UserData{
     }
     output.settings = settings;
     output.longMultData = longMultData;
+    output.isTeacher = data.isTeacher;
+    output.classroomId = data.classroomId;
     return output;
   }
 
