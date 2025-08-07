@@ -13,5 +13,7 @@ type FireStoreUserData = {
     numCorrect:number;
   }
   settings:SettingsType;
+  isTeacher:boolean;
+  classroomId:string;
 };
 export default FireStoreUserData
