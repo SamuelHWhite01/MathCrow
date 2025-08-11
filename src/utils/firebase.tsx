@@ -58,3 +58,12 @@ export const createClassroom = async () =>{ // will generate a unique 5 digit co
     }
   return code;
 }
+export const checkId = async (code:string) =>{
+  const docRef = doc(db, 'classrooms', code);
+  let docSnap = await getDoc(docRef); // check to see if there is information here
+  if(docSnap.exists())
+  {
+    return true;
+  }
+  return false;
+}

@@ -4,11 +4,12 @@ import React, { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
-import SetupClassroom from "./SetupClassroom";
+import { useUserDataContext } from "@/context/UserDataContext";
 
 const Toolbar: React.FC = () => {
     const navigate = useNavigate()
     const { user } = useAuth();
+    const {userData} = useUserDataContext();
     const isLoggedIn = useMemo(() => user != null, [user]);
   return (
     <header className=" fixed top-0 left-0 right-0 z-50 bg-white shadow-md flex flex-row h-[8vh] items-center gap-2 text-center">
@@ -32,7 +33,9 @@ const Toolbar: React.FC = () => {
                     Welcome {user?.displayName}!
                 </div>
                 <LogoutButton/>
-                <SetupClassroom/>
+                <div className="h-auto w-auto text-[2vh] font-bold m-2">
+                    {userData.classroomId}
+                </div>
            </div>
           )}
             { !isLoggedIn &&(

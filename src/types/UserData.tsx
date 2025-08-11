@@ -100,6 +100,8 @@ class UserData{
     newUserData.timesTableData = this.timesTableData
     newUserData.settings = this.settings
     newUserData.longMultData = this.longMultData
+    newUserData.classroomId = this.classroomId
+    newUserData.isTeacher = this.isTeacher
     return newUserData
   }
   static fromFireStore(data:FireStoreUserData)
