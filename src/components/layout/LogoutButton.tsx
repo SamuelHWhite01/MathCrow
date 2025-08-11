@@ -1,6 +1,6 @@
-import { useAuth } from "../context/AuthContext";
-import { saveData } from "../utils/firebase";
-import { useUserDataContext } from "../context/UserDataContext";
+import { useAuth } from "../../context/AuthContext";
+import { saveData } from "../../utils/firebase";
+import { useUserDataContext } from "../../context/UserDataContext";
 
 function LogoutButton(){
   const { logout,user } = useAuth();

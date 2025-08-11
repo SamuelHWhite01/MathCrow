@@ -86,6 +86,14 @@ class UserData{
   {
     this.settings.speedMode = !this.settings.speedMode
   }
+  public toggleTeacher()
+  {
+    this.isTeacher = !this.isTeacher;
+  }
+  public setClassroomId(id:string)
+  {
+    this.classroomId = id;
+  }
   public clone()
   {
     const newUserData = new UserData
@@ -119,6 +127,16 @@ class UserData{
     output.classroomId = data.classroomId;
     return output;
   }
+  static generateCode(length: number = 5): string {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let code = '';
+    for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * chars.length);
+    code += chars[randomIndex];
+    }
+    return code;
+  }
+
 
 };
 export default UserData

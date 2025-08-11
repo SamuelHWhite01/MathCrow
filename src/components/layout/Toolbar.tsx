@@ -2,8 +2,9 @@
 import { useAuth } from "@/context/AuthContext";
 import React, { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import LogoutButton from "../LogoutButton";
-import LoginButton from "../LoginButton";
+import LogoutButton from "./LogoutButton";
+import LoginButton from "./LoginButton";
+import SetupClassroom from "./SetupClassroom";
 
 const Toolbar: React.FC = () => {
     const navigate = useNavigate()
@@ -26,11 +27,12 @@ const Toolbar: React.FC = () => {
 
           </button> 
           { isLoggedIn &&(
-            <div className="flex flex-row m-auto mr-2">
+            <div className="flex flex-row m-auto mr-2 gap-5">
                 <div className="h-auto w-auto text-[2vh] font-bold m-2">
                     Welcome {user?.displayName}!
                 </div>
                 <LogoutButton/>
+                <SetupClassroom/>
            </div>
           )}
             { !isLoggedIn &&(

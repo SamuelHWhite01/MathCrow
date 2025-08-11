@@ -2,7 +2,7 @@
 import debounce from 'lodash.debounce';
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, User } from "firebase/auth";
-import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 import UserData from "../types/UserData";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -40,3 +40,21 @@ export const saveData = async (user:User|null, userData:UserData) => {
 export const debouncedSaveData = debounce((user:User|null, userData:UserData) => {
   saveData(user, userData)
 },5000)
+export const createClassroom = async () =>{ // will generate a unique 5 digit code, add it to the classroom database, and return the code
+  let code = UserData.generateCode()
+  const docRef = doc(db, 'classrooms', code);
+  let docSnap = await getDoc(docRef); // check to see if there is information here
+  while (docSnap.exists()) { // if there is a collision, generate a new code
+    let code = UserData.generateCode()
+    const docRef = doc(db, 'classrooms', code);
+    docSnap = await getDoc(docRef); // check to see if there is information here
+  }
+  try {
+      await setDoc(docRef, { placeholder: true });
+      //console.log("saved data...")
+    } catch (error) {
+      console.error("Error saving user data:", error);
+      alert("Failed to save data.");
+    }
+  return code;
+}
