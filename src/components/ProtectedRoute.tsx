@@ -1,10 +1,28 @@
-// components/ProtectedRoute.tsx
-import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { useUserDataContext } from "@/context/UserDataContext";
 
-const ProtectedRoute = () => {
+interface ProtectedRouteProps {
+  requireTeacher?: boolean;
+}
+
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
+  requireTeacher
+}) => {
+
+  const { userData } = useUserDataContext();
   const { user } = useAuth();
-  return user ? <Outlet /> : <Navigate to="/MathCrow" replace />;
+  const location = useLocation();
+
+  if (!user) {
+    return <Navigate to="MathCrow" replace state={{ from: location }} />;
+  }
+
+  if (requireTeacher && !userData.isTeacher) {
+    return <Navigate to="MathCrow" replace state={{ from: location }} />;
+  }
+
+  return <Outlet />;
 };
 
 export default ProtectedRoute;

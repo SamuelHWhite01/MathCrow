@@ -10,6 +10,7 @@ import LongMultiplication from './screens/LongMultiplication';
 import ActivitySelect from './screens/ActivitySelect';
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/layout/Layout';
+import TeacherDashboard from './screens/TeacherDashboard';
 
 
 const App: React.FC = () => {
@@ -25,6 +26,9 @@ const App: React.FC = () => {
                         <Route path="/TimesTable" element={<TimesTable />} />
                         <Route path="/LongMultiplication" element={<LongMultiplication />} />
                         <Route path="/ActivitySelect" element={<ActivitySelect />} />
+                    </Route>
+                    <Route element={<ProtectedRoute requireTeacher={true} />}>
+                        <Route path="/TeacherDashboard" element={<TeacherDashboard />} />
                     </Route>
                 </Routes>
             </Layout>

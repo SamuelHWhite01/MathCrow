@@ -22,7 +22,7 @@ function JoinByCode(){
             saveData(user, userData);
             setExpanded(false)
         }
-        else ///Add toastify error message here
+        else 
         {
             toast.error("Invalid classroom Id")
         }

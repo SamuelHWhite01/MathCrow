@@ -20,13 +20,22 @@ const Toolbar: React.FC = () => {
           m-4'
           onClick={(_e) => navigate('/MathCrow')}>
           </button>
-         <button className='h-[6vh] w-[25vh] font-bold bg-[url("/Activities-button.png")]
-            bg-cover
-          rounded 
-          hover:cursor-pointer hover:scale-110 transform transition-transform duration-150'
-          onClick={(_e) => navigate('/ActivitySelect')}>
-
-          </button> 
+          { isLoggedIn &&(
+            <button className='h-[6vh] w-[25vh] font-bold bg-[url("/Activities-button.png")]
+              bg-cover
+              rounded 
+              hover:cursor-pointer hover:scale-110 transform transition-transform duration-150'
+              onClick={(_e) => navigate('/ActivitySelect')}/>
+          )}
+          { userData.isTeacher &&(
+            <button className='h-[6vh] w-[25vh] font-bold
+              bg-cover
+              rounded 
+              hover:cursor-pointer hover:scale-110 transform transition-transform duration-150'
+              onClick={(_e) => navigate('/TeacherDashboard')}>
+                Teacher Dashboard
+              </button>
+          )}
           { isLoggedIn &&(
             <div className="flex flex-row m-auto mr-2 gap-5">
                 <div className="h-auto w-auto text-[2vh] font-bold m-2">
