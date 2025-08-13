@@ -1,6 +1,7 @@
 import './App.css';
 import { AuthProvider } from './context/AuthProvider';
 import './index.css';
+import { ToastContainer } from 'react-toastify';
 import { UserDataProvider } from './context/UserDataProvider';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import HomeScreen from './screens/HomeScreen';
@@ -16,6 +17,7 @@ const App: React.FC = () => {
         <AuthProvider>
         <UserDataProvider>
         <Router>
+            <ToastContainer/>
             <Layout>
                 <Routes>
                     <Route path="/MathCrow" element={<HomeScreen />} />

@@ -2,7 +2,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useUserDataContext } from "@/context/UserDataContext";
 import { saveData, checkId } from "@/utils/firebase";
 import { useState } from "react";
-
+import {toast} from 'react-toastify';
 function JoinByCode(){
     const {userData, setUserData} = useUserDataContext()
     const {user} = useAuth();
@@ -24,7 +24,7 @@ function JoinByCode(){
         }
         else ///Add toastify error message here
         {
-            console.error("Invalid classroom Id")
+            toast.error("Invalid classroom Id")
         }
 
         
