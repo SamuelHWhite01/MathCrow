@@ -40,7 +40,7 @@ export const saveData = async (user:User|null, userData:UserData) => {
 export const debouncedSaveData = debounce((user:User|null, userData:UserData) => {
   saveData(user, userData)
 },5000)
-export const createClassroom = async () =>{ // will generate a unique 5 digit code, add it to the classroom database, and return the code
+export const createClassroom = async (className:string) =>{ // will generate a unique 5 digit code, add it to the classroom database, and return the code
   let code = UserData.generateCode()
   const docRef = doc(db, 'classrooms', code);
   let docSnap = await getDoc(docRef); // check to see if there is information here
@@ -50,7 +50,7 @@ export const createClassroom = async () =>{ // will generate a unique 5 digit co
     docSnap = await getDoc(docRef); // check to see if there is information here
   }
   try {
-      await setDoc(docRef, { placeholder: true });
+      await setDoc(docRef, { className:className });
       //console.log("saved data...")
     } catch (error) {
       console.error("Error saving user data:", error);

@@ -62,7 +62,7 @@ function JoinByCode(){
                             <div className="
                                 text-[3vh]
                                 font-bold">
-                                Enter Classroom Id to Join!
+                                Enter Classroom ID to Join!
                             </div>
                             <div>
                                 <input
