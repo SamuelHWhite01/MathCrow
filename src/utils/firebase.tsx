@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
 import debounce from 'lodash.debounce';
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, User } from "firebase/auth";
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { connectAuthEmulator, getAuth, GoogleAuthProvider, User } from "firebase/auth";
+import { collection, doc, getDoc, getDocs, getFirestore, query, setDoc, where, connectFirestoreEmulator  } from "firebase/firestore";
 import UserData from "../types/UserData";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -24,7 +24,13 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
-
+// if (
+//   window.location.hostname === "localhost" ||
+//   window.location.hostname === "127.0.0.1"
+// ) {
+//   connectFirestoreEmulator(db, "127.0.0.1", 8080);
+//   connectAuthEmulator(auth, "http://127.0.0.1:9099");
+// }
 export const saveData = async (user:User|null, userData:UserData) => {
    if (!user) return; // safety check
     const docRef = doc(db, 'users', user.uid);
@@ -66,4 +72,20 @@ export const checkId = async (code:string) =>{
     return true;
   }
   return false;
+}
+export const getStudentData = async(user:User|null) => {
+  if (!user) return; // make sure the user is authorized
+
+  const teacherDocRef = doc(db, "users", user.uid);
+  const teacherDoc = await getDoc(teacherDocRef);
+  if (!teacherDoc.exists()) throw new Error("Teacher doc not found"); // make sure that there is information for the teacher
+
+  const classroomId = teacherDoc.data().classroomId;
+  const q = query(
+    collection(db, "users"),
+    where("classroomId", "==", classroomId),
+    where("isTeacher", "==", false)
+  );
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 }
