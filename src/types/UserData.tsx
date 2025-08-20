@@ -10,7 +10,8 @@ class UserData{
   longMultData:LongMultDataType;
   isTeacher:boolean;
   classroomId:string;
-  constructor()
+  userName:string;
+  constructor(name:string = "")
   {
     this.timesTableData ={
       historyGrid: Array.from({ length: 12 }, () =>Array.from({ length: 12 }, () => 0)),
@@ -27,6 +28,7 @@ class UserData{
     }
     this.isTeacher = false;
     this.classroomId = "";
+    this.userName = name
   }
   public toFireStore() {
     const saveGrid = this.timesTableData.historyGrid.flat()
@@ -46,6 +48,7 @@ class UserData{
       },
       isTeacher:this.isTeacher,
       classroomId:this.classroomId,
+      userName:this.userName,
     };
   }
   public correct(factors:Factors) // disambiguation to save depending on mode
@@ -94,6 +97,10 @@ class UserData{
   {
     this.classroomId = id;
   }
+  public setUserName(name:string)
+  {
+    this.userName = name;
+  }
   public clone()
   {
     const newUserData = new UserData
@@ -102,6 +109,7 @@ class UserData{
     newUserData.longMultData = this.longMultData
     newUserData.classroomId = this.classroomId
     newUserData.isTeacher = this.isTeacher
+    newUserData.userName = this.userName
     return newUserData
   }
   static fromFireStore(data:FireStoreUserData)
@@ -127,6 +135,7 @@ class UserData{
     output.longMultData = longMultData;
     output.isTeacher = data.isTeacher;
     output.classroomId = data.classroomId;
+    output.userName = data.userName;
     return output;
   }
   static generateCode(length: number = 5): string {

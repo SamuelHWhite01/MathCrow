@@ -15,5 +15,6 @@ type FireStoreUserData = {
   settings:SettingsType;
   isTeacher:boolean;
   classroomId:string;
+  userName:string;
 };
 export default FireStoreUserData

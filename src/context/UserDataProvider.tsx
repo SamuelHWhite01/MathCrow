@@ -10,12 +10,13 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const { user } = useAuth(); // 🔑 use AuthContext instead of onAuthStateChanged again
   const [userData, setUserData] = useState<UserData>(new UserData()); // default to blank slate
   const fetchUserData = async () => { // updates the user data context to match the firestore
-    setUserData(new UserData());
+    setUserData(new UserData(user?.displayName ?? ""));
     let userDataExist = false;
     if (!user) {
       //console.log("no user ...")
       return; // dont even check the database if the user is not logged in
     }
+
     const docRef = doc(db, 'users', user.uid); // this is where the user's data should be stored
     try {
       //console.log("checking data for", user)
@@ -31,7 +32,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       console.error("Failed to fetch user data:", error);
     }
     if(!userDataExist){ // if the data couldnt be fetched, make a new default
-      saveData(user, new UserData()) // not passing userdata directly because of possible race condition
+      saveData(user, userData) // not passing userdata directly because of possible race condition
     }
   };
   useEffect(() => {
