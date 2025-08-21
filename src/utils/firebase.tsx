@@ -4,6 +4,7 @@ import { initializeApp } from "firebase/app";
 import { connectAuthEmulator, getAuth, GoogleAuthProvider, User } from "firebase/auth";
 import { collection, doc, getDoc, getDocs, getFirestore, query, setDoc, where, connectFirestoreEmulator  } from "firebase/firestore";
 import UserData from "../types/UserData";
+import FireStoreUserData from '@/types/FireStoreUserData';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -87,5 +88,5 @@ export const getStudentData = async(user:User|null) => {
     where("isTeacher", "==", false)
   );
   const snapshot = await getDocs(q);
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  return snapshot.docs.map(doc => (UserData.fromFireStore(doc.data() as FireStoreUserData)));
 }
