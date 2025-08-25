@@ -127,7 +127,7 @@ class Factors {
         }
     }
     public selectedFactorNext() { // used when in level selector Mode
-        if (this.index < 10) {
+        if (this.index < 11) {
             this.index += 1;
             this.factor2 = this.factorsOrder[this.index];
             this.product = this.factor1 * this.factor2;

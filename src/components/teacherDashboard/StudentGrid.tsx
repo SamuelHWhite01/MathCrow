@@ -50,27 +50,33 @@ function StudentGrid(){
     }
     return (
         <div className=' text-[2vh] font-bold border-1 flex flex-col'>
-            {studentList.map((student, i) =>(
-                <div key={i+"student"} className='border-1 flex flex-row items-center'>
-                    <div key={i+"studentName"} className='border-r w-[20vw] h-[2vw]'>
-                        {student.userName}
-                    </div>
-                    <div key={i+"studentScore"} className=' flex flex-row border-1'>
-                        {factorsCompleteList[i].map((complete, j) =>
-                            <div key={i+"score"+j} className={`flex scoreboard-cell h-[2vw] w-[2vw] border-1 ${complete ? 'bg-green-500' : 'bg-gray-300'}`}
-                            title = {titleGenerator(i,j)}>
-                                
-                            </div>
-                        )}
-                    </div>
-                    <div key={i+"totalAnswered"}>
-                        {student.timesTableData.numCorrect}
-                    </div>
-                    
-                </div>
-            ))
+            {studentList?.map((student, i) => (
+  <div key={i + "student"} className="border flex flex-row items-center">
+    <div
+      key={i + "studentName"}
+      className="border-r w-[20vw] h-[2vw] flex items-center justify-center"
+    >
+      {student?.userName ?? ""}
+    </div>
 
-            }
+    <div key={i + "studentScore"} className="flex flex-row border">
+      {factorsCompleteList?.[i]?.map((complete, j) => (
+        <div
+          key={i + "score" + j}
+          className={`flex items-center justify-center scoreboard-cell h-[2vw] w-[2vw] border ${
+            complete ? "bg-green-500" : "bg-gray-300"
+          }`}
+          title={titleGenerator?.(i, j) ?? ""}
+        />
+      ))}
+    </div>
+
+    <div key={i + "totalAnswered"}>
+      {student?.timesTableData?.numCorrect ?? ""}
+    </div>
+  </div>
+))}
+
 
         </div>
     );
