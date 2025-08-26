@@ -1,10 +1,10 @@
 import { useAuth } from '@/context/AuthContext';
 import UserData from '@/types/UserData';
 import { getStudentData } from '@/utils/firebase';
-import { useUserDataContext } from 'context/UserDataContext';
+//import { useUserDataContext } from 'context/UserDataContext';
 import { useEffect, useState } from 'react';
 function StudentGrid(){
-    const {userData} = useUserDataContext()
+    //const {userData} = useUserDataContext()
     const [studentList, setStudentList] = useState<UserData[]>([])
     const [factorsCompleteList, setFactorsCompleteList] = useState<boolean[][]>([])
     const {user} = useAuth()

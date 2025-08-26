@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
 import debounce from 'lodash.debounce';
 import { initializeApp } from "firebase/app";
-import { connectAuthEmulator, getAuth, GoogleAuthProvider, User } from "firebase/auth";
-import { collection, doc, getDoc, getDocs, getFirestore, query, setDoc, where, connectFirestoreEmulator  } from "firebase/firestore";
+import { getAuth, GoogleAuthProvider, User } from "firebase/auth"; //connectAuthEmulator
+import { collection, doc, getDoc, getDocs, getFirestore, query, setDoc, where  } from "firebase/firestore"; //connectFirestoreEmulator
 import UserData from "../types/UserData";
 import FireStoreUserData from '@/types/FireStoreUserData';
 // TODO: Add SDKs for Firebase products that you want to use

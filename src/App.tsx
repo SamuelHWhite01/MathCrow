@@ -17,11 +17,11 @@ const App: React.FC = () => {
     return (
         <AuthProvider>
         <UserDataProvider>
-        <Router>
+        <Router basename='/MathCrow'>
             <ToastContainer/>
             <Layout>
                 <Routes>
-                    <Route path="/MathCrow" element={<HomeScreen />} />
+                    <Route path="/" element={<HomeScreen />} />
                     <Route element={<ProtectedRoute />}>
                         <Route path="/TimesTable" element={<TimesTable />} />
                         <Route path="/LongMultiplication" element={<LongMultiplication />} />
