@@ -14,6 +14,8 @@ class Factors {
     carryList: Carry[] = []; // list of carries that are present in the problem
     rawMultList:number[] = []; // raw list of the value you get by multiplying each number in factor 1 against each number in factor 2
     carrySumList:number[] = []; // list of carries added to the raw mult list fot he appropriate pairs
+    sumCarryList:Carry[] = [];
+    numSumCarryCorrect:number = 0; // number of sumCarries that have been correctly answered
     resetCounter: number = 0; // reset watched to update elements that use factors
     difficulty:number = 0; // used to deermine length of long mulciplication
     constructor() {
@@ -27,6 +29,47 @@ class Factors {
         this.product = this.factor1 * this.factor2;
         this.productList = this.initProductList(this.product);
         [this.productGridList, this.carryList, this.rawMultList, this.carrySumList] = this.initAnswers();
+        this.sumCarryList = this.initSumCarryList()
+    }
+    private initSumCarryList()
+    {
+        const sumCarryOutput:Carry[] = []
+        let rowLen = this.productList.length
+        let colLen = this.factor2.toString().length
+        const grid: number[][] = [];
+        for (let row = 0; row < colLen; row++) {
+            const start = row * rowLen;
+            const end = start + rowLen;
+            grid.push(this.productGridList.slice(start, end));
+        }
+        let carryVal = 0;
+        for (let i = 0;i< grid[0].length;i++) //for each col
+        {
+            let baseTotal = 0;
+            let primaryCarry = false;
+            for(let j = 0; j<grid.length;j++) //for each number in that col
+            {
+                baseTotal += grid[j][i]
+            }
+            if(baseTotal > 9)
+            {
+                primaryCarry = true
+            }
+            let modifiedTotal = carryVal + baseTotal
+            carryVal = Math.floor(modifiedTotal / 10)
+            if(carryVal > 0)
+            {
+                let newCarry:Carry = {
+                    value:carryVal,
+                    primary:primaryCarry,
+                    order:i,
+                    place:i-1,
+                }
+                sumCarryOutput.push(newCarry)
+            }
+            
+        }
+        return sumCarryOutput;
     }
     private initProductList(product:number)
     {
@@ -133,9 +176,11 @@ class Factors {
             this.product = this.factor1 * this.factor2;
             this.productList = this.initProductList(this.product);
             [this.productGridList, this.carryList, this.rawMultList, this.carrySumList] = this.initAnswers();
+            this.sumCarryList = this.initSumCarryList()
             this.numGridCorrect = 0;
             this.numCarryCorrect = 0;
             this.numSumCorrect = 0;
+            this.numSumCarryCorrect = 0;
             this.resetCounter++;
         } else {
             this.index = 0;
@@ -144,9 +189,11 @@ class Factors {
             this.product = this.factor1 * this.factor2;
             this.productList = this.initProductList(this.product);
             [this.productGridList, this.carryList, this.rawMultList, this.carrySumList] = this.initAnswers();
+            this.sumCarryList = this.initSumCarryList()
             this.numGridCorrect = 0;
             this.numCarryCorrect = 0;
             this.numSumCorrect = 0;
+            this.numSumCarryCorrect = 0;
             this.resetCounter++;
         }
     }
@@ -173,9 +220,11 @@ class Factors {
         this.product = this.factor1 * this.factor2;
         this.productList = this.initProductList(this.product);
         [this.productGridList, this.carryList, this.rawMultList, this.carrySumList] = this.initAnswers();
+        this.sumCarryList = this.initSumCarryList()
         this.numGridCorrect = 0;
         this.numCarryCorrect = 0;
         this.numSumCorrect = 0;
+        this.numSumCarryCorrect = 0;
         this.resetCounter++;
     }
     public longNext() // used in long multiplication. References difficulty level
@@ -188,9 +237,11 @@ class Factors {
         this.product = this.factor1 * this.factor2;
         this.productList = this.initProductList(this.product);
         [this.productGridList, this.carryList, this.rawMultList, this.carrySumList] = this.initAnswers();
+        this.sumCarryList = this.initSumCarryList()
         this.numGridCorrect = 0;
         this.numCarryCorrect = 0;
         this.numSumCorrect = 0;
+        this.numSumCarryCorrect = 0;
         this.resetCounter++;
 
     }
@@ -203,10 +254,20 @@ class Factors {
     public correctSum(){
         this.numSumCorrect +=1;
     }
+    public correctSumCarry(){
+        this.numSumCarryCorrect +=1;
+    }
     public nextCarry(){
         if (this.carryList[this.numCarryCorrect] !== undefined)
         {
             return this.carryList[this.numCarryCorrect]
+        }
+        return undefined
+    }
+    public nextSumCarry(){
+        if (this.sumCarryList[this.numSumCarryCorrect] !== undefined)
+        {
+            return this.sumCarryList[this.numSumCarryCorrect]
         }
         return undefined
     }
@@ -221,12 +282,14 @@ class Factors {
         newInstance.numGridCorrect = this.numGridCorrect;
         newInstance.numCarryCorrect = this.numCarryCorrect;
         newInstance.numSumCorrect = this.numSumCorrect;
+        newInstance.numSumCarryCorrect = this.numSumCarryCorrect;
         newInstance.productGridList = this.productGridList;
         newInstance.carryList = this.carryList;
         newInstance.resetCounter = this.resetCounter;
         newInstance.difficulty = this.difficulty;
         newInstance.rawMultList = this.rawMultList;
         newInstance.carrySumList = this.carrySumList;
+        newInstance.sumCarryList = this.sumCarryList;
         return newInstance;
     }
 
@@ -244,9 +307,11 @@ class Factors {
         this.product = this.factor1 * this.factor2;
         this.productList = this.initProductList(this.product);
         [this.productGridList, this.carryList, this.rawMultList, this.carrySumList] = this.initAnswers();
+        this.sumCarryList = this.initSumCarryList()
         this.numGridCorrect = 0;
         this.numCarryCorrect = 0;
         this.numSumCorrect = 0;
+        this.numSumCarryCorrect = 0;
         this.resetCounter++;
     }
     private shuffleArray(arr: number[]): number[] {

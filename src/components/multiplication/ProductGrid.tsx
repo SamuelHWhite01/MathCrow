@@ -109,7 +109,7 @@ function ProductGrid({ gridRef, gridInput, setGridInput, carryBarToGrid}: Produc
         }
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>, i: number, j: number) => {
-        //console.log(factors);
+        console.log(factors);
         // console.log(activeCarry)
         // console.log(factors.nextCarry())
         // console.log(factors.numGridCorrect)

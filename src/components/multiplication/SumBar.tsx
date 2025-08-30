@@ -14,6 +14,13 @@ function SumBar(){
     const productGridLength: number = useMemo(() => factors.product.toString().length, [factors.product]);
     const sumComplete: boolean = useMemo(() => factors.numSumCorrect == factors.productList.length, [factors.numSumCorrect]);
     const problemComplete : boolean = useMemo(() => sumComplete || (gridComplete && !needToAdd), [sumComplete, gridComplete, needToAdd])
+    const activeCarry:boolean = useMemo(()=>{
+        if(factors.nextSumCarry()?.order === factors.numSumCorrect)
+        {
+            return true
+        }
+        return false
+        },[factors.numSumCorrect, factors.numSumCarryCorrect, factors.resetCounter])
     const sumRef = useRef<(HTMLInputElement | null)[]>([]);
     const [sumInput, setSumInput] = useState<(number | '')[]>(() =>
         Array.from({ length: productGridLength },() => '')
@@ -26,6 +33,13 @@ function SumBar(){
             }
         }
     }, [gridComplete]);
+    useEffect(() => {
+        console.log("sum correct")
+        if(activeCarry)
+        {
+            console.log("activeCarry")
+        }
+    }, [factors.numSumCorrect]);
     
     useEffect(() => {
         setSumInput(
@@ -94,6 +108,10 @@ function SumBar(){
 
     const isLocked = (i: number) => {
         // used to determine if a number cell should be locked
+        if(activeCarry)
+        {
+            return true;
+        }
         const unlockedIndex = factors.productList.length - factors.numSumCorrect - 1
         if (i === unlockedIndex) {
             // only if the given i and j are next in the series are they NOT locked
@@ -103,7 +121,7 @@ function SumBar(){
     };
 
     function shouldFocusSumInput(index: number,): boolean {
-        if (!gridComplete || !needToAdd) return false;
+        if (!gridComplete || !needToAdd || activeCarry) return false;
         const expectedIndex = productGridLength - factors.numSumCorrect - 1;
         return index === expectedIndex;
     }

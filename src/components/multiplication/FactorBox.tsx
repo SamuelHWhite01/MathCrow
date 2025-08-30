@@ -8,6 +8,7 @@ import { useFactorsContext } from 'context/FactorsContext';
 import Factors from 'types/Factors';
 import { useUserDataContext } from 'context/UserDataContext';
 import CarryBox from './CarryBox';
+import SumCarryBar from './SumCarryBar';
 function FactorBox(){
     const {factors} = useFactorsContext()
     const {userData} = useUserDataContext()
@@ -151,6 +152,7 @@ function FactorBox(){
             <CarryBox carryBarRef={carryBarRef} carrySumBarRef={carrySumBarRef} carrySumToGrid={carrySumToGrid}/>
             <Factor1/>
             <Factor2/>
+            <SumCarryBar/>
             <ProductGrid gridRef={gridRef} gridInput={gridInput} setGridInput={setGridInput} carryBarToGrid={carryBarToGrid}/>
             <SumBar/>
             {carryAnimations.map((props) => (
