@@ -165,7 +165,7 @@ class Factors {
             this.autoNext(userData.timesTableData.historyGrid)
         }
         else if( userData.settings.mode === "LongMult")
-        {
+        {     
             this.longNext()
         }
     }

@@ -10,7 +10,7 @@ import { useUserDataContext } from 'context/UserDataContext';
 import CarryBox from './CarryBox';
 import SumCarryBar from './SumCarryBar';
 function FactorBox(){
-    const {factors} = useFactorsContext()
+    const {factors, setFactors} = useFactorsContext()
     const {userData} = useUserDataContext()
     const productGridHeight = factors.factor2.toString().length;
     const productGridLength = factors.product.toString().length;
@@ -48,6 +48,7 @@ function FactorBox(){
     useEffect(() => // when the mode is updated, refresh the current problem
     {
         factors.next(userData)
+        setFactors(factors.clone());
     }, [userData.settings.mode])
 
     const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));

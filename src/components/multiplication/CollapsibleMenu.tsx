@@ -3,9 +3,12 @@ import LevelSelector from './times-table/LevelSelector';
 import ScoreBoard from './ScoreBoard';
 import AutoModeToggle from './AutoModeCheck';
 import SpeedModeToggle from './SpeedModeCheck';
+import { useUserDataContext } from '@/context/UserDataContext';
+import LongMultToggle from './LongMultToggle';
 
 function CollapsibleMenu(){
     const [isOpen, setIsOpen] = useState(true);
+    const {userData} = useUserDataContext();
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
@@ -33,8 +36,17 @@ function CollapsibleMenu(){
                 <div className='flex flex-col gap-2'>
                     <AutoModeToggle/>
                     <SpeedModeToggle/>
-                    <LevelSelector/>
-                    <ScoreBoard/>
+                    <LongMultToggle/>
+                    {
+                        userData.settings.mode !=="LongMult" &&(
+                            <div>
+                            <LevelSelector/>
+                            <ScoreBoard/>
+                            </div>
+                        )
+
+                    }
+                    
                 </div>
             )}
         </div>
