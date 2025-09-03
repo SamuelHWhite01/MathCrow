@@ -18,6 +18,11 @@ function FactorBox(){
     const ANIMATION_GROW = 1.5;
     const carryBarRef = useRef<(HTMLInputElement | null)[]>([]);
     const carrySumBarRef = useRef<(HTMLInputElement | null)[]>([]);
+    const sumBarRef = useRef<(HTMLInputElement | null)[]>([]);
+    const sumCarryBarRef = useRef<(HTMLInputElement | null)[]>([]);
+    const [sumInput, setSumInput] = useState<(number | '')[]>(() =>
+        Array.from({ length: productGridLength },() => '')
+    );
     const gridRef = useRef<(HTMLInputElement | null)[][]>(
         Array.from({ length: productGridHeight }, () =>
             Array.from({ length: productGridLength }, () => null)
@@ -148,14 +153,58 @@ function FactorBox(){
 
     }
 
+    const carrySumCarryToSum = (curfactors:Factors, curSumInput:(number|'')[]): [Factors, (number | '')[]] => { // fire when carry sum is complete to move the lowest value of the carry sum to the product
+        const nextVal = curfactors.productList[0]
+        const nextLength = productGridLength - 1 - (curfactors.numSumCorrect);
+        const startRef = sumCarryBarRef.current[curfactors.sumCarryList[curfactors.numSumCarryCorrect-1].place]
+        const endRef = sumBarRef.current[nextLength]
+        if(startRef && endRef)
+        {
+            const from = startRef.getBoundingClientRect();
+            const to = endRef.getBoundingClientRect();
+            // this needs to point to the real factors to listend for changes and abort the operation
+            const snapshotResetCounter = curfactors.resetCounter
+            //console.log(resetCounterRef.current, snapshotResetCounter)
+            const animId = Date.now() + Math.random()
+            setCarryAnimations((prev) =>[
+                ...prev,
+                {
+                    id: animId, // unique id
+                    from,
+                    to,
+                    value: nextVal,
+                    duration: ANIMATION_DURATION,
+                    grow: ANIMATION_GROW,
+                    onAnimationEnd: () => {
+                        setCarryAnimations((prev) => prev.filter((anim) => anim.id !== animId));
+                    },
+                }
+            ])
+            wait(ANIMATION_DURATION).then(() => {
+                //console.log(resetCounterRef.current, snapshotResetCounter)
+                if(resetCounterRef.current === snapshotResetCounter)
+                {
+                    //console.log("setting gridInput...")
+                    let newSum = curSumInput
+                    newSum[nextLength] = nextVal
+                    setSumInput(newSum)
+                    
+                }
+            });
+
+        }
+        curfactors.correctSum();
+        return [curfactors, curSumInput];
+
+    }
     return (
         <div className="  leading-none m-auto flex flex-col items-end w-fit h-fit">
             <CarryBox carryBarRef={carryBarRef} carrySumBarRef={carrySumBarRef} carrySumToGrid={carrySumToGrid}/>
             <Factor1/>
             <Factor2/>
-            <SumCarryBar/>
+            <SumCarryBar sumCarryBarRef={sumCarryBarRef}/>
             <ProductGrid gridRef={gridRef} gridInput={gridInput} setGridInput={setGridInput} carryBarToGrid={carryBarToGrid}/>
-            <SumBar/>
+            <SumBar sumBarRef={sumBarRef} sumInput={sumInput} setSumInput={setSumInput} carrySumCarryToSum={carrySumCarryToSum}/>
             {carryAnimations.map((props) => (
                 <CarryAnimationBox key = {props.id} {...props} />
             ))}

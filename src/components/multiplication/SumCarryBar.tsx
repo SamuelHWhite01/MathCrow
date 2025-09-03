@@ -4,15 +4,16 @@ import { useSoundPlayerContext } from 'context/SoundPlayerContext';
 import Carry from 'types/Carry';
 
 
-
-function SumCarryBar(){
+type SumCarryBarProps = {
+  sumCarryBarRef: React.RefObject<(HTMLInputElement | null)[]>;
+};
+function SumCarryBar({sumCarryBarRef}:SumCarryBarProps){
     const { setFactors, factors } = useFactorsContext();
     const [sumCarryInput, setSumCarryInput] = useState<(number|'')[]>([])
     const [sumCarryCorrect, setSumCarryCorrect] = useState<boolean[]>([])
     const {incrementStreak} = useSoundPlayerContext();
     const productGridLength = useMemo(() => factors.product.toString().length, [factors.product, factors.resetCounter]);
     const nextSumCarry = useMemo(()=> factors.nextSumCarry(),[factors.numSumCarryCorrect, factors.resetCounter])
-    const sumCarryBarRef = useRef<(HTMLInputElement | null)[]>([]);
     const gridComplete: boolean = useMemo(() => factors.numGridCorrect === factors.productGridList.length, [factors.numGridCorrect]);
     const needToAdd: boolean = useMemo(() => factors.factor2.toString().length>1, [factors.product]);
     useEffect(() => {

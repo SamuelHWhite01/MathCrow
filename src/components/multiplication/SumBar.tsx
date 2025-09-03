@@ -4,7 +4,14 @@ import { useSoundPlayerContext } from 'context/SoundPlayerContext';
 import { useUserDataContext } from 'context/UserDataContext';
 import { debouncedSaveData } from 'utils/firebase';
 import { useAuth } from 'context/AuthContext';
-function SumBar(){
+import Factors from '@/types/Factors';
+type SumBarProps = {
+  sumBarRef: React.RefObject<(HTMLInputElement | null)[]>;
+  sumInput:(number|'')[];
+  setSumInput:React.Dispatch<React.SetStateAction<(number|'')[]>>;
+  carrySumCarryToSum:(curfactors: Factors, curSumInput: (number | '')[]) => [Factors, (number | '')[]]
+};
+function SumBar({sumBarRef, sumInput, setSumInput, carrySumCarryToSum}:SumBarProps){
     const { setFactors, factors } = useFactorsContext();
     const { user } = useAuth();
     const {incrementStreak} = useSoundPlayerContext();
@@ -14,6 +21,7 @@ function SumBar(){
     const productGridLength: number = useMemo(() => factors.product.toString().length, [factors.product]);
     const sumComplete: boolean = useMemo(() => factors.numSumCorrect == factors.productList.length, [factors.numSumCorrect]);
     const problemComplete : boolean = useMemo(() => sumComplete || (gridComplete && !needToAdd), [sumComplete, gridComplete, needToAdd])
+    const [animationReady, setAnimationReady] = useState(false)
     const activeCarry:boolean = useMemo(()=>{
         if(factors.nextSumCarry()?.order === factors.numSumCorrect)
         {
@@ -21,10 +29,6 @@ function SumBar(){
         }
         return false
         },[factors.numSumCorrect, factors.numSumCarryCorrect, factors.resetCounter])
-    const sumRef = useRef<(HTMLInputElement | null)[]>([]);
-    const [sumInput, setSumInput] = useState<(number | '')[]>(() =>
-        Array.from({ length: productGridLength },() => '')
-    );
     useEffect(() => {
         // if we dont have to sum the grid, go to the next problem
         if (gridComplete && !needToAdd) {
@@ -40,7 +44,20 @@ function SumBar(){
             console.log("activeCarry")
         }
     }, [factors.numSumCorrect]);
-    
+    useEffect(() =>  //whenever a sumCarry is correctly answered, or on reset, check to see if the most recently answered sumCarry could be sent down
+    {
+        if(factors.numSumCarryCorrect > 0 && // never carry on reset
+            factors.sumCarryList[factors.numCarryCorrect-1].place === 0 && // only carry at the end
+            factors.sumCarryList[factors.numCarryCorrect-1].value === factors.productList[0] // only carry if its the last value
+        )
+        {
+            setAnimationReady(true)
+        }
+        else
+        {
+            setAnimationReady(false)
+        }
+    }, [factors.numSumCarryCorrect])
     useEffect(() => {
         setSumInput(
             Array.from({ length: productGridLength },() => '')
@@ -82,19 +99,27 @@ function SumBar(){
         if (event.target.value !== '') {
             value = Number(event.target.value);
         }
-        const newGrid = [...sumInput];
-        newGrid[index] = value;
+        let curSumInput = [...sumInput];
         if(value === '' || value < 10) // only update the input if its a single digit
         {
-            setSumInput(newGrid)
+            curSumInput[index] = value
         }
         if (value === factors.productList[index]) {
             // in the case of a correct answer
+            let curfactors = factors.clone()
             event.target.value = '';
             incrementStreak();
-            factors.correctSum()
-            setFactors(factors.clone())
+            curfactors.correctSum()
+            if(animationReady)
+            {
+                console.log(curSumInput);
+                [curfactors,curSumInput] = carrySumCarryToSum(curfactors, curSumInput)
+                console.log(curSumInput);
+            }
+            setFactors(curfactors)
+            setAnimationReady(false)
         }
+        setSumInput(curSumInput)
     };
 
     const nextProblem = () =>{
@@ -135,7 +160,7 @@ function SumBar(){
                 key={i}
                 readOnly={isLocked(i)}
                 ref={(el) => {
-                    sumRef.current[i] = el;
+                    sumBarRef.current[i] = el;
                     if (el &&
                     shouldFocusSumInput(i)
                     ) {
