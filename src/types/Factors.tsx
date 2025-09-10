@@ -13,11 +13,11 @@ class Factors {
     numSumCorrect: number = 0; // number of times the user has correctly answered the sim
     carryList: Carry[] = []; // list of carries that are present in the problem
     rawMultList:number[] = []; // raw list of the value you get by multiplying each number in factor 1 against each number in factor 2
-    carrySumList:number[] = []; // list of carries added to the raw mult list fot he appropriate pairs
+    carrySumList:number[] = []; // list of carries added to the raw mult list for the appropriate pairs
     sumCarryList:Carry[] = [];
     numSumCarryCorrect:number = 0; // number of sumCarries that have been correctly answered
     resetCounter: number = 0; // reset watched to update elements that use factors
-    difficulty:number = 0; // used to deermine length of long mulciplication
+    difficulty:number = 1; // used to deermine length of long mulciplication
     constructor() {
         this.index = 0;
         this.factorsOrder = [];
@@ -63,7 +63,7 @@ class Factors {
                     value:carryVal,
                     primary:primaryCarry,
                     order:i,
-                    place:i-1,
+                    place:rowLen-i-2,
                 }
                 sumCarryOutput.push(newCarry)
             }
@@ -116,7 +116,7 @@ class Factors {
                 const f2 = parseInt(f2string[i]);
                 let primaryCarry = false;
                 let product = f1 * f2 + carryVal;
-                if(f1*f2 === product) // simply check to see if the raw numbers themselves would prooduce a carry
+                if(f1*f2 === product) // simply check to see if the raw numbers themselves would produce a carry
                 {
                     primaryCarry = true;
                 }
@@ -229,7 +229,7 @@ class Factors {
     }
     public longNext() // used in long multiplication. References difficulty level
     {
-        let totalDigits = this.difficulty + 3;
+        let totalDigits = this.difficulty + 2;
         const f2len = Math.floor(totalDigits / 2);
         const f1len = totalDigits - f2len;
         this.factor1 = this.randomDigits(f1len);
@@ -300,6 +300,7 @@ class Factors {
     }
     public setDifficulty(newdiff:number){
         this.difficulty = newdiff
+        this.longNext()
     }
     public setFactors(f1:number, f2:number){
         this.factor1 = f1;
@@ -332,5 +333,27 @@ class Factors {
 
     return Math.floor(Math.random() * (max - min + 1)) + min;
     }
+    static rowComplete(curfactors:Factors)
+    {
+        let productGridLength = curfactors.product.toString().length
+        const endRowIndex = productGridLength * Math.ceil(curfactors.numGridCorrect / productGridLength);
+        for (let index = curfactors.numGridCorrect; index < endRowIndex; index++) {
+            if (curfactors.productGridList[index] !== 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    static leadingZero = (curfactors:Factors) =>
+        {
+            let productGridLength = curfactors.product.toString().length
+            const endRowIndex = productGridLength * Math.ceil(curfactors.numGridCorrect / productGridLength);
+            if (Factors.rowComplete(curfactors)) {
+                for (let index = curfactors.numGridCorrect; index < endRowIndex; index++) {
+                    curfactors.correctGrid();
+                }
+            }
+            return curfactors;
+        }
 }
 export default Factors;

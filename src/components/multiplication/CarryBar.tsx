@@ -27,6 +27,7 @@ function CarryBar({carryBarRef, carryInput, setCarryInput, carryCorrect, setCarr
                 Array.from({ length: productGridLength },() => false)
             );
         }
+        //console.log("Next carry:",nextCarry)
     }, [factors.numGridCorrect,factors.resetCounter]);
 
     const showCarry = (i: number) => {

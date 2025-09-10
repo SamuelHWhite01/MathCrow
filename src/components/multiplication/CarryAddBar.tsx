@@ -12,17 +12,39 @@ import Factors from 'types/Factors';
 type CarryAddBarProps = {
   carrySumBarRef: React.RefObject<(HTMLInputElement | null)[]>;
   carrySumToGrid:(curfactors:Factors, index:number) => Factors;
+  carrySumToBar:(num:number, index:number) => void;
   clearCarryBar:(index:number) =>void;
+
 };
 
 
-function CarryAddBar({carrySumBarRef, carrySumToGrid, clearCarryBar}: CarryAddBarProps){
+function CarryAddBar({carrySumBarRef, carrySumToGrid, clearCarryBar, carrySumToBar}: CarryAddBarProps){
     const { setFactors, factors } = useFactorsContext();
     const {incrementStreak} = useSoundPlayerContext();
     const productGridLength = useMemo(() => factors.product.toString().length, [factors.product, factors.resetCounter]);
     const recentCarry = useMemo(() => factors.carryList[factors.numCarryCorrect-1] ?? undefined, [factors.numCarryCorrect])
     const [showBar, setShowBar] = useState(true);
     const rawMultRef = useRef<(HTMLInputElement | null)[]>([]);
+    const rawMultIdx = useMemo(()=>
+    {
+        const f1Len = factors.factor1.toString().length;
+        const rowLen = factors.product.toString().length;
+        const curRow = Math.floor(factors.numGridCorrect / rowLen);
+        let curCol = 0
+        if(((rowLen *curRow) <= factors.numGridCorrect) &&
+            (factors.numGridCorrect <= (((rowLen *curRow + curRow)))))
+            {
+                curCol = 0
+            }
+        else
+        {
+            curCol = Math.min(((factors.numGridCorrect-curRow) % rowLen), f1Len-1)
+        }
+        let output = curRow*f1Len + curCol
+        //console.log(factors, curRow, curCol, output)
+        return(output)
+    }
+    ,[factors.numGridCorrect])
 
     /// Variables to check the raw mult bar ///////
     const [rawMultInput, setRawMultInput] = useState<(number | '')[]>(() =>
@@ -62,19 +84,23 @@ function CarryAddBar({carrySumBarRef, carrySumToGrid, clearCarryBar}: CarryAddBa
             
             let curfactors = factors.clone()
             curfactors = carrySumToGrid(curfactors,recentCarry.place)
-            console.log(carrySumAnswer, carrySumNumCorrect)
+            //console.log("Carry sum trace:", carrySumAnswer, carrySumNumCorrect, curfactors)
             if(carrySumNumCorrect === 2) 
             {
                 if(carrySumAnswer[0] === curfactors.productGridList[curfactors.numGridCorrect]) // if the second digit can be carried directly to the grid
                 {
                     curfactors = carrySumToGrid(curfactors, recentCarry.place-1)
+                    curfactors.correctCarry()
                 }
                 else //if the second digit needs to be moved to the carry bar
                 {
-                    // carrySumToBar
+                    //console.log("Carry sum to bar")
+                    carrySumToBar(carrySumAnswer[0], recentCarry.place-1)
+                    curfactors.correctCarry()
                 }
             }
             clearCarryBar(recentCarry.place)
+            curfactors = Factors.leadingZero(curfactors)
             setFactors(curfactors)
 
         }
@@ -95,28 +121,31 @@ function CarryAddBar({carrySumBarRef, carrySumToGrid, clearCarryBar}: CarryAddBa
         setCarrySumCorrect(
             Array.from({ length: productGridLength },() => false)
         );
-        if(factors.numCarryCorrect < factors.rawMultList.length)
+
+    }, [factors.numCarryCorrect,factors.resetCounter]);
+
+    useEffect(() =>{ // whenever we go to a new raw mult pairing, we need to update the answer for a potenial carry add
+        if(rawMultIdx < factors.rawMultList.length)
         {
-            const reversedRawMultList = factors.rawMultList[factors.numCarryCorrect]
+            const rawMultList = factors.rawMultList[rawMultIdx]
                 .toString()
                 .split('')
                 .map(Number)
 
-            const reversedCarrySumList = factors.carrySumList[factors.numCarryCorrect]
+            const carrySumList = factors.carrySumList[rawMultIdx]
                 .toString()
                 .split('')
                 .map(Number)
-            setRawMultAnswer(reversedRawMultList)
-            setCarrySumAnswer(reversedCarrySumList)
+            setRawMultAnswer(rawMultList)
+            setCarrySumAnswer(carrySumList)
         }
         setRawMultNumCorrect(0)
         setCarrySumNumCorrect(0)
-    }, [factors.numCarryCorrect,factors.resetCounter]);
-
+    }, [rawMultIdx, factors.resetCounter])
     const showCell = ( index:number) =>{ // used to hide cells in the add bar that should be invisible
         if(factors.carrySumList)
         {
-            const subTotal = factors.carrySumList[factors.numCarryCorrect] ?? 0
+            const subTotal = factors.carrySumList[rawMultIdx] ?? 0
             const subTotalLength = subTotal.toString().length - 1 // taking off the 1 to show the number of cells beyond the first the sum will extend
             if(recentCarry === undefined)
             {
@@ -166,7 +195,7 @@ function CarryAddBar({carrySumBarRef, carrySumToGrid, clearCarryBar}: CarryAddBa
         }
     }
     const handleRawMultChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-        //console.log(rawMultAnswer[rawMultNumCorrect])
+        //console.log(rawMultAnswer)
         let value: number | '' = ''; // scrape the input to make it into the correct type to be put into gridInput
         if (event.target.value !== '') {
             value = Number(event.target.value);

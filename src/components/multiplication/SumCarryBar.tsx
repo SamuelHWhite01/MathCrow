@@ -45,10 +45,6 @@ function SumCarryBar({sumCarryBarRef}:SumCarryBarProps){
             // if the next carry is not at the given value column, then dont display it
             return false;
         }
-        if(nextSumCarry.primary === false) // if the next carry is a sum of a raw mult and existing carry, then it should be accessed directly
-        {
-            return false
-        }
         if (nextSumCarry.order !== factors.numSumCorrect) {
             // if the next carry is not the next correct answer, then dont display it
             return false;

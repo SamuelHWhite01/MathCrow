@@ -37,18 +37,18 @@ function SumBar({sumBarRef, sumInput, setSumInput, carrySumCarryToSum}:SumBarPro
             }
         }
     }, [gridComplete]);
-    useEffect(() => {
-        console.log("sum correct")
-        if(activeCarry)
-        {
-            console.log("activeCarry")
-        }
-    }, [factors.numSumCorrect]);
+    // useEffect(() => {
+    //     //console.log("sum correct")
+    //     if(activeCarry)
+    //     {
+    //         //console.log("activeCarry")
+    //     }
+    // }, [factors.numSumCorrect]);
     useEffect(() =>  //whenever a sumCarry is correctly answered, or on reset, check to see if the most recently answered sumCarry could be sent down
     {
         if(factors.numSumCarryCorrect > 0 && // never carry on reset
-            factors.sumCarryList[factors.numCarryCorrect-1].place === 0 && // only carry at the end
-            factors.sumCarryList[factors.numCarryCorrect-1].value === factors.productList[0] // only carry if its the last value
+            factors.sumCarryList[factors.numSumCarryCorrect-1].place === 0 && // only carry at the end
+            factors.sumCarryList[factors.numSumCarryCorrect-1].value === factors.productList[0] // only carry if its the last value
         )
         {
             setAnimationReady(true)

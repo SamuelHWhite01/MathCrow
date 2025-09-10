@@ -5,6 +5,7 @@ import AutoModeToggle from './AutoModeCheck';
 import SpeedModeToggle from './SpeedModeCheck';
 import { useUserDataContext } from '@/context/UserDataContext';
 import LongMultToggle from './LongMultToggle';
+import DifficultySelector from './long-mult/DifficultySelector';
 
 function CollapsibleMenu(){
     const [isOpen, setIsOpen] = useState(true);
@@ -44,7 +45,13 @@ function CollapsibleMenu(){
                             <ScoreBoard/>
                             </div>
                         )
-
+                    }
+                    {
+                        userData.settings.mode === "LongMult" &&(
+                            <div>
+                                <DifficultySelector/>
+                            </div>
+                        )
                     }
                     
                 </div>
