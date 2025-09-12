@@ -52,7 +52,7 @@ function JoinByCode(){
                             className="bg-white
                                 rounded-lg
                                 w-[50vw]
-                                h-[30vh]
+                                h-[35vh]
                                 flex
                                 m-auto
                                 items-center
@@ -64,6 +64,16 @@ function JoinByCode(){
                                 font-bold">
                                 Enter Classroom ID to Join!
                             </div>
+                            {
+                                userData.isTeacher && (
+                                    <div className="
+                                        text-[2vh]
+                                        font-bold
+                                        text-red-500">
+                                    By joining a classroom, you will forfeit your teacher status in your current classroom.
+                                    </div>
+                                )
+                            }
                             <div>
                                 <input
                                     type="string"
