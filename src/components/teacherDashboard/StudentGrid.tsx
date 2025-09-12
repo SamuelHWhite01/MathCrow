@@ -54,20 +54,25 @@ function StudentGrid(){
   <div key={i + "student"} className="border flex flex-row items-center">
     <div
       key={i + "studentName"}
-      className="border-r w-[20vw] h-[2vw] flex items-center justify-center"
+      className="border-r w-[20vw] h-[4vw] flex items-center justify-center"
     >
       {student?.userName ?? ""}
     </div>
 
     <div key={i + "studentScore"} className="flex flex-row border">
       {factorsCompleteList?.[i]?.map((complete, j) => (
-        <div
-          key={i + "score" + j}
-          className={`flex items-center justify-center scoreboard-cell h-[2vw] w-[2vw] border ${
-            complete ? "bg-green-500" : "bg-gray-300"
-          }`}
-          title={titleGenerator?.(i, j) ?? ""}
-        />
+        <div>
+          <div className='flex items-center justify-center h-[2vw] w-[2vw] border font-bold bg-[#2c8bcd] text-white'>
+            {j+1}
+          </div>
+          <div
+            key={i + "score" + j}
+            className={`flex items-center justify-center scoreboard-cell h-[2vw] w-[2vw] border ${
+              complete ? "bg-green-500" : "bg-gray-300"
+            }`}
+            title={titleGenerator?.(i, j) ?? ""}
+          />
+        </div>
       ))}
     </div>
 

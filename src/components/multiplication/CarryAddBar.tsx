@@ -85,9 +85,16 @@ function CarryAddBar({carrySumBarRef, carrySumToGrid, clearCarryBar, carrySumToB
             let curfactors = factors.clone()
             curfactors = carrySumToGrid(curfactors,recentCarry.place)
             //console.log("Carry sum trace:", carrySumAnswer, carrySumNumCorrect, curfactors)
+            let carryToGridFlag = true
+            if(curfactors.carryList[curfactors.numCarryCorrect+1] != undefined &&
+                curfactors.carryList[curfactors.numCarryCorrect+1].primary === false
+            )
+            {
+                carryToGridFlag = false
+            }
             if(carrySumNumCorrect === 2) 
             {
-                if(carrySumAnswer[0] === curfactors.productGridList[curfactors.numGridCorrect]) // if the second digit can be carried directly to the grid
+                if(carrySumAnswer[0] === curfactors.productGridList[curfactors.numGridCorrect] && carryToGridFlag) // if the second digit can be carried directly to the grid
                 {
                     curfactors = carrySumToGrid(curfactors, recentCarry.place-1)
                     curfactors.correctCarry()
