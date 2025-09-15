@@ -120,6 +120,7 @@ function SumBar({sumBarRef, sumInput, setSumInput, carrySumCarryToSum}:SumBarPro
             setAnimationReady(false)
         }
         setSumInput(curSumInput)
+        console.log(userData)
     };
 
     const nextProblem = () =>{

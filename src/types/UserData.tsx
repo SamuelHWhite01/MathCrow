@@ -77,8 +77,15 @@ class UserData{
   }
   private correctLongMult(i:number)
   {
-
-    this.longMultData.difficultyScore[i] +=1;
+    if(!Number.isNaN(this.longMultData.difficultyScore[i]))
+    {
+      this.longMultData.difficultyScore[i] +=1;
+    }
+    else
+    {
+      this.longMultData.difficultyScore[i] = 1
+    }
+    
     this.longMultData.numCorrect +=1;
   }
   public changeMode(newMode:string)
