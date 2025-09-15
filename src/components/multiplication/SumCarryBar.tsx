@@ -84,7 +84,7 @@ function SumCarryBar({sumCarryBarRef}:SumCarryBarProps){
     numSumCorrect: number
     ): boolean {
         if (!nextCarry || !gridComplete || !needToAdd) return false;
-        return nextCarry.place === index && nextCarry.order === numSumCorrect && nextCarry.primary;
+        return nextCarry.place === index && nextCarry.order === numSumCorrect;
     }
     function highlightSumCarry (index:number) : boolean
     {
