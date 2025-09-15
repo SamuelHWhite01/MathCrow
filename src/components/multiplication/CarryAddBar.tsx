@@ -11,6 +11,8 @@ import Factors from 'types/Factors';
 
 type CarryAddBarProps = {
   carrySumBarRef: React.RefObject<(HTMLInputElement | null)[]>;
+  rawMultComplete:boolean;
+  setRawMultComplete:React.Dispatch<React.SetStateAction<boolean>>;
   carrySumToGrid:(curfactors:Factors, index:number) => Factors;
   carrySumToBar:(num:number, index:number) => void;
   clearCarryBar:(index:number) =>void;
@@ -18,7 +20,7 @@ type CarryAddBarProps = {
 };
 
 
-function CarryAddBar({carrySumBarRef, carrySumToGrid, clearCarryBar, carrySumToBar}: CarryAddBarProps){
+function CarryAddBar({carrySumBarRef, carrySumToGrid, clearCarryBar, carrySumToBar, rawMultComplete, setRawMultComplete}: CarryAddBarProps){
     const { setFactors, factors } = useFactorsContext();
     const {incrementStreak} = useSoundPlayerContext();
     const productGridLength = useMemo(() => factors.product.toString().length, [factors.product, factors.resetCounter]);
@@ -53,7 +55,6 @@ function CarryAddBar({carrySumBarRef, carrySumToGrid, clearCarryBar, carrySumToB
     const[rawMultCorrect, setRawMultCorrect] = useState<boolean[]>([]) // keeps track of the questions I have answered correctly in the given carry sum
     const [rawMultNumCorrect, setRawMultNumCorrect] = useState(0) // how many correct answers have been given in the current carry sum 
     const [rawMultAnswer, setRawMultAnswer] = useState<number[]>([])
-    const rawMultComplete= useMemo(()=> rawMultNumCorrect >= rawMultAnswer.length, [rawMultAnswer, rawMultCorrect]) // check if the raw mult problem is complete
     /// Variables to check the carry sum bar /////
 
     const [carrySumInput, setCarrySumInput] = useState<(number | '')[]>(() =>
@@ -64,6 +65,9 @@ function CarryAddBar({carrySumBarRef, carrySumToGrid, clearCarryBar, carrySumToB
     const [carrySumAnswer, setCarrySumAnswer] = useState<number[]>([])
     const carrySumComplete= useMemo(()=> ((carrySumNumCorrect >= carrySumAnswer.length) && carrySumAnswer.length>0), [carrySumAnswer, carrySumCorrect]) // check if the raw mult problem is complete
 
+    useEffect(() => { // whenever a grid is answered correctly, we need to check if the carry add bar needs to show up
+        setRawMultComplete(rawMultNumCorrect >= rawMultAnswer.length)
+    }, [rawMultAnswer, rawMultCorrect]);
 
     useEffect(() => { // whenever a grid is answered correctly, we need to check if the carry add bar needs to show up
         if(recentCarry && // we dont care about the next carry, but the most recent one
@@ -298,7 +302,9 @@ function CarryAddBar({carrySumBarRef, carrySumToGrid, clearCarryBar, carrySumToB
                     <div className='flex flex-row gap-2 justify-end mt-2'>
                         {rawMultInput.map((_val, i) => (
                             <input
-                                className={`carry-cell ${
+                                className={`carry-cell 
+                                    ${rawMultComplete ? 'text-[#bb2020]':''}
+                                    ${
                                     !showCell(i)
                                     ? 'invisible'
                                     : rawMultCorrect[i] || rawMultComplete
@@ -325,12 +331,14 @@ function CarryAddBar({carrySumBarRef, carrySumToGrid, clearCarryBar, carrySumToB
                         ))}
                     </div>
                     <div className='border-t-6 border-[rgb(20,128,223)] flex flex-row gap-2'>
-                        <div className='text-[5vh] font-bold text-[rgb(20,128,223)]'>
+                        <div className={`text-[5vh] font-bold ${rawMultComplete ? 'text-[#bb2020]':'text-[rgb(20,128,223)]'}`}>
                             +
                         </div>
                         {carrySumInput.map((_val, i) => (
                             <input
-                                className={`carry-cell ${
+                                className={`carry-cell 
+                                    mt-1
+                                    ${
                                     !showCell(i)
                                     ? 'invisible'
                                     : carrySumCorrect[i] || carrySumComplete

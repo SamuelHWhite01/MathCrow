@@ -20,6 +20,7 @@ function FactorBox(){
     const carrySumBarRef = useRef<(HTMLInputElement | null)[]>([]);
     const sumBarRef = useRef<(HTMLInputElement | null)[]>([]);
     const sumCarryBarRef = useRef<(HTMLInputElement | null)[]>([]);
+    const [rawMultComplete, setrawMultComplete] = useState(false);
     const [sumInput, setSumInput] = useState<(number | '')[]>(() =>
         Array.from({ length: productGridLength },() => '')
     );
@@ -199,9 +200,13 @@ function FactorBox(){
     }
     return (
         <div className="  leading-none m-auto flex flex-col items-end w-fit h-fit">
-            <CarryBox carryBarRef={carryBarRef} carrySumBarRef={carrySumBarRef} carrySumToGrid={carrySumToGrid}/>
-            <Factor1/>
-            <Factor2/>
+            <CarryBox carryBarRef={carryBarRef} 
+                carrySumBarRef={carrySumBarRef}
+                carrySumToGrid={carrySumToGrid}
+                rawMultComplete={rawMultComplete}
+                setRawMultComplete={setrawMultComplete}/>
+            <Factor1 rawMultComplete={rawMultComplete}/>
+            <Factor2 rawMultComplete={rawMultComplete}/>
             <SumCarryBar sumCarryBarRef={sumCarryBarRef}/>
             <ProductGrid gridRef={gridRef} gridInput={gridInput} setGridInput={setGridInput} carryBarToGrid={carryBarToGrid}/>
             <SumBar sumBarRef={sumBarRef} sumInput={sumInput} setSumInput={setSumInput} carrySumCarryToSum={carrySumCarryToSum}/>

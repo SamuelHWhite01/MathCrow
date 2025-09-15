@@ -1,6 +1,11 @@
 import { useFactorsContext } from 'context/FactorsContext';
-function Factor1(){
+type Factor1Props = {
+  rawMultComplete:boolean;
+};
+
+function Factor1({rawMultComplete}:Factor1Props){
     const { factors } = useFactorsContext();
+
     const highlightF1 = (i: number) =>
     {
         if(factors.numGridCorrect === factors.productGridList.length)
@@ -12,7 +17,7 @@ function Factor1(){
         const rowLen = factors.product.toString().length;
         const curRow = Math.floor(factors.numGridCorrect / rowLen);
         const curCol = Math.min((factors.numGridCorrect % rowLen) - curRow, f1Len-1); // find the column, or the maximum value that f2 can be
-        if(curNum === curCol)
+        if(curNum === curCol  && !rawMultComplete)
         {
             return true;
         }

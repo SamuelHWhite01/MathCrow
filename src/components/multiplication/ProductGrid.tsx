@@ -133,16 +133,29 @@ function ProductGrid({ gridRef, gridInput, setGridInput, carryBarToGrid}: Produc
 
         return i === expectedI && j === expectedJ;
     }
-
+    function highlightCell(index:number):boolean {
+        const expectedIndex = productGridLength - factors.numSumCorrect - 1;
+        if((!gridComplete || !needToAdd))
+        {
+            return false
+        }
+        else
+        {
+            return(index === expectedIndex)
+        }
+    }
     return (
         <div className='flex flex-row items-end'>
-            <div className={`leading-none text-[10vh] font-bold text-[rgb(20,128,223)] ${(!gridComplete || !needToAdd) ? 'invisible' : ''}`}>+</div>
+            <div className={`leading-none text-[10vh] font-bold  ${(!gridComplete || !needToAdd) ? 'invisible' : 'text-[#bb2020]'}`}>+</div>
             <div className="h-auto flex flex-col gap-2">
                 {gridInput.map((row, i) => (
                     <div className="h-auto flex flex-row gap-2 justify-end" key={i}>
                         {row.map((_val, j) => (
                             <input
-                                className={` product-grid-cell ${isLocked(i,j) ? gridCorrect(i,j) ? 'bg-green-200' : 'bg-gray-400' : ''}`}
+                                className={` product-grid-cell
+                                    ${highlightCell(j) ? 'text-[#bb2020]' : ''}
+                                    ${isLocked(i,j) ? gridCorrect(i,j) ? 'bg-green-200' : 'bg-gray-400' : ''}
+                                    `}
                                 type="number"
                                 value={gridInput[i]?.[j] ?? ''}
                                 readOnly={isLocked(i, j)}

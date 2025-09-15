@@ -86,12 +86,20 @@ function SumCarryBar({sumCarryBarRef}:SumCarryBarProps){
         if (!nextCarry || !gridComplete || !needToAdd) return false;
         return nextCarry.place === index && nextCarry.order === numSumCorrect && nextCarry.primary;
     }
+    function highlightSumCarry (index:number) : boolean
+    {
+        const expectedIndex = productGridLength - factors.numSumCorrect - 1;
+        return (index === expectedIndex)
+    }
 
     return (
         <div className='flex flex-row gap-2 justify-end'>
             {sumCarryInput.map((_val, i) => (
                 <input
-                    className={`carry-cell ${showSumCarry(i) ? sumCarryCorrect[i] ? 'bg-green-200':'' : 'invisible'} `}
+                    className={`carry-cell
+                        ${highlightSumCarry(i) ? 'text-[#bb2020]':''}
+                        ${showSumCarry(i) ? sumCarryCorrect[i] ? 'bg-green-200':'' : 'invisible'}
+                        `}
                     type="number"
                     value={sumCarryInput[i]}
                     key={i}

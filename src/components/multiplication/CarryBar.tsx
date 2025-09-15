@@ -9,9 +9,10 @@ type CarryBarProps = {
   setCarryInput:React.Dispatch<React.SetStateAction<(number|'')[]>>;
   carryCorrect:boolean[];
   setCarryCorrect:React.Dispatch<React.SetStateAction<boolean[]>>;
+  rawMultComplete:boolean;
 };
 
-function CarryBar({carryBarRef, carryInput, setCarryInput, carryCorrect, setCarryCorrect }: CarryBarProps){
+function CarryBar({carryBarRef, carryInput, setCarryInput, carryCorrect, setCarryCorrect, rawMultComplete }: CarryBarProps){
     const { setFactors, factors } = useFactorsContext();
     const {incrementStreak} = useSoundPlayerContext();
     const productGridLength = useMemo(() => factors.product.toString().length, [factors.product, factors.resetCounter]);
@@ -93,7 +94,10 @@ function CarryBar({carryBarRef, carryInput, setCarryInput, carryCorrect, setCarr
         <div className='flex flex-row gap-2 justify-end'>
             {carryInput.map((_val, i) => (
                 <input
-                    className={`carry-cell ${showCarry(i) ? carryCorrect[i] ? 'bg-green-200':'' : 'invisible'} `}
+                    className={`carry-cell 
+                        ${rawMultComplete ? 'text-[#bb2020]':''}
+                        ${showCarry(i) ? carryCorrect[i] ? 'bg-green-200':'' : 'invisible'}
+                         `}
                     type="number"
                     value={carryInput[i]}
                     key={i}
