@@ -1,23 +1,31 @@
-import { useAuth } from "@/context/AuthContext";
 import { useUserDataContext } from "@/context/UserDataContext";
-import { saveData, createClassroom } from "@/utils/firebase";
 import { useState } from "react";
+import { getFunctions, httpsCallable } from "firebase/functions";
 
+type CreateClassroomRequestType = {
+  className: string;
+};
+type CreateClassroomResultType = {
+  classroomId: string;
+};
 function SetupClassroom(){
     const {userData, setUserData} = useUserDataContext()
-    const {user} = useAuth();
     const [expanded, setExpanded] = useState(false)
     const [inputId, setInputId] = useState("")
+    const functions = getFunctions();
+   const createClassroom = httpsCallable<CreateClassroomRequestType, CreateClassroomResultType>(
+  functions,
+  "createClassroom"
+);
     async function handleSetup(){
         //set as teacher
         if(!userData.isTeacher)
         {
             userData.toggleTeacher()
         }
-        let code = await createClassroom(inputId)
-        userData.setClassroomId(code);
+        let result = await createClassroom({ className: inputId })
+        userData.setClassroomId(result.data.classroomId);
         setUserData(userData.clone())
-        saveData(user, userData);
         setExpanded(false)
         
     }

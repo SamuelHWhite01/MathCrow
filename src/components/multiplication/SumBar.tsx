@@ -112,21 +112,21 @@ function SumBar({sumBarRef, sumInput, setSumInput, carrySumCarryToSum}:SumBarPro
             curfactors.correctSum()
             if(animationReady)
             {
-                console.log(curSumInput);
+                //console.log(curSumInput);
                 [curfactors,curSumInput] = carrySumCarryToSum(curfactors, curSumInput)
-                console.log(curSumInput);
+                //console.log(curSumInput);
             }
             setFactors(curfactors)
             setAnimationReady(false)
         }
         setSumInput(curSumInput)
-        console.log(userData)
+        //console.log(userData)
     };
 
     const nextProblem = () =>{
         //console.log(userData)
         userData.correct(factors);
-        debouncedSaveData(user, userData);
+        debouncedSaveData(user, userData)
         factors.next(userData);
         setUserData(userData.clone())
         setFactors(factors.clone());

@@ -25,7 +25,7 @@ const HomeScreen = () => {
           bg-cover
           rounded 
           hover:cursor-pointer hover:scale-110 transform transition-transform duration-150'
-          onClick={(_e) => toast.error("Feature not complete")}>        
+          onClick={(_e) => toast.error("Check back soon!")}>        
           </button>
           Division
         </div>
@@ -35,7 +35,7 @@ const HomeScreen = () => {
           bg-cover
           rounded 
           hover:cursor-pointer hover:scale-110 transform transition-transform duration-150'
-          onClick={(_e) => toast.error("Feature not complete")}>        
+          onClick={(_e) => toast.error("Check back soon!")}>        
           </button>
           Fraction
         </div>
@@ -45,7 +45,7 @@ const HomeScreen = () => {
           bg-cover
           rounded 
           hover:cursor-pointer hover:scale-110 transform transition-transform duration-150'
-          onClick={(_e) => toast.error("Feature not complete")}>        
+          onClick={(_e) => toast.error("Check back soon!")}>        
           </button>
           Decimal
         </div>

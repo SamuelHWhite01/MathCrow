@@ -116,7 +116,7 @@ function ProductGrid({ gridRef, gridInput, setGridInput, carryBarToGrid}: Produc
                setAnimationReady(false);
             }
             curfactors =  Factors.leadingZero(curfactors);
-            console.log("Product grid correct trace", curfactors)
+            //console.log("Product grid correct trace", curfactors)
             setFactors(curfactors);
             incrementStreak();
             //console.log(curfactors)
