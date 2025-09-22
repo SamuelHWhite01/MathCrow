@@ -17,7 +17,7 @@ const App: React.FC = () => {
     return (
         <AuthProvider>
         <UserDataProvider>
-        <Router basename='/MathCrow'>
+        <Router basename='/'>
             <ToastContainer/>
             <Layout>
                 <Routes>
