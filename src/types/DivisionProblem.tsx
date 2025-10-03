@@ -5,8 +5,9 @@ class DivisionProblem {
     dividendList:number[] = []; // what we are dividing as a list of numbers
     quotient:number = 0; //the answer as a number
     quotientList:number[] = []; // answer to the division as a list of numbers
+    numQuotientCorrect:number = 0;
     remaindersList:number[][] = [] // a list of remainder subtotals represented as lists of numbers.
-    
+    resetCounter:number = 0;
 
     constructor ()
     {
@@ -23,6 +24,7 @@ class DivisionProblem {
         this.divisorList = this.divisor.toString().split('').map((x) => Number(x))
         const numZeroes = this.dividendList.length - quotientList.length // this is the number of leading zeroes we need to add to the quotient for easier answer tracking
         this.quotientList = Array(numZeroes).fill(0).concat(quotientList)
+        this.resetCounter +=1;
         this.initRemainders()
 
     }
@@ -52,8 +54,15 @@ class DivisionProblem {
         newInstance.dividendList = this.dividendList
         newInstance.quotient = this.quotient
         newInstance.quotientList = this.quotientList
+        newInstance.numQuotientCorrect = this.numQuotientCorrect
         newInstance.remaindersList = this.remaindersList
+        newInstance.resetCounter = this.resetCounter
+        return newInstance
         
+    }
+    public correctQuotient()
+    {
+        this.numQuotientCorrect +=1
     }
     public nextClean() // will generate a division problem with no remainder
     {

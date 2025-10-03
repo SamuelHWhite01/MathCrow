@@ -1,18 +1,11 @@
-import { userDivisionProblemContext } from "@/context/DivisionProblemContext";
+import QuotientBar from "./QuotientBar";
+import DivisionStaticBox from "./DivisionStaticBox";
 
 function DivisionBox(){
-    const {divisionProblem, setDivisionProblem} = userDivisionProblemContext()
-    const displayData = () => {
-        divisionProblem.nextTable()
-        setDivisionProblem(divisionProblem)
-        console.log(divisionProblem)
-    }
     return (
-        <div>
-            <button  onClick={displayData} className="p-2 bg-[#2596be] text-white rounded-lg font-bold text-[5vh] h-[10vh] w-[20vw] hover:cursor-pointer
-            hover:scale-110 transform transition-transform duration-150">
-            Display
-            </button>
+        <div className="flex m-auto flex-col leading-none items-end w-fit h-fit">
+            <QuotientBar/>
+            <DivisionStaticBox/>
         </div>
     );
 };

@@ -9,7 +9,7 @@ export const DivisionProblemContext = createContext<
   | undefined
 >(undefined);
 
-export function userDivisionProblemContext() {
+export function useDivisionProblemContext() {
   const context = useContext(DivisionProblemContext);
   if (!context) {
     throw new Error('useDivisionProblemContext must be used within a DivisionProblemProvider');
