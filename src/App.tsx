@@ -6,11 +6,11 @@ import { UserDataProvider } from './context/UserDataProvider';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import HomeScreen from './screens/HomeScreen';
 import TimesTable from './screens/TimesTable';
-import LongMultiplication from './screens/LongMultiplication';
 import ActivitySelect from './screens/ActivitySelect';
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/layout/Layout';
 import TeacherDashboard from './screens/TeacherDashboard';
+import Division from './screens/Division';
 
 
 const App: React.FC = () => {
@@ -24,7 +24,7 @@ const App: React.FC = () => {
                     <Route path="/" element={<HomeScreen />} />
                     <Route element={<ProtectedRoute />}>
                         <Route path="/TimesTable" element={<TimesTable />} />
-                        <Route path="/LongMultiplication" element={<LongMultiplication />} />
+                        <Route path="/Division" element={<Division />} />
                         <Route path="/ActivitySelect" element={<ActivitySelect />} />
                     </Route>
                     <Route element={<ProtectedRoute requireTeacher={true} />}>
