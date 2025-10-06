@@ -24,6 +24,7 @@ class DivisionProblem {
         this.divisorList = this.divisor.toString().split('').map((x) => Number(x))
         const numZeroes = this.dividendList.length - quotientList.length // this is the number of leading zeroes we need to add to the quotient for easier answer tracking
         this.quotientList = Array(numZeroes).fill(0).concat(quotientList)
+        this.numQuotientCorrect = 0
         this.resetCounter +=1;
         this.initRemainders()
 
