@@ -49,7 +49,20 @@ function QuotientBar(){
             divisionProblem.nextTable();
             //setUserData(userData.clone())
             setDivisionProblem(divisionProblem.clone());
-        }
+    }
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Enter' && quotientComplete) {
+                nextProblem();
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [quotientComplete]);
     function shouldFocusQuotientInput(index: number,): boolean {
         const expectedIndex = divisionProblem.numQuotientCorrect;
         return index === expectedIndex;

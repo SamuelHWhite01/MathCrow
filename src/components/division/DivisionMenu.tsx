@@ -1,15 +1,9 @@
 import { useState } from 'react';
-import LevelSelector from './times-table/LevelSelector';
-import ScoreBoard from './ScoreBoard';
 import AutoModeToggle from '../settings/AutoModeCheck';
 import SpeedModeToggle from '../settings/SpeedModeCheck';
-import { useUserDataContext } from '@/context/UserDataContext';
-import LongMultToggle from './LongMultToggle';
-import DifficultySelector from './long-mult/DifficultySelector';
 
-function CollapsibleMenu(){
+function DivisionMenu(){
     const [isOpen, setIsOpen] = useState(true);
-    const {userData} = useUserDataContext();
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
@@ -35,29 +29,11 @@ function CollapsibleMenu(){
             </button>
             {isOpen && (
                 <div className='flex flex-col gap-2'>
-                    <AutoModeToggle/>
-                    <SpeedModeToggle/>
-                    <LongMultToggle/>
-                    {
-                        userData.settings.mode !=="LongMult" &&(
-                            <div>
-                            <LevelSelector/>
-                            <ScoreBoard/>
-                            </div>
-                        )
-                    }
-                    {
-                        userData.settings.mode === "LongMult" &&(
-                            <div>
-                                <DifficultySelector/>
-                            </div>
-                        )
-                    }
-                    
+                    <SpeedModeToggle/>                  
                 </div>
             )}
         </div>
     );
 };
 
-export default CollapsibleMenu;
+export default DivisionMenu;

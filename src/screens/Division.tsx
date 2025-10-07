@@ -3,6 +3,8 @@
 import { SoundPlayerProvider } from '../context/SoundPlayerProvider';
 import { DivisionProblemProvider } from '@/context/DivisionProblemProvider';
 import DivisionBox from '@/components/division/DivisionBox';
+import DivisionMenu from '@/components/division/DivisionMenu';
+import DivisorLookup from '@/components/division/DivisorLookup';
 
 const TimesTable = () => {
   return (
@@ -10,6 +12,8 @@ const TimesTable = () => {
         <SoundPlayerProvider>
         <DivisionProblemProvider>
             <DivisionBox/>
+            <DivisionMenu/>
+            <DivisorLookup/>
         </DivisionProblemProvider>
         </SoundPlayerProvider>
     </div>
