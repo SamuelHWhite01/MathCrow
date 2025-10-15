@@ -2,8 +2,10 @@ import { useDivisionProblemContext } from "@/context/DivisionProblemContext";
 import { useSoundPlayerContext } from "@/context/SoundPlayerContext";
 import { useUserDataContext } from "@/context/UserDataContext";
 import { useEffect, useMemo, useRef, useState } from "react";
-
-function QuotientBar(){
+type QuotientbarProps ={
+    remainderGridActive:boolean,
+}
+function QuotientBar({remainderGridActive}:QuotientbarProps){
     const {divisionProblem, setDivisionProblem} = useDivisionProblemContext()
     const {userData, setUserData} = useUserDataContext();
     const [quotientInput, setQuotientInput] = useState<(number|'')[]>([])
@@ -40,7 +42,7 @@ function QuotientBar(){
             setDivisionProblem(curDiv)
         }
         setQuotientInput(curQuotientInput)
-        //console.log(userData)
+        console.log(divisionProblem)
     };
     const nextProblem = () =>{
             //console.log(userData)
@@ -65,11 +67,19 @@ function QuotientBar(){
     }, [quotientComplete]);
     function shouldFocusQuotientInput(index: number,): boolean {
         const expectedIndex = divisionProblem.numQuotientCorrect;
+        if(remainderGridActive)
+        {
+            return false;
+        }
         return index === expectedIndex;
     }
     const isLocked = (i: number) => {
 
         const unlockedIndex = divisionProblem.numQuotientCorrect ;
+        if(remainderGridActive)
+        {
+            return true;
+        }
         if (i === unlockedIndex) {
             // only if the given i and j are next in the series are they NOT locked
             return false;

@@ -36,12 +36,10 @@ class DivisionProblem {
         let curRemainder = this.dividend
         for(let i = 0; i<this.quotientList.length; i++)
         {
-            if(this.quotientList[i] != 0)
-            {
-                let place = this.quotientList.length - i - 1
-                curRemainder -= (this.divisor * this.quotientList[i] * Math.pow(10, place))
-                outputList.push(curRemainder.toString().split('').map((x) => Number(x)))
-            }
+            let place = this.quotientList.length - i - 1
+            curRemainder -= (this.divisor * this.quotientList[i] * Math.pow(10, place))
+            outputList.push(curRemainder.toString().split('').map((x) => Number(x)))
+
         }
         this.remaindersList = outputList
     }
