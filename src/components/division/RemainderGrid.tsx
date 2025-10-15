@@ -187,30 +187,35 @@ function RemainderGrid({remainderGridActive, setRemainderGridActive}:RemainderGr
     <div>
     {
         remainderGridActive &&(
-            <div>
-                <div className={`h-auto flex flex-row justify-end gap-2`}>
-                {
-                    subtractBarInput.map((val,i) =>(
-                        <input
-                            className={`mt-2 product-grid-cell  ${subtractBarLocked(i) ? subtractBarCorrect(i) ? 'bg-green-200' : 'bg-gray-400' : ''}`}
-                            type="number"
-                            value={val}
-                            key={i}
-                            readOnly={subtractBarLocked(i)}
-                            ref={(el) => {
-                                subtractionBarRef.current[i] = el;
-                                if (el &&
-                                    focusSubtractBar(i)
-                                ) {
-                                    el.focus();
-                                }
-                            }}
-                            onChange={(e) => handleSubtractBarChange(e, i)}
-                        />
-                    ))
-                }  
+            <div className="">
+                <div className=" flex flex-row items-end">
+                    <div className=" font-bold text-[7vh] mr-3 text-[rgb(20,128,223)]">
+                        -
+                    </div>
+                    <div className={`h-auto flex flex-row justify-end gap-2`}>
+                    {
+                        subtractBarInput.map((val,i) =>(
+                            <input
+                                className={`mt-2 product-grid-cell  ${subtractBarLocked(i) ? subtractBarCorrect(i) ? 'bg-green-200' : 'bg-gray-400' : ''}`}
+                                type="number"
+                                value={val}
+                                key={i}
+                                readOnly={subtractBarLocked(i)}
+                                ref={(el) => {
+                                    subtractionBarRef.current[i] = el;
+                                    if (el &&
+                                        focusSubtractBar(i)
+                                    ) {
+                                        el.focus();
+                                    }
+                                }}
+                                onChange={(e) => handleSubtractBarChange(e, i)}
+                            />
+                        ))
+                    }  
+                    </div>
                 </div>
-                <div className={`h-auto flex flex-row justify-end gap-2`}>
+                <div className={`h-auto flex flex-row justify-end gap-2 border-t-6 border-[rgb(20,128,223)] mt-2`}>
                 {
                     remainderBarInput.map((val,i) =>(
                         <input
