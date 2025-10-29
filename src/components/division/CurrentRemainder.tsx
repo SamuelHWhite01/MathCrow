@@ -1,24 +1,11 @@
 import { useDivisionProblemContext } from "@/context/DivisionProblemContext";
-import { useEffect, useMemo, useState } from "react";
+import {useMemo} from "react";
 
-type CurrentRemainderType = {
-    remainderGridActive:boolean
+type CurrentRemainderProps = {
+    firstSubtraction:boolean
 }
-function CurrentRemainder({remainderGridActive}:CurrentRemainderType){
+function CurrentRemainder({firstSubtraction}:CurrentRemainderProps){
     const {divisionProblem} = useDivisionProblemContext()
-    const [firstSubtraction, setFirstSubtraction] = useState(false);
-    const [previousRemainderGrid, setPreviousRemainderGrid] = useState(false);
-    useEffect(()=>{ //when we get to a new problem, the first subtraction is always false
-        setFirstSubtraction(false)
-        setPreviousRemainderGrid(false)
-    }, [divisionProblem.resetCounter])
-    useEffect(() =>{
-        if(previousRemainderGrid && !remainderGridActive) //if the grid was on and now its off
-        {
-            setFirstSubtraction(true)
-        }
-        setPreviousRemainderGrid(remainderGridActive)
-    }, [remainderGridActive])
     const currentRemainder = useMemo(() => {
         let remainderList = divisionProblem.remaindersList[divisionProblem.numQuotientCorrect]
         let numberZeroes = divisionProblem.quotientList.length - remainderList.length
@@ -26,6 +13,18 @@ function CurrentRemainder({remainderGridActive}:CurrentRemainderType){
         return paddedList
     }
     , [divisionProblem.numQuotientCorrect, divisionProblem.resetCounter])
+    const startHighlight = useMemo(()=>{
+        let quotientlen = divisionProblem.quotientList.length
+        let remainderlen = divisionProblem.remaindersList[divisionProblem.numQuotientCorrect].length
+        return quotientlen-remainderlen
+    },[divisionProblem.numQuotientCorrect, divisionProblem.resetCounter])
+    const highlightRemainder = (index:number) =>{
+        if(index<startHighlight || index > divisionProblem.numQuotientCorrect)
+        {
+            return false
+        }
+        return true
+    }
     const showRemainder = () =>{
         const numCorrect = divisionProblem.numQuotientCorrect
         if( numCorrect > 0 &&
@@ -43,7 +42,7 @@ function CurrentRemainder({remainderGridActive}:CurrentRemainderType){
             <div className='   flex w-fit text-[10vh] font-bold text-[rgb(20,128,223)]'>
                 {currentRemainder
                     .map((letter, index) => (
-                        <span key={index}className={``}>{letter}</span>
+                        <span key={index}className={`${highlightRemainder(index) ? 'text-[#bb2020]' : 'text-[rgb(20,128,223)]'}`}>{letter}</span>
                     ))}
             </div>
             )

@@ -5,11 +5,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 type RemainderGridProps = {
     remainderGridActive:boolean,
     setRemainderGridActive: React.Dispatch<React.SetStateAction<boolean>>;
+    firstSubtraction:boolean,
+    setFirstSubtraction: React.Dispatch<React.SetStateAction<boolean>>;
 }
-function RemainderGrid({remainderGridActive, setRemainderGridActive}:RemainderGridProps){
+function RemainderGrid({remainderGridActive, setRemainderGridActive, firstSubtraction, setFirstSubtraction}:RemainderGridProps){
     const {incrementStreak} = useSoundPlayerContext()
     const {divisionProblem, setDivisionProblem} = useDivisionProblemContext()
-    const currentSubtract = useMemo(() => {
+    const currentSubtract = useMemo(() => { //will return the true grid answer for the subtract bar
         let subtractNum = 0 
         if(divisionProblem.numQuotientCorrect>0)
         {
@@ -23,6 +25,16 @@ function RemainderGrid({remainderGridActive, setRemainderGridActive}:RemainderGr
         return paddedList
     },
      [divisionProblem.numQuotientCorrect, divisionProblem.resetCounter])
+    const currentRawSubtract = useMemo(()=>{ // will return the numbers that the user has to enter in before the padded zeroes at the end
+        let subtractNum = 0 
+        if(divisionProblem.numQuotientCorrect>0)
+        {
+            subtractNum = divisionProblem.divisor * divisionProblem.quotientList[divisionProblem.numQuotientCorrect-1]
+        }
+
+        let subtractList = subtractNum.toString().split('').map((x) => Number(x))
+        return subtractList
+    }, [divisionProblem.numQuotientCorrect, divisionProblem.resetCounter])
     const currentRemainder = useMemo(() => {
         let remainderList = divisionProblem.remaindersList[divisionProblem.numQuotientCorrect]
         let numberZeroes = divisionProblem.quotientList.length - remainderList.length
@@ -55,18 +67,23 @@ function RemainderGrid({remainderGridActive, setRemainderGridActive}:RemainderGr
         setRemainderBarInput(Array(divisionProblem.quotientList.length).fill(''))
         setNumSubtractCorrect(0)
         setNumRemainderCorrect(0)
+        setFirstSubtraction(false)
         if (showGrid())
         {
             setRemainderGridActive(true)
         }
     }, [divisionProblem.resetCounter, divisionProblem.numQuotientCorrect])
-    useEffect(() =>{
-        trailingZeroCheck()
-    }, [subtractBarInput]) 
+    // useEffect(() =>{
+    //     if(numSubtractCorrect === currentRawSubtract.length)
+    //     {
+    //         trailingZeroCheck()
+    //     }
+    // }, [subtractBarInput]) 
     useEffect(()=>{
         if(numRemainderCorrect >= currentRemainder.length)
         {
             setRemainderGridActive(false)
+            setFirstSubtraction(true)
         }
     }, [numRemainderCorrect])
     const subtractBarLocked = (index :number)=>{
@@ -165,24 +182,24 @@ function RemainderGrid({remainderGridActive, setRemainderGridActive}:RemainderGr
         setRemainderBarInput(curRemainderInput)
         console.log(divisionProblem)
     }
-    const trailingZeroCheck = () => // used to automatically complete trailing zeroes in subtraction
-    {
-        let barComplete = true
-        for (let i = numSubtractCorrect; i<subtractBarInput.length; i++)
-        {
-            if(currentSubtract[i] != 0)
-            {
-                barComplete = false
-            }
-        }
-        if(barComplete)
-        {
-            for (let i = numSubtractCorrect; i<subtractBarInput.length; i++)
-            {
-                setNumSubtractCorrect(numSubtractCorrect+1)
-            }
-        }
-    }
+    // const trailingZeroCheck = () => // used to automatically complete trailing zeroes in subtraction
+    // {
+    //     let barComplete = true
+    //     for (let i = numSubtractCorrect; i<subtractBarInput.length; i++)
+    //     {
+    //         if(currentSubtract[i] != 0)
+    //         {
+    //             barComplete = false
+    //         }
+    //     }
+    //     if(barComplete)
+    //     {
+    //         for (let i = numSubtractCorrect; i<subtractBarInput.length; i++)
+    //         {
+    //             setNumSubtractCorrect(numSubtractCorrect+1)
+    //         }
+    //     }
+    // }
     return (
     <div>
     {
@@ -225,7 +242,7 @@ function RemainderGrid({remainderGridActive, setRemainderGridActive}:RemainderGr
                             key={i}
                             readOnly={remainderBarLocked(i)}
                             ref={(el) => {
-                                subtractionBarRef.current[i] = el;
+                                remainderBarRef.current[i] = el;
                                 if (el &&
                                     focusRemainderBar(i)
                                 ) {
