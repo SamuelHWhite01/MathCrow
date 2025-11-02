@@ -11,6 +11,7 @@ class UserData{
   isTeacher:boolean;
   classroomId:string;
   userName:string;
+  firstTimeSetup:boolean;
   constructor(name:string = "")
   {
     this.timesTableData ={
@@ -29,6 +30,7 @@ class UserData{
     this.isTeacher = false;
     this.classroomId = "";
     this.userName = name
+    this.firstTimeSetup = false
   }
   public toFireStore() {
     const saveGrid = this.timesTableData.historyGrid.flat()
@@ -49,6 +51,7 @@ class UserData{
       isTeacher:this.isTeacher,
       classroomId:this.classroomId,
       userName:this.userName,
+      firstTimeSetup:this.firstTimeSetup,
     };
   }
   public correct(factors:Factors) // disambiguation to save depending on mode
@@ -108,6 +111,10 @@ class UserData{
   {
     this.userName = name;
   }
+  public setFirstTimeSetup(val:boolean)
+  {
+    this.firstTimeSetup = val
+  }
   public clone()
   {
     const newUserData = new UserData
@@ -117,6 +124,7 @@ class UserData{
     newUserData.classroomId = this.classroomId
     newUserData.isTeacher = this.isTeacher
     newUserData.userName = this.userName
+    newUserData.firstTimeSetup = this.firstTimeSetup
     return newUserData
   }
   static fromFireStore(data:FireStoreUserData)
@@ -143,6 +151,7 @@ class UserData{
     output.isTeacher = data.isTeacher;
     output.classroomId = data.classroomId;
     output.userName = data.userName;
+    output.firstTimeSetup = data.firstTimeSetup
     return output;
   }
   static generateCode(length: number = 5): string {

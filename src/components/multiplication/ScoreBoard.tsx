@@ -61,7 +61,7 @@ function ScoreBoard(){
     }
     const handleExpand = () =>
     {
-        console.log(expandedGrid)
+        //console.log(expandedGrid)
         setExpanded(!expanded)
     }
     const handleExpandScoreboardClick = (f1:number, f2:number) =>

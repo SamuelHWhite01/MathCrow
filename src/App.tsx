@@ -11,6 +11,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/layout/Layout';
 import TeacherDashboard from './screens/TeacherDashboard';
 import Division from './screens/Division';
+import FirstTimeSetup from './screens/FirstTimeSetup';
 
 
 const App: React.FC = () => {
@@ -22,6 +23,7 @@ const App: React.FC = () => {
             <Layout>
                 <Routes>
                     <Route path="/" element={<HomeScreen />} />
+                    <Route path="/FirstTimeSetup" element={<FirstTimeSetup />} />
                     <Route element={<ProtectedRoute />}>
                         <Route path="/TimesTable" element={<TimesTable />} />
                         <Route path="/Division" element={<Division />} />

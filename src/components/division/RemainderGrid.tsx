@@ -146,7 +146,7 @@ function RemainderGrid({remainderGridActive, setRemainderGridActive, firstSubtra
         {
             curSubtractInput[index] = value
         }
-        console.log(currentSubtract)
+        //console.log(currentSubtract)
         if (value === currentSubtract[index]) {
             // in the case of a correct answer
             //let curDiv = divisionProblem.clone()
@@ -157,7 +157,7 @@ function RemainderGrid({remainderGridActive, setRemainderGridActive, firstSubtra
             setNumSubtractCorrect(numSubtractCorrect+1)
         }
         setSubtractBarInput(curSubtractInput)
-        console.log(divisionProblem)
+        //console.log(divisionProblem)
     }
     const handleRemainderBarChange = (event: React.ChangeEvent<HTMLInputElement>, index:number) =>{
         let value: number | '' = ''; // scrape the input to makew it into the correct type to be put into gridInput
@@ -169,7 +169,7 @@ function RemainderGrid({remainderGridActive, setRemainderGridActive, firstSubtra
         {
             curRemainderInput[index] = value
         }
-        console.log(currentRemainder)
+        //console.log(currentRemainder)
         if (value === currentRemainder[index]) {
             // in the case of a correct answer
             //let curDiv = divisionProblem.clone()
@@ -180,7 +180,7 @@ function RemainderGrid({remainderGridActive, setRemainderGridActive, firstSubtra
             setNumRemainderCorrect(numRemainderCorrect+1)
         }
         setRemainderBarInput(curRemainderInput)
-        console.log(divisionProblem)
+        //console.log(divisionProblem)
     }
     // const trailingZeroCheck = () => // used to automatically complete trailing zeroes in subtraction
     // {

@@ -14,10 +14,12 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   const { user } = useAuth();
   const location = useLocation();
 
-  if (!user) {
+  if (!user ) {
     return <Navigate to="/" replace state={{ from: location }} />;
   }
-
+  if (!userData.firstTimeSetup ) {
+    return <Navigate to="/FirstTimeSetup" replace state={{ from: location }} />;
+  }
   if (requireTeacher && !userData.isTeacher) {
     return <Navigate to="/" replace state={{ from: location }} />;
   }

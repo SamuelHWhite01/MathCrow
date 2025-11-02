@@ -9,9 +9,10 @@ type SumBarProps = {
   sumBarRef: React.RefObject<(HTMLInputElement | null)[]>;
   sumInput:(number|'')[];
   setSumInput:React.Dispatch<React.SetStateAction<(number|'')[]>>;
-  carrySumCarryToSum:(curfactors: Factors, curSumInput: (number | '')[]) => [Factors, (number | '')[]]
+  carrySumCarryToSum:(curfactors: Factors, curSumInput: (number | '')[]) => [Factors, (number | '')[]];
+  handleCelebrate: () => void;
 };
-function SumBar({sumBarRef, sumInput, setSumInput, carrySumCarryToSum}:SumBarProps){
+function SumBar({handleCelebrate,  sumBarRef, sumInput, setSumInput, carrySumCarryToSum}:SumBarProps){
     const { setFactors, factors } = useFactorsContext();
     const { user } = useAuth();
     const {incrementStreak} = useSoundPlayerContext();
@@ -37,6 +38,12 @@ function SumBar({sumBarRef, sumInput, setSumInput, carrySumCarryToSum}:SumBarPro
             }
         }
     }, [gridComplete]);
+    useEffect(()=>{
+        if(problemComplete)
+        {
+            handleCelebrate();
+        }
+    }, [problemComplete])
     // useEffect(() => {
     //     //console.log("sum correct")
     //     if(activeCarry)

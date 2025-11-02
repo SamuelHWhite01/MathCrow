@@ -42,7 +42,7 @@ function QuotientBar({remainderGridActive}:QuotientbarProps){
             setDivisionProblem(curDiv)
         }
         setQuotientInput(curQuotientInput)
-        console.log(divisionProblem)
+        //console.log(divisionProblem)
     };
     const nextProblem = () =>{
             //console.log(userData)

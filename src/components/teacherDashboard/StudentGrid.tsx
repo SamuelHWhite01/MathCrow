@@ -29,11 +29,11 @@ function StudentGrid(){
         )
     }
     useEffect(() => { 
-        console.log(studentList)
+        //console.log(studentList)
         setFactorsCompleteList(getHistoryGridBooleans(studentList))
     },[studentList]);
         useEffect(() => { 
-        console.log(factorsCompleteList)
+        //console.log(factorsCompleteList)
     },[factorsCompleteList]);
     const factorAnswered = (student:number, factor:number) => // will sum the number of times that a studnet has answered a question of a given factor
     {

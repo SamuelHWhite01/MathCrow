@@ -9,6 +9,7 @@ import Factors from 'types/Factors';
 import { useUserDataContext } from 'context/UserDataContext';
 import CarryBox from './CarryBox';
 import SumCarryBar from './SumCarryBar';
+import Confetti from "react-confetti";
 function FactorBox(){
     const {factors, setFactors} = useFactorsContext()
     const {userData} = useUserDataContext()
@@ -16,6 +17,8 @@ function FactorBox(){
     const productGridLength = factors.product.toString().length;
     const ANIMATION_DURATION = 1000;
     const ANIMATION_GROW = 1.5;
+    const CONFETTI_DURATION = 3000;
+    const [showConfetti, setShowConfetti] = useState(false);
     const carryBarRef = useRef<(HTMLInputElement | null)[]>([]);
     const carrySumBarRef = useRef<(HTMLInputElement | null)[]>([]);
     const sumBarRef = useRef<(HTMLInputElement | null)[]>([]);
@@ -58,6 +61,12 @@ function FactorBox(){
     }, [userData.settings.mode])
 
     const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+    const handleCelebrate = () => {
+    setShowConfetti(true);
+
+    // Stop confetti after 3 seconds
+    setTimeout(() => setShowConfetti(false),CONFETTI_DURATION);
+    };
     const carryBarToGrid = (curfactors:Factors) => { //if the most recent carry needs to be transferred to the product grid (animationReady) It will do it
 
         const nextVal = curfactors.productGridList[curfactors.numGridCorrect]
@@ -209,10 +218,11 @@ function FactorBox(){
             <Factor2 rawMultComplete={rawMultComplete}/>
             <SumCarryBar sumCarryBarRef={sumCarryBarRef}/>
             <ProductGrid gridRef={gridRef} gridInput={gridInput} setGridInput={setGridInput} carryBarToGrid={carryBarToGrid}/>
-            <SumBar sumBarRef={sumBarRef} sumInput={sumInput} setSumInput={setSumInput} carrySumCarryToSum={carrySumCarryToSum}/>
+            <SumBar sumBarRef={sumBarRef} sumInput={sumInput} setSumInput={setSumInput} carrySumCarryToSum={carrySumCarryToSum} handleCelebrate={handleCelebrate}/>
             {carryAnimations.map((props) => (
                 <CarryAnimationBox key = {props.id} {...props} />
             ))}
+            {showConfetti && <Confetti gravity={2} numberOfPieces={1500} tweenDuration={CONFETTI_DURATION} recycle={false} className='fixed top-0 left-0 h-full w-full'/>}
         </div>
     );
 };
