@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import AutoModeToggle from '../settings/AutoModeCheck';
 import SpeedModeToggle from '../settings/SpeedModeCheck';
 
 function DivisionMenu(){

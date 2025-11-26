@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 function LoginButton(){
     const { loginWithGoogle,user } = useAuth();
-    const {userData, setUserData} = useUserDataContext();
+    const {userData} = useUserDataContext();
     const navigate = useNavigate()
     const isLoggedIn = useMemo(() => user != null, [user]);
     async function handleLoginButton(){

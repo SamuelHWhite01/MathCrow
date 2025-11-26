@@ -7,7 +7,7 @@ function PlayButton(){
     const { loginWithGoogle,user } = useAuth();
     const isLoggedIn = useMemo(() => user != null, [user]);
     const navigate = useNavigate()
-    const {userData, setUserData} = useUserDataContext();
+    const {userData} = useUserDataContext();
     async function handlePlayButton(){
         if(!isLoggedIn)
         {

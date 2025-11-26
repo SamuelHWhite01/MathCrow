@@ -8,9 +8,9 @@ type RemainderGridProps = {
     firstSubtraction:boolean,
     setFirstSubtraction: React.Dispatch<React.SetStateAction<boolean>>;
 }
-function RemainderGrid({remainderGridActive, setRemainderGridActive, firstSubtraction, setFirstSubtraction}:RemainderGridProps){
+function RemainderGrid({remainderGridActive, setRemainderGridActive, setFirstSubtraction}:RemainderGridProps){
     const {incrementStreak} = useSoundPlayerContext()
-    const {divisionProblem, setDivisionProblem} = useDivisionProblemContext()
+    const {divisionProblem} = useDivisionProblemContext()
     const currentSubtract = useMemo(() => { //will return the true grid answer for the subtract bar
         let subtractNum = 0 
         if(divisionProblem.numQuotientCorrect>0)
@@ -25,16 +25,16 @@ function RemainderGrid({remainderGridActive, setRemainderGridActive, firstSubtra
         return paddedList
     },
      [divisionProblem.numQuotientCorrect, divisionProblem.resetCounter])
-    const currentRawSubtract = useMemo(()=>{ // will return the numbers that the user has to enter in before the padded zeroes at the end
-        let subtractNum = 0 
-        if(divisionProblem.numQuotientCorrect>0)
-        {
-            subtractNum = divisionProblem.divisor * divisionProblem.quotientList[divisionProblem.numQuotientCorrect-1]
-        }
+    // const currentRawSubtract = useMemo(()=>{ // will return the numbers that the user has to enter in before the padded zeroes at the end
+    //     let subtractNum = 0 
+    //     if(divisionProblem.numQuotientCorrect>0)
+    //     {
+    //         subtractNum = divisionProblem.divisor * divisionProblem.quotientList[divisionProblem.numQuotientCorrect-1]
+    //     }
 
-        let subtractList = subtractNum.toString().split('').map((x) => Number(x))
-        return subtractList
-    }, [divisionProblem.numQuotientCorrect, divisionProblem.resetCounter])
+    //     let subtractList = subtractNum.toString().split('').map((x) => Number(x))
+    //     return subtractList
+    // }, [divisionProblem.numQuotientCorrect, divisionProblem.resetCounter])
     const currentRemainder = useMemo(() => {
         let remainderList = divisionProblem.remaindersList[divisionProblem.numQuotientCorrect]
         let numberZeroes = divisionProblem.quotientList.length - remainderList.length

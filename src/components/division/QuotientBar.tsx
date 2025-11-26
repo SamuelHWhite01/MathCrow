@@ -7,7 +7,7 @@ type QuotientbarProps ={
 }
 function QuotientBar({remainderGridActive}:QuotientbarProps){
     const {divisionProblem, setDivisionProblem} = useDivisionProblemContext()
-    const {userData, setUserData} = useUserDataContext();
+    const {userData} = useUserDataContext();
     const [quotientInput, setQuotientInput] = useState<(number|'')[]>([])
     const {incrementStreak} = useSoundPlayerContext()
     const quotientComplete: boolean = useMemo(() => divisionProblem.numQuotientCorrect == divisionProblem.quotientList.length, [divisionProblem.numQuotientCorrect]);
