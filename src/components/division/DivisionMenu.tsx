@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import SpeedModeToggle from '../settings/SpeedModeCheck';
+import DivisionScoreBoard from './DivisionScoreBoard';
 
 function DivisionMenu(){
     const [isOpen, setIsOpen] = useState(true);
@@ -28,7 +29,8 @@ function DivisionMenu(){
             </button>
             {isOpen && (
                 <div className='flex flex-col gap-2'>
-                    <SpeedModeToggle/>                  
+                    <SpeedModeToggle/>       
+                    <DivisionScoreBoard/>           
                 </div>
             )}
         </div>

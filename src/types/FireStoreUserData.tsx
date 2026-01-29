@@ -8,6 +8,11 @@ type FireStoreUserData = {
     numCorrect:number;
     maxCorrect:number;
   }
+  divisionTableData:{
+    historyGrid:number[];
+    numCorrect:number;
+    maxCorrect:number;
+  }
   longMultData:{
     difficultyScore:number[];
     numCorrect:number;

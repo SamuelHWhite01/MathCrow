@@ -1,13 +1,16 @@
+import { useAuth } from "@/context/AuthContext";
 import { useDivisionProblemContext } from "@/context/DivisionProblemContext";
 import { useSoundPlayerContext } from "@/context/SoundPlayerContext";
 import { useUserDataContext } from "@/context/UserDataContext";
+import { debouncedSaveData } from "@/utils/firebase";
 import { useEffect, useMemo, useRef, useState } from "react";
 type QuotientbarProps ={
     remainderGridActive:boolean,
 }
 function QuotientBar({remainderGridActive}:QuotientbarProps){
     const {divisionProblem, setDivisionProblem} = useDivisionProblemContext()
-    const {userData} = useUserDataContext();
+    const { user } = useAuth();
+    const {userData, setUserData} = useUserDataContext();
     const [quotientInput, setQuotientInput] = useState<(number|'')[]>([])
     const {incrementStreak} = useSoundPlayerContext()
     const quotientComplete: boolean = useMemo(() => divisionProblem.numQuotientCorrect == divisionProblem.quotientList.length, [divisionProblem.numQuotientCorrect]);
@@ -45,11 +48,10 @@ function QuotientBar({remainderGridActive}:QuotientbarProps){
         //console.log(divisionProblem)
     };
     const nextProblem = () =>{
-            //console.log(userData)
-            //userData.correct(factors);
-            //debouncedSaveData(user, userData)
+            userData.correctDiv(divisionProblem);
+            debouncedSaveData(user, userData)
+            setUserData(userData.clone())
             divisionProblem.nextTable();
-            //setUserData(userData.clone())
             setDivisionProblem(divisionProblem.clone());
     }
     useEffect(() => {

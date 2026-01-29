@@ -12,17 +12,18 @@ function RemainderGrid({remainderGridActive, setRemainderGridActive, setFirstSub
     const {incrementStreak} = useSoundPlayerContext()
     const {divisionProblem} = useDivisionProblemContext()
     const currentSubtract = useMemo(() => { //will return the true grid answer for the subtract bar
-        let subtractNum = 0 
-        if(divisionProblem.numQuotientCorrect>0)
-        {
-            subtractNum = divisionProblem.divisor * divisionProblem.quotientList[divisionProblem.numQuotientCorrect-1]
-        }
+        let subtractNum = divisionProblem.divisor * divisionProblem.quotientList[divisionProblem.numQuotientCorrect-1]
 
         let subtractList = subtractNum.toString().split('').map((x) => Number(x))
-        let numberZeroes = divisionProblem.quotientList.length - subtractList.length
-        //console.log(subtractList, numberZeroes)
-        let paddedList = subtractList.concat(Array(numberZeroes).fill(0))
+        let trailingZeroes = Math.max((divisionProblem.quotientList.length - (divisionProblem.numQuotientCorrect)),0)
+        let leadingZeroes = Math.max((divisionProblem.quotientList.length - subtractList.length - trailingZeroes),0)
+        console.log( divisionProblem, subtractNum, leadingZeroes, subtractList, trailingZeroes)
+        let paddedList = Array(leadingZeroes).fill(0)
+        .concat(subtractList)
+        .concat(Array(trailingZeroes).fill(0))
+        //console.log(paddedList)
         return paddedList
+
     },
      [divisionProblem.numQuotientCorrect, divisionProblem.resetCounter])
     // const currentRawSubtract = useMemo(()=>{ // will return the numbers that the user has to enter in before the padded zeroes at the end
@@ -150,6 +151,8 @@ function RemainderGrid({remainderGridActive, setRemainderGridActive, setFirstSub
         if (value === currentSubtract[index]) {
             // in the case of a correct answer
             //let curDiv = divisionProblem.clone()
+            
+            console.log(currentSubtract)
             event.target.value = '';
             incrementStreak();
             //curDiv.correctQuotient()

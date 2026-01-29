@@ -1,3 +1,5 @@
+import DivisionProblem from "./DivisionProblem";
+import DivisionTableType from "./DivisionTable";
 import Factors from "./Factors";
 import FireStoreUserData from "./FireStoreUserData";
 import LongMultDataType from "./LongMultData";
@@ -8,6 +10,7 @@ class UserData{
   settings:SettingsType;
   timesTableData:TimesTableDataType;
   longMultData:LongMultDataType;
+  divisionTableData:DivisionTableType;
   isTeacher:boolean;
   classroomId:string;
   userName:string;
@@ -15,6 +18,11 @@ class UserData{
   constructor(name:string = "")
   {
     this.timesTableData ={
+      historyGrid: Array.from({ length: 12 }, () =>Array.from({ length: 12 }, () => 0)),
+      numCorrect: 0,
+      maxCorrect: 0
+    }
+    this.divisionTableData ={
       historyGrid: Array.from({ length: 12 }, () =>Array.from({ length: 12 }, () => 0)),
       numCorrect: 0,
       maxCorrect: 0
@@ -33,12 +41,18 @@ class UserData{
     this.firstTimeSetup = false
   }
   public toFireStore() {
-    const saveGrid = this.timesTableData.historyGrid.flat()
+    const saveMultGrid = this.timesTableData.historyGrid.flat()
+    const saveDivGrid = this.divisionTableData.historyGrid.flat()
     return {
       timesTableData:{
-        historyGrid: saveGrid,
+        historyGrid: saveMultGrid,
         numCorrect:this.timesTableData.numCorrect,
         maxCorrect:this.timesTableData.maxCorrect,
+      },
+      divisionTableData:{
+        historyGrid:saveDivGrid,
+        numCorrect:this.divisionTableData.numCorrect,
+        maxCorrect:this.divisionTableData.maxCorrect,
       },
       settings:{
         mode: this.settings.mode,
@@ -54,7 +68,7 @@ class UserData{
       firstTimeSetup:this.firstTimeSetup,
     };
   }
-  public correct(factors:Factors) // disambiguation to save depending on mode
+  public correctMult(factors:Factors) // disambiguation to save depending on mode
   {
     if(this.settings.mode === "SelectedFactor" || this.settings.mode === "TimesTableAuto")
     {
@@ -67,6 +81,17 @@ class UserData{
     else
     {
       console.error("Incompatible mode: ", this.settings.mode)
+    }
+  }
+  public correctDiv(divisionProblem:DivisionProblem)
+  {
+    let i = divisionProblem.quotient
+    let j = divisionProblem.divisor
+    this.divisionTableData.historyGrid[i-1][j-1] +=1;
+    this.divisionTableData.numCorrect +=1;
+    if (this.divisionTableData.historyGrid[i-1][j-1] > this.divisionTableData.maxCorrect)
+    {
+      this.divisionTableData.maxCorrect = this.divisionTableData.historyGrid[i-1][j-1]
     }
   }
   private correctTimesTable(i:number, j:number)
@@ -119,6 +144,7 @@ class UserData{
   {
     const newUserData = new UserData
     newUserData.timesTableData = this.timesTableData
+    newUserData.divisionTableData = this.divisionTableData
     newUserData.settings = this.settings
     newUserData.longMultData = this.longMultData
     newUserData.classroomId = this.classroomId
@@ -130,14 +156,22 @@ class UserData{
   static fromFireStore(data:FireStoreUserData)
   {
     let output = new UserData()
-    const grid = [];
-    const flat = data.timesTableData.historyGrid;
+    const multGrid = [];
+    const flatMult = data.timesTableData.historyGrid;
     for (let i = 0; i < 12; i++) {
-      grid.push(flat.slice(i * 12, (i + 1) * 12));
+      multGrid.push(flatMult.slice(i * 12, (i + 1) * 12));
     }
-    output.timesTableData.historyGrid = grid;
+    output.timesTableData.historyGrid = multGrid;
     output.timesTableData.numCorrect = data.timesTableData.numCorrect;
     output.timesTableData.maxCorrect = data.timesTableData.maxCorrect;
+    const divGrid = [];
+    const flatDiv = data.divisionTableData.historyGrid;
+    for (let i = 0; i < 12; i++) {
+      divGrid.push(flatDiv.slice(i * 12, (i + 1) * 12));
+    }
+    output.divisionTableData.historyGrid = divGrid;
+    output.divisionTableData.numCorrect = data.divisionTableData.numCorrect;
+    output.divisionTableData.maxCorrect = data.divisionTableData.maxCorrect;
     let settings = {
       mode: data.settings.mode,
       speedMode: data.settings.speedMode

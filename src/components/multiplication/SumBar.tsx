@@ -132,7 +132,7 @@ function SumBar({handleCelebrate,  sumBarRef, sumInput, setSumInput, carrySumCar
 
     const nextProblem = () =>{
         //console.log(userData)
-        userData.correct(factors);
+        userData.correctMult(factors);
         debouncedSaveData(user, userData)
         factors.next(userData);
         setUserData(userData.clone())

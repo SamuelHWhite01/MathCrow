@@ -29,6 +29,20 @@ class DivisionProblem {
         this.initRemainders()
 
     }
+    public nextSelect(divisor:number, quotient:number)
+    {
+        this.quotient = quotient
+        this.divisor =  divisor
+        this.dividend = this.divisor * this.quotient
+        this.dividendList = this.dividend.toString().split('').map((x) => Number(x))
+        const quotientList = this.quotient.toString().split('').map((x) => Number(x))
+        this.divisorList = this.divisor.toString().split('').map((x) => Number(x))
+        const numZeroes = this.dividendList.length - quotientList.length // this is the number of leading zeroes we need to add to the quotient for easier answer tracking
+        this.quotientList = Array(numZeroes).fill(0).concat(quotientList)
+        this.numQuotientCorrect = 0
+        this.resetCounter +=1;
+        this.initRemainders()
+    }
     private initRemainders()
     {
         const outputList:number[][] = []
