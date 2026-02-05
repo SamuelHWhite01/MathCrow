@@ -6,8 +6,9 @@ import { debouncedSaveData } from "@/utils/firebase";
 import { useEffect, useMemo, useRef, useState } from "react";
 type QuotientbarProps ={
     remainderGridActive:boolean,
+    handleCelebrate: () => void;
 }
-function QuotientBar({remainderGridActive}:QuotientbarProps){
+function QuotientBar({handleCelebrate, remainderGridActive}:QuotientbarProps){
     const {divisionProblem, setDivisionProblem} = useDivisionProblemContext()
     const { user } = useAuth();
     const {userData, setUserData} = useUserDataContext();
@@ -24,6 +25,10 @@ function QuotientBar({remainderGridActive}:QuotientbarProps){
         if(userData.settings.speedMode)
         {
             nextProblem();
+        }
+        if(quotientComplete)
+        {
+            handleCelebrate();
         }
     }, [quotientComplete]);
     const handleQuotientChange = (event: React.ChangeEvent<HTMLInputElement>, index:number) => {
