@@ -1,6 +1,6 @@
 // components/Toolbar.tsx
 import { useAuth } from "@/context/AuthContext";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
