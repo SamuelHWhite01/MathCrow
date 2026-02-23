@@ -15,6 +15,7 @@ class UserData{
   classroomId:string;
   userName:string;
   firstTimeSetup:boolean;
+  isSubscribed:boolean;
   constructor(name:string = "")
   {
     this.timesTableData ={
@@ -35,6 +36,7 @@ class UserData{
       difficultyScore: [0,0,0,0,0],
       numCorrect:0
     }
+    this.isSubscribed = false;
     this.isTeacher = false;
     this.classroomId = "";
     this.userName = name
@@ -63,6 +65,7 @@ class UserData{
         numCorrect:this.longMultData.numCorrect
       },
       isTeacher:this.isTeacher,
+      isSubscribed:this.isSubscribed,
       classroomId:this.classroomId,
       userName:this.userName,
       firstTimeSetup:this.firstTimeSetup,
@@ -151,6 +154,7 @@ class UserData{
     newUserData.isTeacher = this.isTeacher
     newUserData.userName = this.userName
     newUserData.firstTimeSetup = this.firstTimeSetup
+    newUserData.isSubscribed = this.isSubscribed
     return newUserData
   }
   static fromFireStore(data:FireStoreUserData)
@@ -182,10 +186,11 @@ class UserData{
     }
     output.settings = settings;
     output.longMultData = longMultData;
-    output.isTeacher = data.isTeacher;
-    output.classroomId = data.classroomId;
-    output.userName = data.userName;
-    output.firstTimeSetup = data.firstTimeSetup
+    output.isTeacher = data.isTeacher ?? false;
+    output.classroomId = data.classroomId ?? "";
+    output.userName = data.userName ?? "undefined";
+    output.firstTimeSetup = data.firstTimeSetup ?? false;
+    output.isSubscribed = data.isSubscribed ?? false;
     return output;
   }
   static generateCode(length: number = 5): string {

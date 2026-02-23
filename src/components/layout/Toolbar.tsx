@@ -1,16 +1,43 @@
 // components/Toolbar.tsx
 import { useAuth } from "@/context/AuthContext";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
 import { useUserDataContext } from "@/context/UserDataContext";
+//import { getCurrentUserSubscriptions, getStripePayments } from "@invertase/firestore-stripe-payments";
+//import { getApp } from "firebase/app";
 
 const Toolbar: React.FC = () => {
     const navigate = useNavigate()
+    //const app = getApp();
     const { user } = useAuth();
     const {userData} = useUserDataContext();
     const isLoggedIn = useMemo(() => user != null, [user]);
+    // const [isSubscribed, setIsSubscribed] = useState(false)
+    // const payments = getStripePayments(app, {
+    // productsCollection: "products",
+    // customersCollection: "customers",
+    // });
+    // useEffect(() => {
+    //   if (!user) return; // only fetch if logged in
+
+    //   const fetchSubs = async () => {
+    //   try {
+    //     const subs = await getCurrentUserSubscriptions(payments, {
+    //       status: "active",
+    //     });
+    //     setIsSubscribed(subs.length > 0);
+    //   } catch (err) {
+    //     console.error("Error fetching subscriptions:", err);
+    //     setIsSubscribed(false);
+    //   }
+    //   };
+
+    //   fetchSubs();
+    // }, [user, payments]);
+
+
   return (
     <header className=" fixed top-0 left-0 right-0 z-50 bg-white shadow-md flex flex-row h-[8vh] items-center gap-2 text-center">
         <button className=' bg-[url("/Logo-landscape.png")] h-[6vh] w-[18vh]

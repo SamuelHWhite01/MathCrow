@@ -17,7 +17,7 @@ function RemainderGrid({remainderGridActive, setRemainderGridActive, setFirstSub
         let subtractList = subtractNum.toString().split('').map((x) => Number(x))
         let trailingZeroes = Math.max((divisionProblem.quotientList.length - (divisionProblem.numQuotientCorrect)),0)
         let leadingZeroes = Math.max((divisionProblem.quotientList.length - subtractList.length - trailingZeroes),0)
-        console.log( divisionProblem, subtractNum, leadingZeroes, subtractList, trailingZeroes)
+        //console.log( divisionProblem, subtractNum, leadingZeroes, subtractList, trailingZeroes)
         let paddedList = Array(leadingZeroes).fill(0)
         .concat(subtractList)
         .concat(Array(trailingZeroes).fill(0))
@@ -152,7 +152,7 @@ function RemainderGrid({remainderGridActive, setRemainderGridActive, setFirstSub
             // in the case of a correct answer
             //let curDiv = divisionProblem.clone()
             
-            console.log(currentSubtract)
+            //console.log(currentSubtract)
             event.target.value = '';
             incrementStreak();
             //curDiv.correctQuotient()

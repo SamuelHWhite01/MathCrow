@@ -1,12 +1,11 @@
 import { setGlobalOptions } from "firebase-functions/v2/options";
 import { onCall, HttpsError } from "firebase-functions/v2/https";
 import * as admin from "firebase-admin";
-
 setGlobalOptions({ maxInstances: 10 });
 
 admin.initializeApp();
 const db = admin.firestore();
-
+//const STRIPE_PUBLISHABLE_KEY = 'pk_test_1P8NbF9pm0Fflz9zdC5dTvQG';
 // Cloud Function: create classroom + promote user to teacher
 type CreateClassroomRequestType = {
   className: string;
