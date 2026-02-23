@@ -12,6 +12,10 @@ import Layout from './components/layout/Layout';
 import TeacherDashboard from './screens/TeacherDashboard';
 import Division from './screens/Division';
 import FirstTimeSetup from './screens/FirstTimeSetup';
+import Privacy from './screens/Privacy';
+import Terms from './screens/Terms';
+import About from './screens/about';
+import ForTeachers from './screens/For-teachers';
 
 
 const App: React.FC = () => {
@@ -32,6 +36,10 @@ const App: React.FC = () => {
                     <Route element={<ProtectedRoute requireTeacher={true} />}>
                         <Route path="/TeacherDashboard" element={<TeacherDashboard />} />
                     </Route>
+                    <Route path="/privacy" element={<Privacy />} />
+                    <Route path="/terms" element={<Terms />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/for-teachers" element={<ForTeachers />} />
                 </Routes>
             </Layout>
         </Router>
