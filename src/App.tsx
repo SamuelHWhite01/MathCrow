@@ -14,7 +14,7 @@ import Division from './screens/Division';
 import FirstTimeSetup from './screens/FirstTimeSetup';
 import Privacy from './screens/Privacy';
 import Terms from './screens/Terms';
-import About from './screens/about';
+import About from './screens/About';
 import ForTeachers from './screens/For-teachers';
 
 
