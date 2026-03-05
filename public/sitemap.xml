@@ -24,35 +24,31 @@
       <changefreq>yearly</changefreq>
       <priority>0.5</priority>
    </url>
-      <url>
+   <url>
       <loc>https://mathcrow.org/TimesTable</loc>
       <lastmod>2026-03-05</lastmod>
       <changefreq>monthly</changefreq>
       <priority>1</priority>
    </url>
-      </url>
-      <url>
+   <url>
       <loc>https://mathcrow.org/ActivitySelect</loc>
       <lastmod>2026-03-05</lastmod>
       <changefreq>monthly</changefreq>
       <priority>1</priority>
    </url>
-      </url>
-      <url>
+   <url>
       <loc>https://mathcrow.org/TeacherDashboard</loc>
       <lastmod>2026-03-05</lastmod>
       <changefreq>monthly</changefreq>
       <priority>1</priority>
    </url>
-      </url>
-      <url>
+   <url>
       <loc>https://mathcrow.org/for-teachers</loc>
       <lastmod>2026-03-05</lastmod>
       <changefreq>yearly</changefreq>
       <priority>0.5</priority>
    </url>
-      </url>
-      <url>
+   <url>
       <loc>https://mathcrow.org/TimesTable</loc>
       <lastmod>2026-03-05</lastmod>
       <changefreq>monthly</changefreq>
