@@ -28,7 +28,7 @@ const Footer: React.FC = () => {
           hover:cursor-pointer hover:scale-110 transform transition-transform duration-150
           m-4'
           onClick={(_e) => navigate('/About')}>
-        About Us
+        About Us 
         </button>
                 <button className=' h-[6vh] w-[18vh] text-white
           hover:cursor-pointer hover:scale-110 transform transition-transform duration-150
