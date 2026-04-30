@@ -1,6 +1,7 @@
 // components/Layout.tsx
 import React from "react";
 import Toolbar from "./Toolbar";
+import Footer from "./Footer";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -11,7 +12,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <div>
       <Toolbar />
       <div className="h-[8vh]"/>
-      <main className="p-4">{children}</main>
+      <div className="min-h-screen flex flex-col">
+        <main className="p-4 flex-grow" >{children}</main>
+        <Footer/>
+      </div>
     </div>
   );
 };
