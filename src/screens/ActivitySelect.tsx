@@ -1,16 +1,22 @@
 import { useNavigate } from 'react-router-dom';
-import {toast} from 'react-toastify';
+//import {toast} from 'react-toastify';
 const HomeScreen = () => {
   
   const navigate = useNavigate()
   return (
-    <div className='flex flex-col m-auto items-center gap-5'>
-      <div className='text-[10vh] mb-[10vh]'>
+    <div className='flex flex-col m-auto items-center'>
+      <div className='
+      text-[6vw]
+      md:text-[4vw]
+      lg:text-[2vw]'>
         Select an activity
       </div>
       <div className=' flex flex-row m-auto items-center gap-5'>
         <div className='flex flex-col items-center text-[3vh] font-bold'>
-          <button className=' h-[20vh] w-[20vh] 
+          <button className=' 
+          h-[18vw] w-[18vw] 
+          md:h-[12vw] md:w-[12vw]
+          lg:h-[6vw] lg:w-[6vw]
           bg-[url("/MultIcon.png")]
           bg-cover
           rounded 
@@ -20,7 +26,10 @@ const HomeScreen = () => {
           Multiplication
         </div>
         <div className='flex flex-col items-center text-[3vh] font-bold'>
-          <button className=' h-[20vh] w-[20vh] 
+          <button className=' 
+          h-[18vw] w-[18vw] 
+          md:h-[12vw] md:w-[12vw]
+          lg:h-[6vw] lg:w-[6vw]
           bg-[url("/DivIcon.png")]
           bg-cover
           rounded 
@@ -29,7 +38,7 @@ const HomeScreen = () => {
           </button>
           Division
         </div>
-        <div className='flex flex-col items-center text-[3vh] font-bold'>
+        {/* <div className='flex flex-col items-center text-[3vh] font-bold'>
           <button className=' h-[20vh] w-[20vh] 
           bg-[url("/FracIcon.png")]
           bg-cover
@@ -48,7 +57,7 @@ const HomeScreen = () => {
           onClick={(_e) => toast.error("Check back soon!")}>        
           </button>
           Decimal
-        </div>
+        </div> */}
       </div>
     </div>
   );

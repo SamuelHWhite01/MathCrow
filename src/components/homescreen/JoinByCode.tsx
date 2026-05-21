@@ -34,9 +34,15 @@ function JoinByCode(){
         setInputId(event.target.value)
     }
   return (
-    <div>
-        <button  onClick={(_e) => setExpanded(!expanded)} className="p-2 bg-[#2596be] text-white rounded font-bold w-full
-        hover:cursor-pointer hover:scale-110 transform transition-transform duration-150">
+    <div className="m-auto">
+        <button  onClick={(_e) => setExpanded(!expanded)} className="bg-[#2596be] text-white rounded-lg font-bold
+    h-[12vw] w-[35vw] text-[4vw]
+    md:h-[8vw] md:text-[3vw] 
+    lg:h-[4vw] lg:text-[2vw]
+    mt-[1vw]
+    m-auto
+    hover:cursor-pointer
+    hover:scale-110 transform transition-transform duration-150">
             Join By Code
         </button>
         {
@@ -51,25 +57,32 @@ function JoinByCode(){
                         <div
                             className="bg-white
                                 rounded-lg
-                                w-[50vw]
-                                h-[35vh]
+                                w-[70vw] h-fit
+                                md:w-[60vw]
+                                lg:w-[50vw]
                                 flex
                                 m-auto
                                 items-center
-                                flex-col gap-4
-                                p-4"
+                                flex-col
+                                p-[2vw]"
                             onClick={(e) => e.stopPropagation()}>
                             <div className="
-                                text-[3vh]
-                                font-bold">
+                                text-[4vw]
+                                md:text-[3vw]
+                                lg:text-[2vw]
+                                font-bold
+                                m-[1vw]">
                                 Enter Classroom ID to Join!
                             </div>
                             {
                                 userData.isTeacher && (
-                                    <div className="
-                                        text-[2vh]
-                                        font-bold
-                                        text-red-500">
+                            <div className="
+                                text-[3vw]
+                                md:text-[2vw]
+                                lg:text-[1vw]
+                                font-bold
+                                m-[1vw]
+                                text-red-500">
                                     By joining a classroom, you will forfeit your teacher status in your current classroom.
                                     </div>
                                 )
@@ -79,23 +92,26 @@ function JoinByCode(){
                                     type="string"
                                     value={inputId}
                                     onChange={handleInputChange}
-                                    className="
-                                        h-[10vh]
-                                        text-[8vh]
-                                        w-[25vw]
-                                        flex m-auto
-                                        border-gray-400
-                                        border-2
-                                        rounded-lg
-                                        text-center
-                                        font-bold
-                                        ">
+                                className="
+                                    h-[10vw] text-[5vw] w-full m-[1vw]
+                                    md:h-[8vw] md:text-[4vw]
+                                    lg:h-[6vw] lg:text[3vw]
+                                    flex 
+                                    border-gray-400
+                                    border-2
+                                    rounded-lg
+                                    text-center
+                                    font-bold
+                                    ">
                                     
                                 </input>
                                 <button  
                                     onClick={join} 
-                                    className="p-2 bg-[#2596be] text-white rounded font-bold w-full h-[8vh] text-[6vh]
-                                        hover:cursor-pointer hover:scale-110 transform transition-transform duration-150">
+                                className="p-2 bg-[#2596be] text-white rounded font-bold 
+                                w-full h-[10vw] text-[5vw] m-[1vw]
+                                md:h-[8vw] md:text-[4vw]
+                                lg:h-[6vw] lg:text[3vw]
+                                hover:cursor-pointer hover:scale-110 transform transition-transform duration-150">
                                     Join
                                 </button>
                             </div>

@@ -30,7 +30,13 @@ function PlayButton(){
         
     }
   return (
-    <button  onClick={handlePlayButton} className="p-2 bg-[#2596be] text-white rounded-lg font-bold text-[5vh] h-[10vh] w-[20vw] hover:cursor-pointer
+    <button  onClick={handlePlayButton} className="bg-[#2596be] text-white rounded-lg font-bold
+    h-[12vw] w-[35vw] text-[4vw]
+    md:h-[8vw] md:text-[3vw] 
+    lg:h-[4vw] lg:text-[2vw]
+    m-auto
+    mt-[1vw]
+    hover:cursor-pointer
     hover:scale-110 transform transition-transform duration-150">
         Play
     </button>

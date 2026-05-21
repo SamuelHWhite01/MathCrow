@@ -39,37 +39,56 @@ const Toolbar: React.FC = () => {
 
 
   return (
-    <header className=" fixed top-0 left-0 right-0 z-50 bg-white shadow-md flex flex-row h-[8vh] items-center gap-2 text-center">
-        <button className=' bg-[url("/Logo-landscape.png")] h-[6vh] w-[18vh]
-            bg-cover
+    <header className=" fixed top-0 left-0 right-0 z-50 bg-white shadow-md flex flex-row
+     h-[12vw]
+     md:h-[8vw] items-center gap-2 text-center
+     lg:h-[4vw]">
+        <button className=' bg-[url("/CroppedLogo.png")]
+         h-[9vw] w-[9vw] 
+         md:bg-[url("/Logo-landscape.png")] md:h-[6vw] md:w-[18vw]
+         lg:h-[3vw] lg:w-[9vw]
+          bg-cover
           rounded 
           hover:cursor-pointer hover:scale-110 transform transition-transform duration-150
-          m-4'
+          m-2'
           onClick={(_e) => navigate('/')}>
           </button>
           { isLoggedIn &&(
-            <button className='h-[6vh] w-[25vh] font-bold bg-[url("/Activities-button.png")]
+            <button className=' 
+              h-[9vw] w-[9vw] bg-[url("/Activities-symbol.png")]
+              md:h-[6vw] md:w-[6vw] 
+              lg:h-[3vw] lg:w-[3vw]
               bg-cover
               rounded 
-              hover:cursor-pointer hover:scale-110 transform transition-transform duration-150'
+              hover:cursor-pointer hover:scale-110 transform transition-transform duration-150
+              m-2'
               onClick={(_e) => navigate('/ActivitySelect')}/>
           )}
           { userData.isTeacher &&(
-            <button className='h-[6vh] w-[25vh] font-bold
+            <button className='
+              h-[9vw] w-[20vw]
+              text-[3vw]
+              md:h-[6vw] md:w-[30vw] 
+              lg:h-[3vw] lg:w-[20vw] lg:text-[2vw]
+              font-bold
               bg-cover
               rounded 
-              hover:cursor-pointer hover:scale-110 transform transition-transform duration-150'
+              bg-[#2596be] text-white
+              hover:cursor-pointer hover:scale-110 transform transition-transform duration-150
+              m-2'
               onClick={(_e) => navigate('/TeacherDashboard')}>
                 Teacher Dashboard
               </button>
           )}
           { isLoggedIn &&(
-            <div className="flex flex-row m-auto mr-2 gap-5">
-                <div className="h-auto w-auto text-[2vh] font-bold m-2">
-                    Welcome {user?.displayName}!
-                </div>
+            <div className="flex flex-row m-auto mr-2 gap-5 items-center justify-center">
                 <LogoutButton/>
-                <div className="h-auto w-auto text-[2vh] font-bold m-2">
+                <div className="
+                  h-[9vw] w-[15vw] text-[3vw]
+                  md:h-[6vw] md:w-[9vw] 
+                  lg:h-[3vw] lg:w-[9vw] lg:text-[2vw]
+                  flex items-center
+                   font-bold m-2">
                     {userData.classroomId}
                 </div>
            </div>
