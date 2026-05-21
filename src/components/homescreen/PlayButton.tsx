@@ -31,9 +31,8 @@ function PlayButton(){
     }
   return (
     <button  onClick={handlePlayButton} className="bg-[#2596be] text-white rounded-lg font-bold
-    h-[12vw] w-[35vw] text-[4vw]
-    md:h-[8vw] md:text-[3vw] 
-    lg:h-[4vw] lg:text-[2vw]
+    h-[clamp(2.5rem,4vw,4rem)] w-[clamp(12rem,25vw,22rem)]
+    text-[clamp(1rem,2vw,1.8rem)]
     m-auto
     mt-[1vw]
     hover:cursor-pointer

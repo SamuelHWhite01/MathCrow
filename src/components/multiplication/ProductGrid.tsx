@@ -146,7 +146,7 @@ function ProductGrid({ gridRef, gridInput, setGridInput, carryBarToGrid}: Produc
     }
     return (
         <div className='flex flex-row items-end'>
-            <div className={`leading-none text-[10vh] font-bold  ${(!gridComplete || !needToAdd) ? 'invisible' : 'text-[#bb2020]'}`}>+</div>
+            <div className={`leading-none text-[clamp(2.5rem,7vw,5rem)] font-bold  ${(!gridComplete || !needToAdd) ? 'invisible' : 'text-[#bb2020]'}`}>+</div>
             <div className="h-auto flex flex-col gap-2">
                 {gridInput.map((row, i) => (
                     <div className="h-auto flex flex-row gap-2 justify-end" key={i}>

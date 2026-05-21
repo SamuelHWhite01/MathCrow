@@ -1,4 +1,4 @@
-import { useAuth } from "@/context/AuthContext";
+﻿import { useAuth } from "@/context/AuthContext";
 import { useUserDataContext } from "@/context/UserDataContext";
 import { debouncedSaveData } from "@/utils/firebase";
 import { useState } from "react";
@@ -26,7 +26,8 @@ function LongMultToggle(){
                         <button
                         onClick={handleTimesTable}
                         className={` ${LongMult ? 'bg-[#589ccc]':'bg-[#08e4ac]'} 
-                            h-[5vh]
+                            min-h-[clamp(1.5rem,3vw,2.5rem)]
+                            text-[clamp(0.6rem,1.2vw,1rem)]
                             m-1 
 
                             flex-1
@@ -40,7 +41,8 @@ function LongMultToggle(){
                         <button
                         onClick={handleLongMult}
                         className={` ${!LongMult ? 'bg-[#589ccc]':'bg-[#08e4ac]'} 
-                            h-[5vh]
+                            min-h-[clamp(1.5rem,3vw,2.5rem)]
+                            text-[clamp(0.6rem,1.2vw,1rem)]
                             flex-1
                             m-1 
                             rounded

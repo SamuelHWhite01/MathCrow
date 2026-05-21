@@ -40,39 +40,32 @@ const Toolbar: React.FC = () => {
 
   return (
     <header className=" fixed top-0 left-0 right-0 z-50 bg-white shadow-md flex flex-row
-     h-[12vw]
-     md:h-[8vw] items-center gap-2 text-center
-     lg:h-[4vw]">
+     h-[clamp(2.5rem,4vw,4rem)] items-center gap-2 text-center">
         <button className=' bg-[url("/CroppedLogo.png")]
-         h-[9vw] w-[9vw] 
-         md:bg-[url("/Logo-landscape.png")] md:h-[6vw] md:w-[18vw]
-         lg:h-[3vw] lg:w-[9vw]
-          bg-cover
-          rounded 
+         h-[clamp(1.8rem,3vw,3rem)] w-[clamp(1.8rem,3vw,3rem)]
+         md:bg-[url("/Logo-landscape.png")] md:w-[clamp(6rem,9vw,9rem)]
+          bg-cover md:bg-contain md:bg-no-repeat md:bg-center
+          rounded
           hover:cursor-pointer hover:scale-110 transform transition-transform duration-150
           m-2'
           onClick={(_e) => navigate('/')}>
           </button>
           { isLoggedIn &&(
-            <button className=' 
-              h-[9vw] w-[9vw] bg-[url("/Activities-symbol.png")]
-              md:h-[6vw] md:w-[6vw] 
-              lg:h-[3vw] lg:w-[3vw]
+            <button className='
+              h-[clamp(1.8rem,3vw,3rem)] w-[clamp(1.8rem,3vw,3rem)] bg-[url("/Activities-symbol.png")]
               bg-cover
-              rounded 
+              rounded
               hover:cursor-pointer hover:scale-110 transform transition-transform duration-150
               m-2'
               onClick={(_e) => navigate('/ActivitySelect')}/>
           )}
           { userData.isTeacher &&(
             <button className='
-              h-[9vw] w-[20vw]
-              text-[3vw]
-              md:h-[6vw] md:w-[30vw] 
-              lg:h-[3vw] lg:w-[20vw] lg:text-[2vw]
+              h-[clamp(1.8rem,3vw,3rem)] w-[clamp(8rem,15vw,15rem)]
+              text-[clamp(0.8rem,1.5vw,1.2rem)]
               font-bold
               bg-cover
-              rounded 
+              rounded
               bg-[#2596be] text-white
               hover:cursor-pointer hover:scale-110 transform transition-transform duration-150
               m-2'
@@ -84,11 +77,10 @@ const Toolbar: React.FC = () => {
             <div className="flex flex-row m-auto mr-2 gap-5 items-center justify-center">
                 <LogoutButton/>
                 <div className="
-                  h-[9vw] w-[15vw] text-[3vw]
-                  md:h-[6vw] md:w-[9vw] 
-                  lg:h-[3vw] lg:w-[9vw] lg:text-[2vw]
+                  h-[clamp(1.8rem,3vw,3rem)] w-[clamp(4rem,9vw,8rem)]
+                  text-[clamp(0.8rem,1.5vw,1.2rem)]
                   flex items-center
-                   font-bold m-2">
+                  font-bold m-2">
                     {userData.classroomId}
                 </div>
            </div>

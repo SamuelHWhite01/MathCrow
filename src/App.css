@@ -3,9 +3,9 @@
 
 @custom-variant dark (&:is(.dark *));
 .factor-input {
-    height: 10vh;
-    font-size: 10vh;
-    width: 30vh;
+    height: clamp(2.5rem, 7vw, 5rem);
+    font-size: clamp(2rem, 6vw, 4rem);
+    width: clamp(8rem, 20vw, 18rem);
     border-radius: 10px;
     border-width: 2px;
 }
@@ -23,27 +23,27 @@ body {
 }
 
 .product-grid-cell {
-    width: 6vh;
-    height: 10vh;
-    font-size: 8vh;           
-    line-height: 10vh;        
+    width: clamp(1.8rem, 4vw, 3.5rem);
+    height: clamp(2.5rem, 5.6vw, 5rem);
+    font-size: clamp(2rem, 4.4vw, 4rem);
+    line-height: clamp(2.5rem, 5.6vw, 5rem);
     border-radius: 10px;
     border-width: 2px;
     text-align: center;
-    padding: 0;               
-    box-sizing: border-box;   
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .carry-cell {
-    width: 6vh;
-    height: 5vh;
-    font-size: 4vh;           
-    line-height: 5vh;        
+    width: clamp(1.8rem, 4vw, 3.5rem);
+    height: clamp(1.2rem, 2.8vw, 2.5rem);
+    font-size: clamp(1rem, 2.4vw, 2rem);
+    line-height: clamp(1.2rem, 2.8vw, 2.5rem);
     border-radius: 10px;
     border-width: 2px;
     text-align: center;
-    padding: 0;               
-    box-sizing: border-box;   
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .scoreboard-cell:hover {

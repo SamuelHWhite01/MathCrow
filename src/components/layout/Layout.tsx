@@ -11,7 +11,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div>
       <Toolbar />
-      <div className="h-[12vw] md:h-[8vw] lg:h-[4vw]"/>
+      <div className="h-[clamp(2.5rem,4vw,4rem)]"/>
       <div className="min-h-screen flex flex-col">
         <main className="p-4 flex-grow" >{children}</main>
         <Footer/>

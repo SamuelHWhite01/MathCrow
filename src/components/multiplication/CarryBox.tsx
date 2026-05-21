@@ -24,7 +24,7 @@ function CarryBox({carryBarRef, carrySumBarRef, carrySumToGrid, rawMultComplete,
         setCarryInput(outputBar)
     }
     return (
-        <div className="h-[20vh] flex flex-col justify-end">
+        <div className="h-[clamp(4rem,9.6vw,9rem)] flex flex-col justify-end">
             <CarryBar carryBarRef={carryBarRef}
                 carryInput={carryInput}
                 setCarryInput={setCarryInput}

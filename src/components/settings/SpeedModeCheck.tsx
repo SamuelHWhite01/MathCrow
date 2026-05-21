@@ -1,4 +1,4 @@
-import { useAuth } from "context/AuthContext";
+﻿import { useAuth } from "context/AuthContext";
 import { useUserDataContext } from "context/UserDataContext";
 import { debouncedSaveData } from "utils/firebase";
 import { Switch } from "@/components/ui/switch";
@@ -14,12 +14,12 @@ function SpeedModeToggle(){
   };
     return (
 
-        <div className="bg-[#589ccc] flex flex-row h-[5vh]"> 
-            <h1 className= "flex m-auto font-bold text-[2vh]">Speed Mode</h1>
+        <div className="bg-[#589ccc] flex flex-row min-h-[clamp(1.5rem,3vw,2.5rem)]">
+            <h1 className= "flex m-auto font-bold text-[clamp(0.75rem,1.5vw,1.2rem)]">Speed Mode</h1>
             <Switch
             checked={userData.settings?.speedMode ?? false}
             onCheckedChange={handleChange}
-            className=" h-[3vh] flex  m-auto mr-5 bg-gray-300 data-[state=checked]:bg-[#08e4ac]
+            className=" h-[clamp(1rem,2vw,1.5rem)] flex  m-auto mr-5 bg-gray-300 data-[state=checked]:bg-[#08e4ac]
                 hover:cursor-pointer 
                 hover:scale-110 transform transition-transform duration-150"
             />

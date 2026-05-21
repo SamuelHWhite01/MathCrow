@@ -209,7 +209,7 @@ function RemainderGrid({remainderGridActive, setRemainderGridActive, setFirstSub
         remainderGridActive &&(
             <div className="">
                 <div className=" flex flex-row items-end">
-                    <div className=" font-bold text-[7vh] mr-3 text-[rgb(20,128,223)]">
+                    <div className=" font-bold text-[clamp(2.5rem,7vw,5rem)] mr-3 text-[rgb(20,128,223)]">
                         -
                     </div>
                     <div className={`h-auto flex flex-row justify-end gap-2`}>

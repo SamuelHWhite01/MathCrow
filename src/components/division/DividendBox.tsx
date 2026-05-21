@@ -26,8 +26,8 @@ function DividendBox({firstSubtraction, remainderGridActive}:DividendProps){
         return true
     }
     return (
-        <div className={`flex w-fit text-[10vh] font-bold 
-            border-t-6 border-l-6 
+        <div className={`flex w-fit text-[clamp(2.5rem,7vw,5rem)] font-bold
+            border-t-6 border-l-6
             ${highlightDivisionBox() ?'border-[#bb2020]' :'border-[rgb(20,128,223)]'}`}>
             {divisionProblem.dividendList
                 .map((letter, index) => (

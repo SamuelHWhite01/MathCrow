@@ -1,4 +1,4 @@
-
+﻿﻿
 import { useDivisionProblemContext } from "@/context/DivisionProblemContext";
 import { useUserDataContext } from "context/UserDataContext";
 import {Search} from "lucide-react";
@@ -72,7 +72,7 @@ function ScoreBoard(){
     } 
     return (
         <div>
-            <div className = "text-[3vh] font-bold items-center bg-[#589ccc] m-auto text-center">
+            <div className = "text-[clamp(0.9rem,2vw,1.5rem)] font-bold items-center bg-[#589ccc] m-auto text-center">
                 Total Score: {userData.divisionTableData.numCorrect}
             </div>
             <div className="mt-2">
@@ -101,14 +101,14 @@ function ScoreBoard(){
             </div>
             <button
                 onClick={handleExpand} 
-                className="text-[3vh] font-bold 
+                className="text-[clamp(0.9rem,2vw,1.5rem)] font-bold 
                 flex items-center 
                 bg-[#589ccc] 
                 text-center rounded   
                 mt-2 m-auto pl-2 pr-2
                 hover:cursor-pointer
                 hover:scale-110 transform transition-transform duration-150">
-                Expand<Search className=" ml-2 h-[3vh] w-auto"></Search>
+                Expand<Search className=" ml-2 h-[clamp(0.9rem,2vw,1.5rem)] w-auto"></Search>
             </button>
             {
                 expanded &&(
@@ -122,14 +122,14 @@ function ScoreBoard(){
                             <div className="flex flex-row mx-auto w-full">
                                 <button
                                     onClick={handleExpand} 
-                                    className="text-[4vh] font-bold 
-                                    flex items-center   
+                                    className="text-[clamp(1rem,2.5vw,2rem)] font-bold
+                                    flex items-center
                                     justify-start pl-2 pr-2
                                     hover:cursor-pointer
                                     hover:scale-110 transform transition-transform duration-150">
                                     ←
                                 </button>
-                                <div className="text-[3vh] font-bold 
+                                <div className="text-[clamp(0.9rem,2vw,1.5rem)] font-bold 
                                     bg-[#2c8bcd]
                                     pt-2 pb-2 pr-6 pl-6
                                     rounded-lg
@@ -147,8 +147,8 @@ function ScoreBoard(){
                                     return (
                                         <div
                                             key={`${i}-${j}`}
-                                            className={`h-[2vw] w-[2vw] flex items-center justify-center
-                                                font-bold bg-[#2c8bcd] 
+                                            className={`h-[clamp(1rem,2vw,2rem)] w-[clamp(1rem,2vw,2rem)] flex items-center justify-center
+                                                text-[clamp(0.5rem,1.2vw,1rem)] font-bold bg-[#2c8bcd] 
                                                 border-r border-b border-black
                                                 ${ (i===0) ? 'border-t':''}
                                                 ${ (j===0) ? 'border-l':''}
@@ -164,7 +164,7 @@ function ScoreBoard(){
                                 return (
                                     <button
                                         key={`${i}-${j}`}
-                                        className={`scoreboard-cell h-[2vw] w-[2vw] border-black
+                                        className={`scoreboard-cell h-[clamp(1rem,2vw,2rem)] w-[clamp(1rem,2vw,2rem)] border-black
                                         border-r border-b
                                         ${i === 12 && j === 12 ? 'rounded-br' : ''}
                                         `}
@@ -176,7 +176,7 @@ function ScoreBoard(){
                                 </div>
                                 ))}
                             </div>
-                            <div className = "text-[3vh] font-bold items-center mr-auto ml-auto text-center">
+                            <div className = "text-[clamp(0.9rem,2vw,1.5rem)] font-bold items-center mr-auto ml-auto text-center">
                                 Total Score: {userData.divisionTableData.numCorrect}
                             </div>
                         </div>

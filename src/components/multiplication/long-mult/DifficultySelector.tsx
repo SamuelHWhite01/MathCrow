@@ -1,4 +1,4 @@
-import { useAuth } from "@/context/AuthContext";
+﻿import { useAuth } from "@/context/AuthContext";
 import { useFactorsContext } from "@/context/FactorsContext";
 import { useUserDataContext } from "@/context/UserDataContext";
 import { debouncedSaveData } from "@/utils/firebase";
@@ -24,7 +24,7 @@ function DifficultySelector(){
     }
     return (
         <div>
-        <div className='bg-[#305c84] mb-1 h-[4vh] flex flex-col items-center justify-center font-bold text-[3vh]'>
+        <div className='bg-[#305c84] mb-1 min-h-[clamp(1.2rem,2.5vw,2rem)] flex flex-col items-center justify-center font-bold text-[clamp(0.75rem,1.5vw,1.2rem)]'>
             Difficulty Selector
         </div>
 
@@ -35,8 +35,9 @@ function DifficultySelector(){
                 key={option}
                 onClick={(_e) =>handleChange(option)}
                 className={`${((selected === option) && (userData.settings.mode === 'LongMult')) ? 'bg-[#08e4ac]':'bg-[#589ccc]' }
-                h-[5vh]
-                m-1 
+                min-h-[clamp(1.5rem,3vw,2.5rem)]
+                text-[clamp(0.7rem,1.5vw,1.2rem)]
+                m-1
                 rounded
                 font-bold
                 hover:cursor-pointer

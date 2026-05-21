@@ -39,7 +39,7 @@ function CurrentRemainder({firstSubtraction}:CurrentRemainderProps){
     return (
         <div>
             { showRemainder() && (
-            <div className='   flex w-fit text-[10vh] font-bold text-[rgb(20,128,223)]'>
+            <div className='   flex w-fit text-[clamp(2.5rem,7vw,5rem)] font-bold text-[rgb(20,128,223)]'>
                 {currentRemainder
                     .map((letter, index) => (
                         <span key={index}className={`${highlightRemainder(index) ? 'text-[#bb2020]' : 'text-[rgb(20,128,223)]'}`}>{letter}</span>

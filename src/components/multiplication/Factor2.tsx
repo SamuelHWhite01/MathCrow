@@ -26,7 +26,7 @@ function Factor2({rawMultComplete}:Factor2Props){
     }
 
     return (
-        <div className='  border-b-6 border-[rgb(20,128,223)] text-[10vh] font-bold text-[rgb(20,128,223)] flex flex-row'>
+        <div className='  border-b-6 border-[rgb(20,128,223)] text-[clamp(2.5rem,7vw,5rem)] font-bold text-[rgb(20,128,223)] flex flex-row'>
             <div className={`flex ${(rawMultComplete || factors.numGridCorrect >= factors.productGridList.length) ? '': 'text-[#bb2020]'}`}>
                 X
             </div>

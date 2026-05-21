@@ -25,7 +25,7 @@ function Factor1({rawMultComplete}:Factor1Props){
 
     }
     return (
-        <div className=' text-[10vh] font-bold text-[rgb(20,128,223)]'>
+        <div className=' text-[clamp(2.5rem,7vw,5rem)] font-bold text-[rgb(20,128,223)]'>
             {factors.factor1
                 .toString()
                 .split('')

@@ -36,9 +36,8 @@ function SetupClassroom(){
   return (
     <div className="m-auto">
       <button  onClick={(_e) => setExpanded(!expanded)} className="bg-[#2596be] text-white rounded-lg font-bold
-    h-[12vw] w-[35vw] text-[4vw]
-    md:h-[8vw] md:text-[3vw] 
-    lg:h-[4vw] lg:text-[2vw]
+    h-[clamp(2.5rem,4vw,4rem)] w-[clamp(12rem,25vw,22rem)]
+    text-[clamp(1rem,2vw,1.8rem)]
     mt-[1vw]
     m-auto
     hover:cursor-pointer
@@ -57,48 +56,39 @@ function SetupClassroom(){
                         <div
                             className="bg-white
                                 rounded-lg
-                                w-[70vw] h-fit
-                                md:w-[60vw]
-                                lg:w-[50vw]
+                                w-[clamp(20rem,50vw,45rem)] h-fit
                                 flex
                                 m-auto
                                 items-center
                                 flex-col
-                                p-[2vw]"
+                                p-[clamp(0.5rem,2vw,2rem)]"
                             onClick={(e) => e.stopPropagation()}>
                             <div className="
-                                text-[4vw]
-                                md:text-[3vw]
-                                lg:text-[2vw]
+                                text-[clamp(1rem,2vw,1.8rem)]
                                 font-bold
-                                m-[1vw]">
+                                m-[clamp(0.25rem,1vw,1rem)]">
                                 Enter Classroom Name to Create!
                             </div>
-  
+
                             <input
                                 type="string"
                                 value={inputId}
                                 onChange={handleInputChange}
                                 className="
-                                    h-[10vw] text-[5vw] w-full m-[1vw]
-                                    md:h-[8vw] md:text-[4vw]
-                                    lg:h-[6vw] lg:text[3vw]
-                                    flex 
+                                    h-[clamp(2.5rem,5vw,4rem)] text-[clamp(1.2rem,3vw,2rem)] w-full m-[clamp(0.25rem,1vw,1rem)]
+                                    flex
                                     border-gray-400
                                     border-2
                                     rounded-lg
                                     text-center
                                     font-bold
                                     ">
-                                
                             </input>
 
-                            <button  
-                                onClick={handleSetup} 
-                                className="p-2 bg-[#2596be] text-white rounded font-bold 
-                                w-full h-[10vw] text-[5vw] m-[1vw]
-                                md:h-[8vw] md:text-[4vw]
-                                lg:h-[6vw] lg:text[3vw]
+                            <button
+                                onClick={handleSetup}
+                                className="p-2 bg-[#2596be] text-white rounded font-bold
+                                w-full h-[clamp(2.5rem,5vw,4rem)] text-[clamp(1.2rem,3vw,2rem)] m-[clamp(0.25rem,1vw,1rem)]
                                 hover:cursor-pointer hover:scale-110 transform transition-transform duration-150">
                                 Create
                             </button>

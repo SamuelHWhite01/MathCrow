@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { useFactorsContext } from 'context/FactorsContext';
 import { useUserDataContext } from 'context/UserDataContext';
 import { debouncedSaveData } from 'utils/firebase';
@@ -48,8 +48,8 @@ function LevelSelector(){
 
         // </div>
         <div>
-            <div className='bg-[#305c84] mb-1 h-[4vh] flex items-center justify-center'>
-                <h1 className= "font-bold text-[3vh]">Factor Practice</h1>
+            <div className='bg-[#305c84] mb-1 min-h-[clamp(1.2rem,2.5vw,2rem)] flex items-center justify-center'>
+                <h1 className= "font-bold text-[clamp(0.75rem,1.5vw,1.2rem)]">Factor Practice</h1>
             </div>
             <div className='grid grid-cols-3'>
                 {options.map(
@@ -58,7 +58,8 @@ function LevelSelector(){
                         key={option}
                         onClick={(_e) =>handleChange(option)}
                         className={`${((selected === option) && (userData.settings.mode === 'SelectedFactor')) ? 'bg-[#08e4ac]':'bg-[#589ccc]' }
-                            h-[5vh]
+                            min-h-[clamp(1.5rem,3vw,2.5rem)]
+                            text-[clamp(0.7rem,1.5vw,1.2rem)]
                             m-1 
                             rounded
                             font-bold

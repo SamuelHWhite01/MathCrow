@@ -4,9 +4,9 @@ import JoinByCode from '@/components/homescreen/JoinByCode';
 const HomeScreen = () => {
   return (
     <div className='leading-none m-auto flex flex-col 
-    h-fit w-[50vw]'>
+    h-fit w-[clamp(20rem,50vw,50rem)]'>
       <img src='/FullLogo.png' className='
-        w-[20vw]
+        w-[clamp(8rem,20vw,20rem)]
         h-auto m-auto'></img>
       <PlayButton/>
       <SetupClassroom/>

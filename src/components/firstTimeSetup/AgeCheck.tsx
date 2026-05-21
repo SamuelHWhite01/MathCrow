@@ -12,7 +12,7 @@ function AgeCheck({ageCheck, setAgeCheck}:AgeCheckProps){
             type="checkbox"
             checked={ageCheck}
             onChange={(e) => setAgeCheck(e.target.checked)}
-            className="ml-4 bg-[#2596be] rounded-lg  h-[5vh] w-[5vh] hover:cursor-pointer
+            className="ml-4 bg-[#2596be] rounded-lg  h-[clamp(1.5rem,3vw,2.5rem)] w-[clamp(1.5rem,3vw,2.5rem)] hover:cursor-pointer
     hover:scale-110 transform transition-transform duration-150">
         </input>
     </div>

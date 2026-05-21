@@ -49,7 +49,7 @@ function StudentGrid(){
 
     }
     return (
-        <div className=' text-[2vh] font-bold border-1 flex flex-col'>
+        <div className=' text-[clamp(0.7rem,1.5vw,1.2rem)] font-bold border-1 flex flex-col'>
             {studentList?.map((student, i) => (
   <div key={i + "student"} className="border flex flex-row items-center">
     <div

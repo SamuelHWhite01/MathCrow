@@ -331,7 +331,7 @@ function CarryAddBar({carrySumBarRef, carrySumToGrid, clearCarryBar, carrySumToB
                         ))}
                     </div>
                     <div className='border-t-6 border-[rgb(20,128,223)] flex flex-row gap-2'>
-                        <div className={`text-[5vh] font-bold ${rawMultComplete ? 'text-[#bb2020]':'text-[rgb(20,128,223)]'}`}>
+                        <div className={`text-[clamp(1.2rem,3vw,2.5rem)] font-bold ${rawMultComplete ? 'text-[#bb2020]':'text-[rgb(20,128,223)]'}`}>
                             +
                         </div>
                         {carrySumInput.map((_val, i) => (

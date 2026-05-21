@@ -41,7 +41,7 @@ function StripeButton(){
        
     }
   return (
-    <button  onClick={handleStripeButton} className="p-2 bg-[#2596be] text-white rounded-lg font-bold text-[5vh] h-[10vh] w-[20vw] hover:cursor-pointer
+    <button  onClick={handleStripeButton} className="p-2 bg-[#2596be] text-white rounded-lg font-bold text-[clamp(1.2rem,3vw,2.5rem)] h-[clamp(2.5rem,5vw,4rem)] w-[clamp(10rem,15vw,15rem)] hover:cursor-pointer
     hover:scale-110 transform transition-transform duration-150">
         Stripe
     </button>

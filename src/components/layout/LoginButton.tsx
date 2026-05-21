@@ -32,9 +32,8 @@ function LoginButton(){
   return (
     <button  onClick={handleLoginButton} className="bg-[#2596be] text-white rounded font-bold 
     hover:cursor-pointer hover:scale-110 transform transition-transform duration-150
-    h-[9vw] w-[15vw] text-[3vw]
-    md:h-[6vw] md:w-[15vw] 
-    lg:h-[3vw] lg:w-[10vw] lg:text-[2vw]">
+    h-[clamp(1.8rem,3vw,3rem)] w-[clamp(5rem,8vw,8rem)]
+    text-[clamp(0.8rem,1.5vw,1.2rem)]">
         Log in
     </button>
   );
