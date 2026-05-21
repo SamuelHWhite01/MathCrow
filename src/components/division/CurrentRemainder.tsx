@@ -39,10 +39,10 @@ function CurrentRemainder({firstSubtraction}:CurrentRemainderProps){
     return (
         <div>
             { showRemainder() && (
-            <div className='   flex w-fit text-[clamp(2.5rem,7vw,5rem)] font-bold text-[rgb(20,128,223)]'>
+            <div className='flex flex-row gap-2 text-[clamp(2.5rem,7vw,5rem)] font-bold text-[rgb(20,128,223)]'>
                 {currentRemainder
                     .map((letter, index) => (
-                        <span key={index}className={`${highlightRemainder(index) ? 'text-[#bb2020]' : 'text-[rgb(20,128,223)]'}`}>{letter}</span>
+                        <span key={index} className={`w-[clamp(1.8rem,4vw,3.5rem)] text-center ${highlightRemainder(index) ? 'text-[#bb2020]' : 'text-[rgb(20,128,223)]'}`}>{letter}</span>
                     ))}
             </div>
             )

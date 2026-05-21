@@ -25,7 +25,7 @@ function DifficultySelector(){
     return (
         <div>
         <div className='bg-[#305c84] mb-1 min-h-[clamp(1.2rem,2.5vw,2rem)] flex flex-col items-center justify-center font-bold text-[clamp(0.75rem,1.5vw,1.2rem)]'>
-            Difficulty Selector
+            Difficulty
         </div>
 
             <div className='flex flex-row'>

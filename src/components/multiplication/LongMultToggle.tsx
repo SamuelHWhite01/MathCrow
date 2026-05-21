@@ -26,32 +26,30 @@ function LongMultToggle(){
                         <button
                         onClick={handleTimesTable}
                         className={` ${LongMult ? 'bg-[#589ccc]':'bg-[#08e4ac]'} 
-                            min-h-[clamp(1.5rem,3vw,2.5rem)]
+                            min-h-[clamp(1rem,3vw,2.5rem)]
                             text-[clamp(0.6rem,1.2vw,1rem)]
-                            m-1 
+                            m-1
 
                             flex-1
                             rounded
                             font-bold
                             hover:cursor-pointer
                             hover:scale-110 transform transition-transform duration-150
-                            p-2
-                            `} 
-                        >Times Table</button>
+                            `}
+                        >Table</button>
                         <button
                         onClick={handleLongMult}
-                        className={` ${!LongMult ? 'bg-[#589ccc]':'bg-[#08e4ac]'} 
-                            min-h-[clamp(1.5rem,3vw,2.5rem)]
+                        className={` ${!LongMult ? 'bg-[#589ccc]':'bg-[#08e4ac]'}
+                            min-h-[clamp(1rem,3vw,2.5rem)]
                             text-[clamp(0.6rem,1.2vw,1rem)]
                             flex-1
-                            m-1 
+                            m-1
                             rounded
                             font-bold
                             hover:cursor-pointer
                             hover:scale-110 transform transition-transform duration-150
-                            p-2
-                            `} 
-                        >Long Mult</button>
+                            `}
+                        >Long</button>
         </div>
   );
 };

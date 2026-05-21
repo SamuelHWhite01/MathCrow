@@ -36,7 +36,7 @@ function CollapsibleMenu(){
                 <div className='flex flex-col gap-2'>
                     <AutoModeToggle/>
                     <SpeedModeToggle/>
-                    <LongMultToggle/>
+                    <div className='px-2'><LongMultToggle/></div>
                     {
                         userData.settings.mode !=="LongMult" &&(
                             <div>

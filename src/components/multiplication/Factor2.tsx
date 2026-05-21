@@ -26,18 +26,16 @@ function Factor2({rawMultComplete}:Factor2Props){
     }
 
     return (
-        <div className='  border-b-6 border-[rgb(20,128,223)] text-[clamp(2.5rem,7vw,5rem)] font-bold text-[rgb(20,128,223)] flex flex-row'>
-            <div className={`flex ${(rawMultComplete || factors.numGridCorrect >= factors.productGridList.length) ? '': 'text-[#bb2020]'}`}>
+        <div className='border-b-6 border-[rgb(20,128,223)] text-[clamp(2.5rem,7vw,5rem)] font-bold text-[rgb(20,128,223)] flex flex-row gap-2'>
+            <div className={`w-[clamp(1.8rem,4vw,3.5rem)] text-center ${(rawMultComplete || factors.numGridCorrect >= factors.productGridList.length) ? '': 'text-[#bb2020]'}`}>
                 X
             </div>
-            <div className='flex'>
-                {factors.factor2
-                .toString()
-                .split('')
-                .map((letter, index) => (
-                    <span key={index} className={`${highlightF2(index) ? 'text-[#bb2020]' : ''}`}>{letter}</span>
-                ))}
-            </div>
+            {factors.factor2
+            .toString()
+            .split('')
+            .map((letter, index) => (
+                <span key={index} className={`w-[clamp(1.8rem,4vw,3.5rem)] text-center ${highlightF2(index) ? 'text-[#bb2020]' : ''}`}>{letter}</span>
+            ))}
         </div>
             
     );

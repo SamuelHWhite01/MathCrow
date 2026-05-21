@@ -14,13 +14,13 @@ function SpeedModeToggle(){
   };
     return (
 
-        <div className="bg-[#589ccc] flex flex-row min-h-[clamp(1.5rem,3vw,2.5rem)]">
-            <h1 className= "flex m-auto font-bold text-[clamp(0.75rem,1.5vw,1.2rem)]">Speed Mode</h1>
+        <div className="bg-[#589ccc] flex flex-row items-center justify-between px-2 min-h-[clamp(1.5rem,3vw,2.5rem)]">
+            <h1 className="font-bold text-[clamp(0.75rem,1.5vw,1.2rem)]">Speed</h1>
             <Switch
             checked={userData.settings?.speedMode ?? false}
             onCheckedChange={handleChange}
-            className=" h-[clamp(1rem,2vw,1.5rem)] flex  m-auto mr-5 bg-gray-300 data-[state=checked]:bg-[#08e4ac]
-                hover:cursor-pointer 
+            className="h-[clamp(1rem,2vw,1.5rem)] bg-gray-300 data-[state=checked]:bg-[#08e4ac]
+                hover:cursor-pointer
                 hover:scale-110 transform transition-transform duration-150"
             />
         </div>

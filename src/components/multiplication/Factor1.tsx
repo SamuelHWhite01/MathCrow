@@ -25,12 +25,12 @@ function Factor1({rawMultComplete}:Factor1Props){
 
     }
     return (
-        <div className=' text-[clamp(2.5rem,7vw,5rem)] font-bold text-[rgb(20,128,223)]'>
+        <div className='flex flex-row gap-2 text-[clamp(2.5rem,7vw,5rem)] font-bold text-[rgb(20,128,223)]'>
             {factors.factor1
                 .toString()
                 .split('')
                 .map((letter, index) => (
-                    <span key={index}className={`${highlightF1(index) ? 'text-[#bb2020]' : ''}`}>{letter}</span>
+                    <span key={index} className={`w-[clamp(1.8rem,4vw,3.5rem)] text-center ${highlightF1(index) ? 'text-[#bb2020]' : ''}`}>{letter}</span>
                 ))}
         </div>
 
