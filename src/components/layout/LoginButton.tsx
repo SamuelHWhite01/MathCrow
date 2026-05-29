@@ -1,12 +1,8 @@
-import { useMemo } from "react";
+import {useMemo } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { useUserDataContext } from "@/context/UserDataContext";
-import { useNavigate } from "react-router-dom";
 
 function LoginButton(){
     const { loginWithGoogle,user } = useAuth();
-    const {userData} = useUserDataContext();
-    const navigate = useNavigate()
     const isLoggedIn = useMemo(() => user != null, [user]);
     async function handleLoginButton(){
         if(!isLoggedIn)
@@ -19,14 +15,7 @@ function LoginButton(){
             }
             
         }
-        if(userData.firstTimeSetup)
-        {
-            navigate('/ActivitySelect')
-        }
-        else
-        {
-            navigate('/FirstTimeSetup')
-        }
+        
         
     }
   return (

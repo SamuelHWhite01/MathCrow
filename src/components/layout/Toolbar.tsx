@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
 import { useUserDataContext } from "@/context/UserDataContext";
+// import { saveData } from "@/utils/firebase";
 //import { getCurrentUserSubscriptions, getStripePayments } from "@invertase/firestore-stripe-payments";
 //import { getApp } from "firebase/app";
 
@@ -37,7 +38,10 @@ const Toolbar: React.FC = () => {
     //   fetchSubs();
     // }, [user, payments]);
 
-
+  // const handleClick = () =>{
+  //   saveData(user, userData)
+  //   console.log(userData)
+  // }
   return (
     <header className=" fixed top-0 left-0 right-0 z-50 bg-white shadow-md flex flex-row
      h-[clamp(2.5rem,4vw,4rem)] items-center gap-2 text-center">
@@ -50,6 +54,13 @@ const Toolbar: React.FC = () => {
           m-2'
           onClick={(_e) => navigate('/')}>
           </button>
+            {/* <button className='
+              h-[clamp(1.8rem,3vw,3rem)] w-[clamp(1.8rem,3vw,3rem)] bg-[url("/Activities-symbol.png")]
+              bg-cover
+              rounded
+              hover:cursor-pointer hover:scale-110 transform transition-transform duration-150
+              m-2'
+              onClick={handleClick}/> */}
           { isLoggedIn &&(
             <button className='
               h-[clamp(1.8rem,3vw,3rem)] w-[clamp(1.8rem,3vw,3rem)] bg-[url("/Activities-symbol.png")]

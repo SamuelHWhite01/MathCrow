@@ -19,13 +19,16 @@ function PlayButton(){
             }
             
         }
-        if(userData.firstTimeSetup)
-        {
-            navigate('/ActivitySelect')
-        }
         else
         {
-            navigate('/FirstTimeSetup')
+            if(userData.firstTimeSetup)
+            {
+                navigate('/ActivitySelect')
+            }
+            else
+            {
+                navigate('/FirstTimeSetup')
+            }
         }
         
     }

@@ -1,11 +1,12 @@
 import { useAuth } from "../../context/AuthContext";
-import { saveData } from "../../utils/firebase";
+import { saveData, debouncedSaveData } from "../../utils/firebase";
 import { useUserDataContext } from "../../context/UserDataContext";
 
 function LogoutButton(){
   const { logout,user } = useAuth();
   const {userData} = useUserDataContext()
   const handleLogout = () =>{
+    debouncedSaveData.cancel()
     saveData(user, userData)
     logout()
   }
