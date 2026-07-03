@@ -12,7 +12,7 @@ import FireStoreUserData from '@/types/FireStoreUserData';
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyDdys6xkXRUIkb_Q4jYzOfutDgrqc-6H28",
-  authDomain: "math-crow.firebaseapp.com",
+  authDomain: "auth.mathcrow.org",
   projectId: "math-crow",
   storageBucket: "math-crow.firebasestorage.app",
   messagingSenderId: "372664559387",
