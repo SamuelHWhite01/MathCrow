@@ -16,6 +16,7 @@ import Privacy from './screens/Privacy';
 import Terms from './screens/Terms';
 import About from './screens/About';
 import ForTeachers from './screens/For-teachers';
+import LoginSelector from './screens/LoginSelector';
 
 
 const App: React.FC = () => {
@@ -28,6 +29,7 @@ const App: React.FC = () => {
                 <Routes>
                     <Route path="/" element={<HomeScreen />} />
                     <Route path="/FirstTimeSetup" element={<FirstTimeSetup />} />
+                    <Route path="/LoginSelector" element={<LoginSelector />} />
                     <Route element={<ProtectedRoute />}>
                         <Route path="/TimesTable" element={<TimesTable />} />
                         <Route path="/Division" element={<Division />} />

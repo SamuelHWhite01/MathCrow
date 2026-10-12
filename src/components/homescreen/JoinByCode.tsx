@@ -9,10 +9,10 @@ function JoinByCode(){
     const [expanded, setExpanded] = useState(false);
     const [inputId, setInputId] = useState("")
     async function join(){
-        //set as student
-        if(userData.isTeacher)
+        //forfeit teacher status, since a teacher joining a classroom becomes a participant
+        if(userData.role === "teacher")
         {
-            userData.toggleTeacher()
+            userData.setRole("student")
         }
         let code = inputId.toUpperCase()
         if(await(checkId(code)))
@@ -70,7 +70,7 @@ function JoinByCode(){
                                 Enter Classroom ID to Join!
                             </div>
                             {
-                                userData.isTeacher && (
+                                userData.role === "teacher" && (
                             <div className="
                                 text-[clamp(0.8rem,1.5vw,1.2rem)]
                                 font-bold

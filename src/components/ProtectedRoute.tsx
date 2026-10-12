@@ -20,7 +20,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   if (!userData.firstTimeSetup ) {
     return <Navigate to="/FirstTimeSetup" replace state={{ from: location }} />;
   }
-  if (requireTeacher && !userData.isTeacher) {
+  if (requireTeacher && userData.role !== "teacher") {
     return <Navigate to="/" replace state={{ from: location }} />;
   }
 

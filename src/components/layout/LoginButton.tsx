@@ -1,22 +1,16 @@
 import {useMemo } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function LoginButton(){
-    const { loginWithGoogle,user } = useAuth();
+    const { user } = useAuth();
     const isLoggedIn = useMemo(() => user != null, [user]);
-    async function handleLoginButton(){
+    const navigate = useNavigate();
+    function handleLoginButton(){
         if(!isLoggedIn)
         {
-            try{
-                await loginWithGoogle();
-            }
-            catch (err){
-                //console.log("Login failed: ", err);
-            }
-            
+            navigate('/LoginSelector');
         }
-        
-        
     }
   return (
     <button  onClick={handleLoginButton} className="bg-[#2596be] text-white rounded font-bold 

@@ -3,6 +3,7 @@ import DivisionTableType from "./DivisionTable";
 import Factors from "./Factors";
 import FireStoreUserData from "./FireStoreUserData";
 import LongMultDataType from "./LongMultData";
+import Role from "./Role";
 import SettingsType from "./SettingsType";
 import TimesTableDataType from "./TimesTableDataType";
 
@@ -11,7 +12,7 @@ class UserData{
   timesTableData:TimesTableDataType;
   longMultData:LongMultDataType;
   divisionTableData:DivisionTableType;
-  isTeacher:boolean;
+  role:Role;
   classroomId:string;
   userName:string;
   firstTimeSetup:boolean;
@@ -37,7 +38,7 @@ class UserData{
       numCorrect:0
     }
     this.isSubscribed = false;
-    this.isTeacher = false;
+    this.role = "student";
     this.classroomId = "";
     this.userName = name
     this.firstTimeSetup = false
@@ -64,7 +65,7 @@ class UserData{
         difficultyScore:this.longMultData.difficultyScore,
         numCorrect:this.longMultData.numCorrect
       },
-      isTeacher:this.isTeacher,
+      role:this.role,
       isSubscribed:this.isSubscribed,
       classroomId:this.classroomId,
       userName:this.userName,
@@ -127,9 +128,9 @@ class UserData{
   {
     this.settings.speedMode = !this.settings.speedMode
   }
-  public toggleTeacher()
+  public setRole(role:Role)
   {
-    this.isTeacher = !this.isTeacher;
+    this.role = role;
   }
   public setClassroomId(id:string)
   {
@@ -151,7 +152,7 @@ class UserData{
     newUserData.settings = this.settings
     newUserData.longMultData = this.longMultData
     newUserData.classroomId = this.classroomId
-    newUserData.isTeacher = this.isTeacher
+    newUserData.role = this.role
     newUserData.userName = this.userName
     newUserData.firstTimeSetup = this.firstTimeSetup
     newUserData.isSubscribed = this.isSubscribed
@@ -186,7 +187,9 @@ class UserData{
     }
     output.settings = settings;
     output.longMultData = longMultData;
-    output.isTeacher = data.isTeacher ?? false;
+    // legacy docs predate the role field and only have isTeacher; derive role from it until they're backfilled
+    const legacyIsTeacher = (data as unknown as { isTeacher?: boolean }).isTeacher;
+    output.role = data.role ?? (legacyIsTeacher ? "teacher" : "student");
     output.classroomId = data.classroomId ?? "";
     output.userName = data.userName ?? "undefined";
     output.firstTimeSetup = data.firstTimeSetup ?? false;

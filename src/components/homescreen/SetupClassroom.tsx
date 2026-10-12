@@ -19,10 +19,7 @@ function SetupClassroom(){
 );
     async function handleSetup(){
         //set as teacher
-        if(!userData.isTeacher)
-        {
-            userData.toggleTeacher()
-        }
+        userData.setRole("teacher")
         let result = await createClassroom({ className: inputId })
         userData.setClassroomId(result.data.classroomId);
         setUserData(userData.clone())

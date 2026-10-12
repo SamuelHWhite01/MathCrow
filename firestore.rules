@@ -17,7 +17,7 @@ service cloud.firestore {
     function readStudent(userId) {
       return request.auth != null
         && (request.auth.uid == userId
-          || (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isTeacher == true
+          || (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "teacher"
               && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.classroomId
                  == resource.data.classroomId));
     }

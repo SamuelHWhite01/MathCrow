@@ -4,20 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { useUserDataContext } from "@/context/UserDataContext";
 
 function PlayButton(){
-    const { loginWithGoogle,user } = useAuth();
+    const { user } = useAuth();
     const isLoggedIn = useMemo(() => user != null, [user]);
     const navigate = useNavigate()
     const {userData} = useUserDataContext();
-    async function handlePlayButton(){
+    function handlePlayButton(){
         if(!isLoggedIn)
         {
-            try{
-                await loginWithGoogle();
-            }
-            catch (err){
-                //console.log("Login failed: ", err);
-            }
-            
+            navigate('/LoginSelector');
         }
         else
         {

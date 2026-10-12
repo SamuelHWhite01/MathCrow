@@ -70,7 +70,7 @@ const Toolbar: React.FC = () => {
               m-2'
               onClick={(_e) => navigate('/ActivitySelect')}/>
           )}
-          { userData.isTeacher &&(
+          { userData.role === "teacher" &&(
             <button className='
               h-[clamp(1.8rem,3vw,3rem)] w-[clamp(8rem,15vw,15rem)]
               text-[clamp(0.8rem,1.5vw,1.2rem)]

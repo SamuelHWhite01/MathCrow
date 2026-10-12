@@ -49,7 +49,7 @@ export const createClassroom = onCall(async (request) => {
 
     const userRef = db.collection("users").doc(uid);
     t.update(userRef, {
-      isTeacher: true,
+      role: "teacher",
       classroomId: code,
     });
   });

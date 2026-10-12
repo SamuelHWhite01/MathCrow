@@ -5,12 +5,14 @@ import { useAuth } from 'context/AuthContext';
 import { UserDataContext } from './UserDataContext';
 import UserData from 'types/UserData';
 import FireStoreUserData from 'types/FireStoreUserData';
+import Role from 'types/Role';
 
 export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user } = useAuth(); // 🔑 use AuthContext instead of onAuthStateChanged again
   const [userData, setUserData] = useState<UserData>(new UserData()); // default to blank slate
   const fetchUserData = async () => { // updates the user data context to match the firestore
-    setUserData(new UserData(user?.displayName ?? ""));
+    const freshUserData = new UserData(user?.displayName ?? "");
+    setUserData(freshUserData);
     let userDataExist = false;
     if (!user) {
       //console.log("no user ...")
@@ -32,7 +34,15 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       console.error("Failed to fetch user data:", error);
     }
     if(!userDataExist){ // if the data couldnt be fetched, make a new default
-      saveData(user, userData) // not passing userdata directly because of possible race condition
+      // LoginSelector stashes the role the user picked before redirecting to Google sign-in,
+      // since the account (and its Firestore doc) doesn't exist until right now.
+      const pendingRole = sessionStorage.getItem('pendingRole') as Role | null;
+      if (pendingRole) {
+        freshUserData.setRole(pendingRole);
+        setUserData(freshUserData);
+      }
+      sessionStorage.removeItem('pendingRole');
+      saveData(user, freshUserData)
     }
   };
   useEffect(() => {

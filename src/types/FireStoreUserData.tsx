@@ -1,6 +1,7 @@
 // this is the shape the data is stored in firebase in. Nested arrays are flattened
 
 import SettingsType from "./SettingsType";
+import Role from "./Role";
 
 type FireStoreUserData = {
   timesTableData:{
@@ -18,7 +19,7 @@ type FireStoreUserData = {
     numCorrect:number;
   }
   settings:SettingsType;
-  isTeacher:boolean;
+  role:Role;
   classroomId:string;
   userName:string;
   firstTimeSetup:boolean;

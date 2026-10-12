@@ -85,7 +85,7 @@ export const getStudentData = async(user:User|null) => {
   const q = query(
     collection(db, "users"),
     where("classroomId", "==", classroomId),
-    where("isTeacher", "==", false)
+    where("role", "!=", "teacher")
   );
   const snapshot = await getDocs(q);
   return snapshot.docs.map(doc => (UserData.fromFireStore(doc.data() as FireStoreUserData)));
