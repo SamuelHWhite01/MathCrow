@@ -17,6 +17,8 @@ import Terms from './screens/Terms';
 import About from './screens/About';
 import ForTeachers from './screens/For-teachers';
 import LoginSelector from './screens/LoginSelector';
+import CreateStudent from './screens/CreateStudent';
+import StudentLogin from './screens/StudentLogin';
 
 
 const App: React.FC = () => {
@@ -30,10 +32,12 @@ const App: React.FC = () => {
                     <Route path="/" element={<HomeScreen />} />
                     <Route path="/FirstTimeSetup" element={<FirstTimeSetup />} />
                     <Route path="/LoginSelector" element={<LoginSelector />} />
+                    <Route path="/StudentLogin" element={<StudentLogin />} />
                     <Route element={<ProtectedRoute />}>
                         <Route path="/TimesTable" element={<TimesTable />} />
                         <Route path="/Division" element={<Division />} />
                         <Route path="/ActivitySelect" element={<ActivitySelect />} />
+                        <Route path="/CreateStudent" element={<CreateStudent />} />
                     </Route>
                     <Route element={<ProtectedRoute requireTeacher={true} />}>
                         <Route path="/TeacherDashboard" element={<TeacherDashboard />} />

@@ -37,7 +37,7 @@ const LoginSelector = () => {
         mt-[1vw]
         hover:cursor-pointer
         hover:scale-110 transform transition-transform duration-150"
-        onClick={(_e) => navigate('/TimesTable')}>
+        onClick={(_e) => navigate('/StudentLogin')}>
         Log in as Student
         </button>
 

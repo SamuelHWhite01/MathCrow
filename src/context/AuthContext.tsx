@@ -7,6 +7,7 @@ export interface AuthContextType {
   loading: boolean;
   logout: () => void;
   loginWithGoogle: () => Promise<User | null>;
+  loginAsStudent: (username: string, pin: string) => Promise<User>;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);

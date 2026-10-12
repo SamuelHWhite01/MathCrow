@@ -1,7 +1,7 @@
 // src/providers/AuthProvider.tsx
 import React, { useState, useEffect } from "react";
-import { onAuthStateChanged, signInWithPopup, signOut, User } from "firebase/auth";
-import { auth, googleProvider } from "utils/firebase";
+import { onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, User } from "firebase/auth";
+import { auth, googleProvider, usernameToStudentEmail } from "utils/firebase";
 import { AuthContext } from "context/AuthContext";
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -25,12 +25,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return null;
     }
   };
+  const loginAsStudent = async (username: string, pin: string) => {
+    const email = usernameToStudentEmail(username);
+    const result = await signInWithEmailAndPassword(auth, email, pin);
+    return result.user;
+  };
   const logout = async () => {
     await signOut(auth);
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading,loginWithGoogle, logout }}>
+    <AuthContext.Provider value={{ user, loading, loginWithGoogle, loginAsStudent, logout }}>
       {children}
     </AuthContext.Provider>
   );

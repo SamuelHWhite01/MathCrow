@@ -25,6 +25,19 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
+
+// Students have no email of their own, so their Firebase Auth account is keyed
+// off a synthetic address derived from their username, with their PIN as the password.
+// Must stay identical to the sanitization in functions/src/index.ts's createStudentAccount.
+const STUDENT_EMAIL_DOMAIN = "students.mathcrow.org";
+export const usernameToStudentEmail = (username:string): string => {
+  const sanitized = username
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "_")
+    .replace(/[^a-z0-9._-]/g, "");
+  return `${sanitized}@${STUDENT_EMAIL_DOMAIN}`;
+}
 // if (
 //   window.location.hostname === "localhost" ||
 //   window.location.hostname === "127.0.0.1"

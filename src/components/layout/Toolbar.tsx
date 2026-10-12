@@ -84,6 +84,20 @@ const Toolbar: React.FC = () => {
                 Teacher Dashboard
               </button>
           )}
+          { (userData.role === "parent" || userData.role === "teacher") &&(
+            <button className='
+              h-[clamp(1.8rem,3vw,3rem)] w-[clamp(8rem,15vw,15rem)]
+              text-[clamp(0.8rem,1.5vw,1.2rem)]
+              font-bold
+              bg-cover
+              rounded
+              bg-[#2596be] text-white
+              hover:cursor-pointer hover:scale-110 transform transition-transform duration-150
+              m-2'
+              onClick={(_e) => navigate('/CreateStudent')}>
+                Create Student
+              </button>
+          )}
           { isLoggedIn &&(
             <div className="flex flex-row m-auto mr-2 gap-5 items-center justify-center">
                 <LogoutButton/>
